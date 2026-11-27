@@ -284,15 +284,15 @@ searched, not read, in [goal loops](goal-loops-landscape.md).
 | Builder | Builds and runs on | Backend and data | Code ownership and export | Model and agent notes | Plans (read 2026-11-27) |
 |---|---|---|---|---|---|
 | Lovable ([docs][lov-docs]) | Web apps; React + Vite older template, TanStack Start default for new projects since 2026-05-13 ([upgrade page][lov-tss]); published free to a `lovable.app` URL, custom domain on paid plans ([hosting][lov-host]) | Built-in backend (database, auth, storage, edge functions) on "Supabase's open-source foundation"; external Supabase connectable ([backend][lov-cloud]) | Pricing FAQ says you own the code; two-way Git sync to GitHub, GitLab or Bitbucket; codebase download on paid plans ([Git sync][lov-git], [pricing][lov-price]) | Build mode and subagents documented ([build mode][lov-agent]); models not documented on the pages read | Free, Pro, Business, Enterprise; credit-based ([plans][lov-plans]) |
-| Bolt.new ([help center][bolt-docs]) | Web and mobile apps (mobile via Expo); runs in the browser on WebContainers, which StackBlitz describes as a browser-based runtime for Node.js ([intro][bolt-intro], [WebContainers][wc]); Safari gets hosted previews ([supported tech][bolt-tech]); built-in hosting, Netlify option ([Cloud][bolt-cloud]) | Bolt Cloud built-in database with auth, file storage and server functions; Supabase connectable ([Cloud][bolt-cloud]) | GitHub sync; project download ([GitHub][bolt-git], [projects][bolt-mp]) | Two agents, Standard and Max; Bolt picks the model behind the scenes; Forge uses open-source models ([agents][bolt-agents]) | Free, Pro, Teams, Enterprise; token-based ([pricing][bolt-price]) |
+| Bolt.new ([help center][bolt-docs]) | Web and mobile apps (mobile via Expo); runs in the browser on WebContainers, which StackBlitz describes as a browser-based runtime for Node.js ([intro][bolt-intro], [WebContainers][wc]); Safari gets hosted previews ([supported tech][bolt-tech]); built-in hosting ([Cloud][bolt-cloud]), Netlify option ([Netlify][bolt-netlify]) | Bolt Cloud built-in database with auth, file storage and server functions; Supabase connectable on Pro and Teams plans ([Supabase][bolt-supabase]) | GitHub sync; project download ([GitHub][bolt-git], [projects][bolt-mp]) | Two agents, Standard and Max; Bolt picks the model behind the scenes; Forge uses open-source models ([agents][bolt-agents]) | Free, Pro, Teams, Enterprise; token-based ([pricing][bolt-price]) |
 | v0 by Vercel ([docs][v0-docs]) | Next.js, Tailwind, shadcn/ui stack named; one-click deploy to Vercel ([docs][v0-docs]) | One-click Marketplace integrations: Upstash, Neon, Supabase, Vercel Blob ([databases][v0-db]) | GitHub sync, branches and pull requests ([GitHub][v0-gh]) | Own model family: v0 Mini, Pro, Max, Max Fast, with token rates ([pricing][v0-price]) | Free, Plus, Business, Enterprise ([pricing][v0-price]) |
-| Replit ([docs][rep-docs]) | Web apps, mobile apps, slides, designs; built and published inside Replit | Built-in SQL database (PostgreSQL; its dev database was on Neon before 2025-12-04) ([database][rep-db]) | GitHub or GitLab repository connection documented ([code][rep-code]); export not documented on the pages read | Mode tiers Auto, Power, Max; the model selector page lists, for example, Claude Sonnet 5 and GPT-6 Sol ([models][rep-models], [overview][rep-docs]) | Core, Pro, Enterprise; Starter closed to new builders ([plans][rep-plans]) |
+| Replit ([docs][rep-docs]) | Web apps, mobile apps, slides, designs; built and published inside Replit | Built-in SQL database (PostgreSQL; its dev database was on Neon before 2025-12-04) ([database][rep-db]) | Working on existing GitHub or GitLab repositories is documented ([code][rep-code]); exporting or syncing a Replit-built app is not documented on the pages read | Agent modes Free, Power and Max ([overview][rep-docs]); the model selector page lists, for example, Claude Sonnet 5 and GPT-6 Sol ([models][rep-models], [overview][rep-docs]) | Core, Pro, Enterprise; Starter closed to new builders ([plans][rep-plans]) |
 
 ### Notes
 
 - **Bolt open-source status.** The `stackblitz/bolt.new` repository is MIT-licensed per its LICENSE
   file (read 2026-11-27); its last push was 2024-12-17 (read 2026-11-27); whether it matches the hosted product was not checked.
-  `bolt.diy` (`stackblitz-labs`, MIT) is a separate community project, started by an outside developer
+  `bolt.diy` (`stackblitz-labs`, MIT) is a community project in the StackBlitz Labs GitHub organization, started by Cole Medin
   per its README, that lets you pick any model; it is active (pushed 2026-11-21) ([bolt.new repo][bolt-repo],
   [bolt.diy repo][boltdiy-repo]).
 - **Firebase Studio is not a current peer.** Google's docs say it sunsets on 2027-03-22, with new
@@ -551,6 +551,8 @@ searched, not read, in [goal loops](goal-loops-landscape.md).
 [wc]: https://webcontainers.io/
 [bolt-tech]: https://support.bolt.new/reference/supported-technologies
 [bolt-cloud]: https://support.bolt.new/bolt-cloud
+[bolt-netlify]: https://support.bolt.new/integrations/netlify
+[bolt-supabase]: https://support.bolt.new/integrations/supabase
 [bolt-git]: https://support.bolt.new/integrations/git
 [bolt-mp]: https://support.bolt.new/managing-projects/projects-files
 [bolt-agents]: https://support.bolt.new/building/agents
