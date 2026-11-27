@@ -1,6 +1,6 @@
 ---
 title: IBM Agent Stack Analysis — watsonx Orchestrate and its Agent Development Kit
-purpose: First-party fact-check of IBM's agent stack (watsonx Orchestrate, ADK, MCP/A2A support, model choice incl. Claude, identity, licence metrics, regions); no prices.
+purpose: First-party fact-check of IBM's agent stack (watsonx Orchestrate, ADK, MCP/A2A, models incl. Claude, identity, licences, regions) and IBM Bob, its coding agent, with list prices.
 created: 2026-11-20
 updated: 2026-11-27
 validated_links_on: 2026-11-20
@@ -110,7 +110,7 @@ From the [pricing page][wxo-pricing] (plan names and allowance *types* only, no 
 ## IBM Bob (coding agent)
 
 IBM Bob is a separate product from watsonx Orchestrate: IBM's AI coding and software-development-lifecycle (SDLC)
-agent, which its [docs][bob-docs] call "an AI SDLC partner". The launch release calls it the evolution of IBM's code assistants:
+agent, which its [docs][bob-docs] call "an AI SDLC (Software Development Lifecycle) partner". The launch release calls it the evolution of IBM's code assistants:
 existing watsonx Code Assistant (WCA) clients stay supported and get an adoption path to Bob ([launch release][bob-news]).
 Evidence below is documented (IBM's own pages), with marketing quotes and customer testimonials on the
 [product page][bob-home] left out.
@@ -118,7 +118,7 @@ Evidence below is documented (IBM's own pages), with marketing quotes and custom
 - **Surfaces.** An IDE (Agent, Ask and Plan modes), Bob Shell for the command line and CI/CD
   pipelines, subagents you approve before each spawn, MCP (the client moved to the 2026-07-28 spec in the
   September 2026 release, and HTTP+SSE transport was removed), skills, hooks and plugin directories, plus
-  Bobalytics for usage analytics ([docs][bob-docs], [September release post][bob-sep]). Premium packages add modes,
+  Bobalytics for usage analytics ([docs][bob-docs], [September release post][bob-sep], posted 2026-10-01). Premium packages add modes,
   skills and workflows for DevSecOps, Java modernization, IBM i and IBM Z.
 - **Models.** The launch release says Bob routes each task across a mix of Claude, Mistral open models, IBM Granite
   and fine-tuned models. For self-hosted deployments the docs name one core model per install: frontier Claude
