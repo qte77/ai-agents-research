@@ -4,7 +4,7 @@ purpose: Catalog of multi-agent orchestration frameworks, LLM routing tools, age
 status: research
 created: 2026-06-14
 updated: 2026-11-27
-validated_links_on: 2026-11-19
+validated_links_on: 2026-11-27
 ---
 
 Catalog of agent frameworks and supporting infrastructure beyond Claude Code. Restored from `docs/archive/landscape-agent-frameworks-infrastructure.md` (archived 2026-04-23), distilled to durable facts and first-party links; project-specific integration boilerplate was dropped. Tool/version facts are a **February–March 2026 snapshot** unless noted — verify before relying. Where a tool already has a dedicated analysis in `docs/non-cc/`, it is cross-linked rather than duplicated.
@@ -349,6 +349,7 @@ citation-grounded PDF Q&A agent running on Ollama.
 - [RAPTOR](https://arxiv.org/abs/2401.18059) — recursive embed→cluster→summarize tree; retrieves across abstraction levels (MIT; ICLR 2024; paper reports +20% absolute on QuALITY with GPT-4).
 - [nano-graphrag](https://github.com/gusye1234/nano-graphrag) — ~1,100-LOC hackable GraphRAG; swappable LLM/embedding/vector backends (Faiss/Neo4j/Ollama), async (MIT, ~4.0k★, last push 2026-01-27, `gh api` 2026-11-21).
 - [Trail-code (trailhq, formerly Graft)](https://github.com/trailhq/Trail-Code) — context layer for coding agents (Claude Code, Cursor, Codex and others); the repo URL `trailhq/Graft` redirects here, and the README says Graft is now Trail-code, with the "graft map" kept as one half. The graft map is a tree-sitter parse (no LLM, no network) of symbols and call edges, ranked by in-degree; the newer half, "learnings", records what the team and agents have learned from conversations; optional `trail build --deep` adds LLM summaries. README headlines 46% fewer tool calls and 60% less time over 162 runs, and its prose adds 32% lower cost and 42% fewer uncached input tokens, and 33 vs 27 of 50 SWE-bench Verified issues solved (66% vs 54%, one model, n=50) — vendor claims, not independently verified. MIT; 11,458★, last push 2026-11-23 (`gh api` 2026-11-23); npm `@trailhq/trail-code`; the CHANGELOG's newest entry is 0.30.5, while GitHub shows no releases and tags stop at v0.21.1.
+- **Book pointer.** *Agentic GraphRAG* (Anthony Alcaraz and Sam Julien, O'Reilly) is listed in O'Reilly's catalog at `https://www.oreilly.com/library/view/agentic-graphrag/9798341623163/`. The catalog page returned HTTP 403 to every fetch on 2026-11-27, so no publication date, page count or contents were verified; title and authors come from the owner's source list, and the book is recorded as a reading pointer only, with no claim about its content.
 
 ### GraphRAG vs vector RAG and KG construction evidence
 
@@ -359,7 +360,6 @@ Evidence from arXiv abstract pages read 2026-11-19 (full texts not re-read; the 
 - **Survey.** [Graph-Mediated LLM Systems in the Agentic Era][graph-survey] offers a role-locus taxonomy and an evaluation framework that separates local metric gains from downstream task performance and keeps reporting conditions; it names memory maintenance as an open challenge. Survey-level, not new measurements.
 - **Construction quality is measurable.** Benchmarks and ontology-grounded pipelines (Text2KGBench, Feng et al.) are summarized in [Ontology generation and ontology-constrained extraction](../infrastructure/semantic-layers-data-catalog-landscape.md#ontology-generation-and-ontology-constrained-extraction).
 - **Update and provenance of LLM-written edges.** Documented mechanisms, not measured quality: Graphiti's validity windows and episode lineage (§4 above); per-concept provenance in the [OKF analysis](../knowledge-management/open-knowledge-format-analysis.md); per-snippet lineage in the [Genie analysis](../agents/databricks-genie-analysis.md). I found no head-to-head study of how often such LLM-written edges are wrong or stale (searched only the sources above, 2026-11-19).
-- **Book pointer.** *Agentic GraphRAG* (Anthony Alcaraz and Sam Julien, O'Reilly) is listed in O'Reilly's catalog at `https://www.oreilly.com/library/view/agentic-graphrag/9798341623163/`. The catalog page returned HTTP 403 to every fetch on 2026-11-27, so no publication date, page count or contents were verified; title and authors come from the owner's source list, and the book is recorded as a reading pointer only, with no claim about its content.
 
 ### Agent-native graph & hybrid RAG platforms
 
