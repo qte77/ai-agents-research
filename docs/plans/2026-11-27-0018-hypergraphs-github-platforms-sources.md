@@ -296,6 +296,34 @@ Gaps and where they went (owner decision 2026-11-27, "do C"): (1) matrix lacks s
 the owner to pick: per-harness sandboxing depth (3), hooks, skills and subagents in the harnesses' own docs (4),
 auth-table and community coverage (5) → row N87.
 
+### N86 audit: diverge and converge
+
+Where the KB describes (M) or itself does (D) a broad exploratory phase followed by a narrow one, found
+2026-11-27 by `git grep -i` over `docs/` for converg, diverg, fan-out, fan-in, best-of, MCTS, tree search,
+brainstorm, Propose-Probe-Compose, plan mode, self-consistency and majority vote. About 45 of 100 "converg"
+hits use the word in another sense (convergence of practice, git "diverged") and are left out. No hits for
+beam search, tree of thought, breadth-first or depth-first. Phases named = the doc labels both halves.
+
+| Place | M or D | Phases named |
+|---|---|---|
+| `cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md` Explore-Plan-Act; Fork-Join | M | yes |
+| `cc-native/agents-skills/CC-dynamic-workflows-analysis.md` `/deep-research` fan-out, cross-check, vote | M | yes |
+| `cc-native/agents-skills/CC-output-verification-analysis.md` adversarial verify, per-claim voting | M | partly |
+| `non-cc/knowledge-management/research-agents-landscape.md` fan-out, cross-check, synthesis | M | yes |
+| `non-cc/frameworks/workflow-frameworks-landscape.md` parallelization, orchestrator-workers | M | yes |
+| `cc-community/CC-community-skills-landscape.md` Superpowers stages; `idea-refine` (the only use of "divergent/convergent" for this pattern); fan-out research skill | M | partly to yes |
+| `cc-community/CC-office-worker-workflows.md` Vibe Kanban attempts (best-of-N); claude-session-driver fan-out | M | yes; no |
+| `cc-community/CC-community-plugins-landscape.md` `/seo` audit fan-out | M | no |
+| `cc-native/sandboxing/CC-sandbox-platforms-landscape.md` sandboxes for agent fan-out | M | no |
+| `cc-native/configuration/CC-changelog-feature-scan.md` `/batch` fan-out | M | no |
+| `non-cc/reference/weco-aide-recursive-self-improvement-analysis.md` Propose-Probe-Compose; HarnessFlow MCTS | M | yes |
+| `non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` self-consistency (sample-N, majority vote) | M | partly |
+| `non-cc/infrastructure/kv-cache-serving-landscape.md` prefix cache for branching (tree search) | M | no |
+| `cc-native/agents-skills/CC-plans-as-skill-rule-templates.md`; `non-cc/coding-agents/goal-loops-landscape.md` plan mode | M | partly; no |
+| `.claude/skills/adding-research-source/SKILL.md` enrich a topic: gap survey, lanes, falsification passes | D | yes |
+
+The section's table in the disciplines landscape keeps the clearest cases.
+
 ### Second batch (owner 2026-11-27)
 
 - **N77, definitions.** Knowledge graph: replace the inference-only definition with a first-party
@@ -342,9 +370,6 @@ auth-table and community coverage (5) → row N87.
   followed by a narrow vertical one (the audit result goes in this plan), then one short section
   with first-party sources (for example the Design Council's Double Diamond) and links to the
   places found.
-- **N88, prompt-to-app builders** (owner 2026-11-27, chose "add the four plus well-known peers"). One section in
-  `coding-agents-comparison-landscape.md`: hosted builders that generate, run and deploy a web app from chat,
-  each cell from vendor pages; HeyBoss as a note if it fails the well-known filter.
 
 ## Remaining work
 
@@ -361,17 +386,16 @@ auth-table and community coverage (5) → row N87.
 | ~~N75~~ | ~~Capability map: new mechanic rows in the Cross-Harness Matrix ([§ Lane tasks](#n75-capability-map))~~ | agent | shipped (seven Cross-Harness Matrix rows: OpenCode subagents, Gemini built-in agents, A2A, resume flags) |
 | ~~N76~~ | ~~Coverage-depth audit of the top coding harnesses against Claude Code ([§ Lane tasks](#n76-coverage-depth-audit))~~ | agent, then owner | shipped (audit table in § N76; gaps 1, 2 and 5 went to N78 to N80, the rest to owner row N87) |
 | N87 | Owner pick from the N76 audit: per-harness sandboxing, hooks, skills and subagents in the harnesses' own docs, auth-table and community coverage ([§ N76](#n76-coverage-depth-audit)) | owner | Owner names which become rows; default: none until N78 to N80 have shipped |
-| N77 | Definitions: knowledge graph, hypergraph and hyperedge, HybridRAG vs hybrid search, plus glossary rows ([§ Second batch](#second-batch-owner-2026-11-27)) | agent | Each term has a first-party definition source; glossary rows added; two fact-check passes |
+| ~~N77~~ | ~~Definitions: knowledge graph, hypergraph and hyperedge, HybridRAG vs hybrid search, plus glossary rows ([§ Second batch](#second-batch-owner-2026-11-27))~~ | agent | shipped (Hogan et al. KG definition, HyperNetX hypergraph quote, HybridRAG row, glossary rows) |
 | N78 | Capability table: Copilot CLI, VS Code Copilot Chat, Cursor, Cline, Aider, Amp and Windsurf added to the Cross-Harness Matrix | agent | All 13 mechanics filled or marked not documented, dated; two passes |
 | ~~N79~~ | ~~Session save and resume for the same seven harnesses; re-check the unverified rows~~ | agent | shipped (checkpoint and resume rows for seven harnesses; Codex, Gemini CLI and OpenCode re-checked) |
 | N80 | Configuration and policy by harness | agent | Table merged; two passes |
-| N81 | Forge capability map: GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket, Azure DevOps | agent | Table merged; two passes |
-| N82 | Distributed systems concepts landscape (fallacies, borders, contracts, communication, papers, timeline, layers, topologies, patterns, agent lens) | agent | New doc merged with hub and index rows; two passes |
-| N83 | Test- and eval-driven development landscape (TDD, BDD, property-based testing, EDD, tripwires) | agent | New doc merged; m3d leads verified or dropped; two passes |
-| N84 | Privacy law touchpoints: GDPR (EU), UK GDPR, CCPA/CPRA, Canada (PIPEDA, Quebec Law 25) | agent | New doc merged with touchpoint table and links; two passes |
-| N85 | Self-evolving and meta-learning: survey the three docs, add what is missing | agent | Gap survey in the PR body; additions merged; two passes |
-| N86 | Diverge and converge: audit and one section | agent | Audit in this plan; section merged; two passes |
-| N88 | Prompt-to-app builders (owner 2026-11-27): Lovable, Bolt.new (StackBlitz WebContainers), HeyBoss, plus well-known peers v0 and Replit | agent | Section in the coding-agents comparison landscape merged; two passes |
+| ~~N81~~ | ~~Forge capability map: GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket, Azure DevOps~~ | agent | shipped (§ Capability map across forges, 16 capabilities × 6 forges) |
+| ~~N82~~ | ~~Distributed systems concepts landscape (fallacies, borders, contracts, communication, papers, timeline, layers, topologies, patterns, agent lens)~~ | agent | shipped (distributed systems concepts landscape) |
+| ~~N83~~ | ~~Test- and eval-driven development landscape (TDD, BDD, property-based testing, EDD, tripwires)~~ | agent | shipped (test- and eval-driven development landscape) |
+| ~~N84~~ | ~~Privacy law touchpoints: GDPR (EU), UK GDPR, CCPA/CPRA, Canada (PIPEDA, Quebec Law 25)~~ | agent | shipped (privacy law touchpoints: GDPR, UK GDPR, CCPA/CPRA, PIPEDA; Quebec unverified) |
+| ~~N85~~ | ~~Self-evolving and meta-learning: survey the three docs, add what is missing~~ | agent | shipped (§ Meta-levels in the Weco doc, 12 landmarks; gap survey in the PR body) |
+| ~~N86~~ | ~~Diverge and converge: audit and one section~~ | agent | shipped (§ Diverge and converge; audit in § N86 audit) |
 | N9 | Assess YouTube videos (ai-that-works playlist, Cole Medin channel) as research leads (owner 2026-11-22; #1009) | owner | **ai-that-works part done 2026-11-22** (owner narrowed it to the companion repo's transcripts): all 86 episode dirs triaged from the repo (github.com/ai-that-works/ai-that-works, no licence, so read and cited only), 47 with transcripts; 3 strong, 18 possible and 38 dropped leads, list and reasons in the session triage notes. Shipped, each re-checked at first-party sources with two fact-check passes: #1031 GEPA, #1032 SlopCodeBench, #1033 HumanLayer status, #1034 lethal trifecta. **Concept pass** (owner 2026-11-22: concepts, how-tos and best practices count, not only tools): about 225 ideas triaged, 24 kept, each cited as a single-source practitioner claim with outside corroboration where it exists: #1039 harness patterns, #1040 eval practices, #1041 memory, skills, observability and event-log projections; five LLM-application patterns held for lack of a fitting doc. **Open, owner-gated:** Cole Medin's channel, once the owner picks a transcript route (from this Codespace, yt-dlp and headless browsers hit YouTube's sign-in bot check) |
 | N38 | paperverse: make the weekly real-feed sync mergeable, add `triage/kb-papers` as a source, then one catch-up sync (D2) | agent in a paperverse session; owner if the fix needs a setting or an App | The sync PR gets every required check and merges without help; paperverse `main` holds all weekly files and `arxiv-kb.jsonl`; deployed page shows them |
 | N56 | Compare `scripts/cc_cache_usage.py` with Claude Code `/usage` "Prompt cache (main)" and with a cachemiss run on one session (residual of N55) | owner | The owner pasted the `/usage` section on 2026-11-25 (46 main-thread requests, 99% of input from cache, no misses); still waits on approval to run cachemiss (external code); the three sets of numbers agree or the differences are explained in `CC-prompt-caching-behavior.md`; offer the prediction column to cachemiss only if they agree |

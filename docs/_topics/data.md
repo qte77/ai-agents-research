@@ -41,6 +41,7 @@ Ontology generation and the agent-native ontology tools are indexed in [knowledg
 | Doc / section | What it covers | Bucket |
 |---|---|---|
 | [agentic-enterprise-os-landscape.md § Enterprise data APIs for agents](../non-cc/frameworks/agentic-enterprise-os-landscape.md#enterprise-data-apis-for-agents) | Auth, plan, unattended access, terms and MCP servers for 16 enterprise data vendors | non-cc |
+| [privacy-law-touchpoints-landscape.md § KB touchpoints](../sdlc-lcm/privacy-law-touchpoints-landscape.md#kb-touchpoints) | Where privacy-law duties reach agent data: memory stores, transcripts, telemetry, cross-border transfer, enterprise data APIs | sdlc-lcm |
 
 ## Graphs and vectors
 

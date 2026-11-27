@@ -27,7 +27,7 @@ the product's own docs, repository or licence file, except where a row says othe
 ## 1. Code forges
 
 "Agent surface" means what a coding agent can drive: the documented API and any official Model Context Protocol (MCP)
-server. "Not read" means we did not find or fetch a page that settles it, not that the feature is absent.
+server. "Not read" means we did not find or fetch a page that settles it, not that the feature is absent. Feature-by-feature comparison of the main forges: [Capability map](#capability-map-across-forges).
 
 | Forge | Hosting | Licence | Built-in CI | Agent surface | Migration from GitHub |
 |---|---|---|---|---|---|
@@ -50,6 +50,36 @@ original content written with or facilitating generative AI for new projects, ef
 ([SourceHut blog][sh-llm]). For agent-heavy teams this is a selection criterion in its own right:
 GitLab, Gitea, Bitbucket and Azure DevOps do not carry such a clause in the pages we read, but we did not search their
 terms of service.
+
+## Capability map across forges
+
+One row per capability, one column per forge, so a team can see where a feature exists, what plan unlocks it and where
+the docs we read say nothing. Plan tiers, prices and preview, beta or general-availability status are all
+`(read 2026-11-27)`. "Not documented on the pages read" means exactly that: we read the pages linked in the row, found no statement, and infer nothing. It is not a claim that the feature is absent. The
+GitHub column points at [github-platform-capabilities-analysis.md](github-platform-capabilities-analysis.md) instead of
+re-sourcing facts that doc already holds; the three code-analysis rows match
+[agent-code-analysis-landscape.md § 4](agent-code-analysis-landscape.md#4-ci-forge-integration-verified-first-party)
+and stay minimal. Codeberg is a public Forgejo instance, so the Forgejo column covers both and names Codeberg only where
+its own docs differ. The Gitea column mixes the open-source docs with the vendor's Enterprise product page, and says which.
+
+| Capability | GitHub | GitLab | Codeberg / Forgejo | Gitea | Bitbucket Cloud | Azure DevOps |
+|---|---|---|---|---|---|---|
+| Built-in CI | Actions ([§][gh-actions]) | GitLab CI/CD ([docs][cm-gl-ci]) | Forgejo Actions ([docs][fj-gha]) | Gitea Actions ([docs][cm-gt-actions]) | Bitbucket Pipelines ([docs][bb-ci]) | Azure Pipelines ([docs][ado-pipe]) |
+| Vendor-hosted runners | GitHub-hosted, larger runners on Team and Enterprise Cloud ([§][gh-actions]) | Hosted runners for Linux and GPU, macOS and Windows in beta; Free, Premium, Ultimate listed ([docs][cm-gl-hosted]) | Codeberg: Woodpecker at `ci.codeberg.org` by request; Actions runners are self-hosted ([docs][cb-ci]) | Not documented on the pages read | Atlassian cloud runners; Free plan 50 build minutes ([pricing][cm-bb-price]) | Microsoft-hosted agents; one free job, 1,800 minutes a month, organization linked to an Azure subscription ([docs][cm-ado-hosted], [pricing][cm-ado-price]) |
+| Self-hosted runners | Free to use ([§][gh-actions]) | GitLab Runner ([docs][cm-gl-runner]) | Forgejo Runner ([docs][cm-fj-runner]) | Gitea Runner ([docs][cm-gt-runner]) | Runners, no build minutes charged ([docs][cm-bb-runners]) | Self-hosted agents; one free job, $15 per extra ([docs][cm-ado-self], [pricing][cm-ado-price]) |
+| Merge queue or merge trains | Public org repos; private needs Enterprise Cloud ([§][gh-actions]) | Merge trains, Premium and Ultimate ([docs][cm-gl-trains]) | Not documented on the pages read | Merge queues ticked in Gitea's own comparison page ([docs][cm-gt-cmp]) | Merge queues; paid Standard or Premium, needs Pipelines ([docs][cm-bb-mq]) | Not documented on the pages read |
+| Branch protection and rulesets | Protected branches; repo and org rulesets, org ones on Team or Enterprise ([§][gh-rules]) | Protected branches Free; user and group allowlists Premium ([docs][cm-gl-protected]) | Per-repo branch and tag protection ([docs][cm-fj-protect]); org level not documented | Per-repo protected branches ([docs][cm-gt-protected]); org-wide inheritance is an Enterprise feature ([page][cm-gt-ent]) | Branch restrictions per branch or pattern ([docs][cm-bb-branch]) | Branch policies per branch ([docs][cm-ado-policies]); project-wide scope not read |
+| Required status checks | Ruleset rule, strict or loose ([§][gh-rules]) | Pipelines-must-succeed on Free; external status checks Ultimate ([docs][cm-gl-merge], [docs][cm-gl-checks]) | Not documented on the pages read | Status checks section on the protected-branches page ([docs][cm-gt-protected]) | Merge checks; blocking a merge needs Premium, lower plans only warn ([docs][cm-bb-checks]) | Build validation and status-check policies ([docs][cm-ado-policies]) |
+| Code owners | `CODEOWNERS`; private repos on Pro, Team, Enterprise ([§][gh-rules]) | Code owners, Premium and Ultimate ([docs][cm-gl-owners]) | `CODEOWNERS` file requests reviews on a pull request ([docs][cm-fj-pr]) | `CODEOWNERS` file in three documented paths ([docs][cm-gt-owners]) | `.bitbucket/CODEOWNERS` adds suggested reviewers ([docs][cm-bb-owners]) | Path-based auto-included reviewers; no `CODEOWNERS` file on the pages read ([docs][cm-ado-owners]) |
+| Dev environments | Codespaces ([§][gh-dev]) | Workspaces, Premium and Ultimate ([docs][cm-gl-ws]) | Not documented on the pages read | Not documented on the pages read | Not documented on the pages read | Not documented on the pages read |
+| Secret scanning with push protection | Secret Protection, bought on Team or Enterprise ([§][gh-org]) | Secret push protection blocks a push, Free to Ultimate ([docs][cm-gl-secret]) | None native ([§ 4][aca-4]) | Not documented on the pages read | Not documented on the pages read | GitHub Secret Protection for Azure DevOps, $19 per committer a month ([docs][cm-ado-ghas], [pricing][cm-ado-price]) |
+| Code scanning and SAST | Code Security with CodeQL ([§][gh-org], [§ 4][aca-4]) | SAST; Advanced SAST Ultimate ([docs][cm-gl-sast], [§ 4][aca-4]) | None native ([§ 4][aca-4]) | Not documented on the pages read | Not documented on the pages read | Code Security for Azure DevOps, CodeQL, $30 per committer a month ([docs][cm-ado-ghas]) |
+| Dependency updates | Dependabot alerts on all plans ([§][gh-org], [§ 4][aca-4]) | Dependency scanning Ultimate ([docs][cm-gl-dep], [§ 4][aca-4]); update pull requests not documented | None native ([§ 4][aca-4]) | Dependency scanning in Enterprise ([page][cm-gt-ent]); update pull requests not documented | Not documented on the pages read | Dependency scanning alerts ([docs][cm-ado-ghas]); update pull requests not documented |
+| Package registry | GitHub Packages: container (Docker), npm, Maven, Gradle, NuGet, RubyGems ([docs][cm-gh-pkg]) | Package registry, Free and above ([docs][cm-gl-pkgreg]) | Built-in, many package types ([docs][cm-fj-pkgs]) | Built-in, many package types ([docs][cm-gt-pkgs]) | Bitbucket Packages: containers, npm, Maven; PyPI and NuGet "coming soon" ([page][cm-bb-pkgs]) | Azure Artifacts: npm, NuGet, Maven, Python, Cargo, Universal; 2 GiB free ([docs][cm-ado-art]) |
+| Enterprise SSO and SCIM | Enterprise Cloud Managed Users: SAML or OIDC, SCIM ([§][gh-org]) | SAML SSO and SCIM for GitLab.com groups, Premium and Ultimate ([docs][cm-gl-saml], [docs][cm-gl-scim]) | LDAP and an OAuth2 provider documented; SAML, SCIM not found ([docs][cm-fj-auth]) | OAuth2, OpenID Connect, LDAP in docs ([docs][cm-gt-auth]); SAML 2.0 in Enterprise ([page][cm-gt-ent]) | SAML SSO and SCIM 2.0 need Atlassian Guard Standard, Atlassian-wide ([docs][cm-bb-sso], [docs][cm-bb-scim]) | Microsoft Entra ID sign-in ([docs][cm-ado-entra]); SCIM not documented on the pages read |
+| Audit log | Streaming on Enterprise Cloud ([§][gh-org]) | Audit events Free; group and project events Premium and Ultimate ([docs][cm-gl-audit]) | Not documented on the pages read | Documented, recording off by default ([docs][cm-gt-audit]); Enterprise page also lists it | Organization audit log, access by subscription plan ([docs][cm-bb-audit]) | Public preview, 90-day retention, streaming ([docs][cm-ado-audit]) |
+| Official MCP server | GitHub MCP server, MIT ([§][gh-agent]) | GitLab MCP server, generally available ([§ 1](#1-code-forges)) | None found in the docs read ([§ 1](#1-code-forges)) | `gitea/gitea-mcp` ([§ 1](#1-code-forges)) | Rovo MCP server lists Bitbucket Cloud tools ([§ 1](#1-code-forges)) | Remote server (Entra only) and local server ([§ 1](#1-code-forges)) |
+| Vendor's own coding agent | Copilot cloud agent ([doc][gh-copilot-agent]) | Duo Agent Platform, Premium and Ultimate, generally available in 18.8 ([docs][cm-gl-duo]) | Not documented on the pages read | Not documented on the pages read | Rovo Dev through Agentic Pipelines, needs paid Rovo Dev Standard; Claude Code and Codex also supported ([docs][cm-bb-agentic]) | Boards work items hand off to Copilot coding agent; GitHub repos only, not Azure Repos ([docs][cm-ado-copilot]) |
 
 ## 2. CI/CD systems
 
@@ -127,6 +157,7 @@ or deferred (named, not yet read first-party).
 | [Spacelift docs][sl-docs] · [Atlantis][atlantis] | IaC platforms |
 | [Blacksmith docs][bs-docs] · [pricing][bs-price] · [home][bs-home] · [Depot][dp-docs] · [Depot pricing][dp-price] · [Namespace][ns-docs] · [pricing][ns-price] · [RunsOn pricing][ro-price] · [README][ro-repo] · [Ubicloud][ub-docs] · [price-performance][ub-price] · [repo][ub-repo] | Runner services, vendor claims |
 | Leads: [openalternative.co][lead-oa] · [Spacelift][lead-sp] · alternativeto.net (`https://alternativeto.net/software/github-actions/`, plain text: 403 to the link checker, read with a browser fetch 2026-11-27) | Candidate discovery only, not evidence |
+| Capability map: [GitLab docs][cm-gl-ci] · [GitHub Packages][cm-gh-pkg] · [Forgejo docs][cm-fj-protect] · [Gitea docs][cm-gt-protected] · [Gitea Enterprise][cm-gt-ent] · [Bitbucket pricing][cm-bb-price] · [Bitbucket merge queues][cm-bb-mq] · [Bitbucket Packages][cm-bb-pkgs] · [Atlassian Guard SAML][cm-bb-sso] · [Azure DevOps policies][cm-ado-policies] · [Azure DevOps pricing][cm-ado-price] · [Boards Copilot][cm-ado-copilot] | Per-capability cells (full URLs in the link definitions below) |
 | `gh api` repository, licence and release endpoints, 2026-11-27 | Stars, licences, latest releases |
 
 [gl-lic]: https://docs.gitlab.com/development/licensing/
@@ -187,3 +218,63 @@ or deferred (named, not yet read first-party).
 [gogs]: https://github.com/gogs/gogs
 [lead-oa]: https://openalternative.co/blog/top-12-alternatives-to-github
 [lead-sp]: https://spacelift.io/blog/github-actions-alternatives
+[gh-actions]: github-platform-capabilities-analysis.md#actions-and-workflows
+[gh-rules]: github-platform-capabilities-analysis.md#rules-and-enforcement
+[gh-dev]: github-platform-capabilities-analysis.md#dev-environments
+[gh-org]: github-platform-capabilities-analysis.md#org-business-and-enterprise-features
+[gh-agent]: github-platform-capabilities-analysis.md#agent-surfaces
+[gh-copilot-agent]: ../non-cc/agents/github-copilot-cloud-agent-analysis.md
+[aca-4]: agent-code-analysis-landscape.md#4-ci-forge-integration-verified-first-party
+[cm-gl-ci]: https://docs.gitlab.com/ci/
+[cm-gl-hosted]: https://docs.gitlab.com/ci/runners/hosted_runners/
+[cm-gl-runner]: https://docs.gitlab.com/runner/
+[cm-gl-trains]: https://docs.gitlab.com/ci/pipelines/merge_trains/
+[cm-gl-protected]: https://docs.gitlab.com/user/project/repository/branches/protected/
+[cm-gl-merge]: https://docs.gitlab.com/user/project/merge_requests/auto_merge/
+[cm-gl-checks]: https://docs.gitlab.com/user/project/merge_requests/status_checks/
+[cm-gl-owners]: https://docs.gitlab.com/user/project/codeowners/
+[cm-gl-ws]: https://docs.gitlab.com/user/workspace/
+[cm-gl-secret]: https://docs.gitlab.com/user/application_security/secret_detection/
+[cm-gl-sast]: https://docs.gitlab.com/user/application_security/sast/
+[cm-gl-dep]: https://docs.gitlab.com/user/application_security/dependency_scanning/
+[cm-gl-pkgreg]: https://docs.gitlab.com/user/packages/package_registry/
+[cm-gl-saml]: https://docs.gitlab.com/user/group/saml_sso/
+[cm-gl-scim]: https://docs.gitlab.com/user/group/saml_sso/scim_setup/
+[cm-gl-audit]: https://docs.gitlab.com/user/compliance/audit_events/
+[cm-gl-duo]: https://docs.gitlab.com/user/duo_agent_platform/
+[cm-fj-runner]: https://forgejo.org/docs/latest/admin/actions/
+[cm-fj-protect]: https://forgejo.org/docs/latest/user/repository/protection/
+[cm-fj-pr]: https://forgejo.org/docs/latest/user/collaboration/pull-requests-and-git-flow/
+[cm-fj-pkgs]: https://forgejo.org/docs/latest/user/packages/
+[cm-fj-auth]: https://forgejo.org/docs/latest/admin/setup/authentication/
+[cm-gt-actions]: https://docs.gitea.com/usage/actions/overview/
+[cm-gt-runner]: https://docs.gitea.com/usage/actions/runner/
+[cm-gt-protected]: https://docs.gitea.com/usage/access-control/protected-branches/
+[cm-gt-owners]: https://docs.gitea.com/usage/repository/code-owners/
+[cm-gt-pkgs]: https://docs.gitea.com/usage/packages/overview/
+[cm-gt-auth]: https://docs.gitea.com/administration/authentication/
+[cm-gt-audit]: https://docs.gitea.com/administration/audit-logging/
+[cm-gt-ent]: https://about.gitea.com/products/gitea-enterprise/
+[cm-gt-cmp]: https://docs.gitea.com/installation/comparison
+[cm-bb-price]: https://www.atlassian.com/software/bitbucket/pricing
+[cm-bb-runners]: https://support.atlassian.com/bitbucket-cloud/docs/runners/
+[cm-bb-mq]: https://support.atlassian.com/bitbucket-cloud/docs/manage-pull-requests-with-merge-queues/
+[cm-bb-branch]: https://support.atlassian.com/bitbucket-cloud/docs/use-branch-permissions/
+[cm-bb-checks]: https://support.atlassian.com/bitbucket-cloud/docs/suggest-or-require-checks-before-a-merge/
+[cm-bb-owners]: https://support.atlassian.com/bitbucket-cloud/docs/set-up-and-use-code-owners/
+[cm-bb-pkgs]: https://www.atlassian.com/software/bitbucket/features/packages
+[cm-bb-sso]: https://support.atlassian.com/security-and-access-policies/docs/configure-saml-single-sign-on-with-an-identity-provider/
+[cm-bb-scim]: https://support.atlassian.com/provisioning-users/docs/understand-user-provisioning/
+[cm-bb-audit]: https://support.atlassian.com/security-and-access-policies/docs/monitor-and-audit-activity-in-your-organization/
+[cm-bb-agentic]: https://support.atlassian.com/bitbucket-cloud/docs/agentic-pipelines/
+[cm-ado-hosted]: https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
+[cm-ado-self]: https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops
+[cm-ado-price]: https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/
+[cm-ado-policies]: https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops
+[cm-ado-owners]: https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies-overview?view=azure-devops
+[cm-ado-ghas]: https://learn.microsoft.com/en-us/azure/devops/repos/security/configure-github-advanced-security-features?view=azure-devops
+[cm-ado-art]: https://learn.microsoft.com/en-us/azure/devops/artifacts/start-using-azure-artifacts?view=azure-devops
+[cm-ado-entra]: https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/connect-organization-to-azure-ad?view=azure-devops
+[cm-ado-audit]: https://learn.microsoft.com/en-us/azure/devops/organizations/audit/azure-devops-auditing?view=azure-devops
+[cm-ado-copilot]: https://learn.microsoft.com/en-us/azure/devops/boards/github/work-item-integration-github-copilot?view=azure-devops
+[cm-gh-pkg]: https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages

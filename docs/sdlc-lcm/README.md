@@ -35,11 +35,14 @@ Lifecycle management specs for the qte77 coding agent ecosystem.
 | [mas-design-principles.md](mas-design-principles.md) | MAS design principles from 12-Factor Agents, Anthropic harnesses, PydanticAI |
 | [mas-benchmarking-best-practices.md](mas-benchmarking-best-practices.md) | Production best practices for MAS development and benchmarking |
 | [mas-security-framework.md](mas-security-framework.md) | Seven-layer threat model for multi-agent systems, inspired by CSA MAESTRO |
+| [distributed-systems-concepts-landscape.md](distributed-systems-concepts-landscape.md) | Distributed systems as a concept space for agents: fallacies, system borders, contracts, communication, timeline of key papers, layers, topologies, patterns |
 | [ai-security-governance-analysis.md](ai-security-governance-analysis.md) | NIST AI RMF, EU AI Act, OWASP LLM Top 10, ISO 42001 frameworks |
+| [privacy-law-touchpoints-landscape.md](privacy-law-touchpoints-landscape.md) | Privacy law for agent systems: GDPR (EU), UK GDPR, CCPA/CPRA, PIPEDA (Quebec unverified), with KB touchpoints; not legal advice |
 | [agentic-ai-vulnerability-landscape.md](agentic-ai-vulnerability-landscape.md) | Operational vuln layer: AIVSS scoring, MITRE ATLAS + AI Incident Sharing, vendor discovery (MDASH/Vuln.AI), Berkeley tracker; prompt-injection taxonomy; guardrail layers comparison |
 | [agent-identity-auth-landscape.md](agent-identity-auth-landscape.md) | Agent identity/auth/personhood: SPIFFE, Entra Agent ID, MCP-OAuth, Okta XAA, AP2 Mandates, World ID, Cloudflare Web Bot Auth |
 | [agent-evaluation-metrics-landscape.md](agent-evaluation-metrics-landscape.md) | Agent evaluation metrics survey (task completion, reasoning, safety; judge calibration, trace evals, eval statistics) |
 | [evaluation-data-resources-landscape.md](evaluation-data-resources-landscape.md) | Eval frameworks, agentic benchmarks, datasets (companion to the metrics survey) |
+| [test-eval-driven-development-landscape.md](test-eval-driven-development-landscape.md) | Test- and eval-driven development: TDD, BDD, property-based testing, EDD and tripwire checks, and how coding agents use them |
 | [agent-silent-failure-taxonomy-analysis.md](agent-silent-failure-taxonomy-analysis.md) | Longitudinal taxonomy of silent failures in a production LLM agent runtime (arXiv:2606.14589) |
 | [sovereign-execution-brokers-analysis.md](sovereign-execution-brokers-analysis.md) | Sovereign Execution Brokers: brokered/controlled agent execution (arXiv:2606.20520) |
 | [ledger-state-tool-calling-analysis.md](ledger-state-tool-calling-analysis.md) | LedgerAgent: ledger-state tool-calling for auditable agent actions (arXiv:2606.20529) |
