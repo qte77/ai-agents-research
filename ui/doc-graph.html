@@ -90,7 +90,7 @@
       <p id="stats"></p>
       <details class="panel">
         <summary>Colour by</summary>
-        <select id="colour-by" aria-label="Colour by"><option value="topic">topic hub</option><option value="folder">folder</option></select>
+        <select id="colour-by" aria-label="Colour by"><option value="topic">topic hub</option><option value="folder">folder</option><option value="age">age</option></select>
         <p class="legend" id="legend"></p>
       </details>
       <details class="panel">
@@ -100,6 +100,7 @@
       <details class="panel">
         <summary id="tl-title">Updated</summary>
         <div class="facet">
+          <select id="tl-date" aria-label="Timeline date"><option value="updated">Updated</option><option value="created">Added</option></select>
           <select id="tl-window" aria-label="Timeline span"><option value="90">last 90 days</option><option value="all">full history</option></select>
           <div id="timeline" role="group" aria-labelledby="tl-title"></div>
           <p id="tl-readout"><span id="tl-text">Click a bar, then another bar for a range.</span>
@@ -174,7 +175,22 @@
           topicColour[id] = "hsl(" + Math.round(h % 360) + ", 55%, " + (dark ? 62 : 42) + "%)";
         });
         var mode = "folder"; // switched to "topic" once the filters exist (end of render)
+        // The date the timeline and the age colour use: "updated" or "created" (shown as Added).
+        var dateKey = "updated", newest = "", oldest = "";
+        function mix(a, b, t) { // two #rrggbb tokens, t in [0, 1]
+          var out = "#";
+          for (var i = 1; i < 7; i += 2) {
+            var x = parseInt(a.substr(i, 2), 16), y = parseInt(b.substr(i, 2), 16);
+            out += ("0" + Math.round(x + (y - x) * t).toString(16)).slice(-2);
+          }
+          return out;
+        }
         function docColour(n) {
+          if (mode === "age") { // oldest --border to newest --primary, linear in time
+            if (!n[dateKey]) { return token("--text-muted"); }
+            var lo = Date.parse(oldest), hi = Date.parse(newest);
+            return mix(token("--border"), token("--primary"), hi > lo ? (Date.parse(n[dateKey]) - lo) / (hi - lo) : 1);
+          }
           if (mode === "topic") {
             var first = n.hubs.filter(function (h) { return checked[h]; })[0]; // first CHECKED hub
             return first ? topicColour[first] : token("--text-muted");
@@ -183,6 +199,8 @@
         }
         var dim = token("--border");
         var base = {};
+        var links = {}; // links per node; a doc's size follows it (vis-network `value` + `scaling`)
+        data.edges.forEach(function (e) { links[e[0]] = (links[e[0]] || 0) + 1; links[e[1]] = (links[e[1]] || 0) + 1; });
         var nodes = new vis.DataSet(data.nodes.map(function (n) {
           var hub = isHub(n);
           if (n.id === HUB_INDEX) {
@@ -194,9 +212,10 @@
                      size: 18, borderWidth: 3, label: "Hub index", x: 0, y: 0, fixed: true };
           }
           base[n.id] = hub ? (mode === "topic" ? topicColour[n.id] : token("--text")) : docColour(n);
-          return { id: n.id, title: n.title + "\n" + n.id, color: base[n.id],
-                   shape: hub ? "diamond" : "dot", size: hub ? 14 : 8,
-                   label: hub ? hubLabel(n) : "" };
+          var node = { id: n.id, title: n.title + "\n" + n.id, color: base[n.id],
+                       shape: hub ? "diamond" : "dot", label: hub ? hubLabel(n) : "" };
+          if (hub) { node.size = 14; } else { node.value = links[n.id] || 0; }
+          return node;
         }));
         // Layout springs run only from a doc to its primary hub (its first checked hub, as in the colour
         // mode); every other link, including the hub index's, is drawn but exerts no force, so each hub
@@ -223,7 +242,10 @@
           var items = mode === "topic"
             ? hubIds.filter(function (id) { return checked[id]; }).map(function (id) { return [hubLabel(data.nodes.filter(function (n) { return n.id === id; })[0]), topicColour[id]]; })
               .concat([["no hub", token("--text-muted")]])
-            : FOLDERS.map(function (f) { return [f[0], colour[f[0]]]; });
+            : mode === "age"
+              ? (newest ? [["oldest " + oldest, token("--border")], ["newest " + newest, token("--primary")]] : [])
+                .concat([["no date", token("--text-muted")]])
+              : FOLDERS.map(function (f) { return [f[0], colour[f[0]]]; });
           items.forEach(function (it) {
             var s = el("span"), dot = el("i");
             dot.style.background = it[1];
@@ -282,7 +304,7 @@
             return !on.length || f[2](n).some(function (v) { return picked[f[0]][v]; });
           });
         }
-        function rangeOk(n) { return !range || (!!n.updated && n.updated >= range.from && n.updated <= range.to); }
+        function rangeOk(n) { return !range || (!!n[dateKey] && n[dateKey] >= range.from && n[dateKey] <= range.to); }
         function visible(n) {
           if (isHub(n)) { return checked[n.id]; }
           if (n.bucket === "_topics") { return true; }
@@ -443,12 +465,10 @@
           document.getElementById("facets").appendChild(wrap);
         });
 
-        // Timeline: docs per `updated` date, as bars over the last 90 days (one bar per day) or the
+        // Timeline: docs per date (`dateKey`), as bars over the last 90 days (one bar per day) or the
         // full history (one bar per 7 or 30 days, so the bar count stays small). Both end at the
-        // newest `updated` date in the data (a fixed window would go empty on a stale deploy).
+        // newest date in the data (a fixed window would go empty on a stale deploy).
         var DAY = 86400000;
-        var newest = docs.reduce(function (m, n) { return n.updated && n.updated > m ? n.updated : m; }, "");
-        var oldest = docs.reduce(function (m, n) { return n.updated && (!m || n.updated < m) ? n.updated : m; }, "");
         var tl = document.getElementById("timeline");
         var readout = document.getElementById("tl-text");
         var clear = document.getElementById("tl-clear");
@@ -468,7 +488,7 @@
         function refreshTimeline() {
           var peak = 1, counts = bars.map(function (d) {
             return docs.filter(function (n) {
-              return n.updated && n.updated >= d.from && n.updated <= d.to && hubOk(n) && chipOk(n);
+              return n[dateKey] && n[dateKey] >= d.from && n[dateKey] <= d.to && hubOk(n) && chipOk(n);
             }).length;
           });
           counts.forEach(function (c) { peak = Math.max(peak, c); });
@@ -477,7 +497,7 @@
             d.b.disabled = !c;
             d.b.style.height = Math.max(c / peak * 100, 4) + "%";
             d.b.title = span + ": " + c;
-            d.b.setAttribute("aria-label", span + ": " + c + " docs updated");
+            d.b.setAttribute("aria-label", span + ": " + c + " docs " + (dateKey === "created" ? "added" : "updated"));
           });
         }
         function buildTimeline(win) {
@@ -503,11 +523,23 @@
             })({ from: iso(end - (i * step + step - 1) * DAY), to: iso(end - i * step * DAY) });
           }
         }
-        if (newest) { buildTimeline("90"); }
-        else { // no dates: say so and drop the span picker (the title is the panel's summary, so the select is untouched)
-          document.getElementById("tl-title").textContent = "Updated (no dates in data)";
-          document.getElementById("tl-window").hidden = true;
+        // Switch the date (Updated or Added): new span, new bars, and the age colours follow.
+        function useDate(key) {
+          dateKey = key;
+          newest = docs.reduce(function (m, n) { return n[key] && n[key] > m ? n[key] : m; }, "");
+          oldest = docs.reduce(function (m, n) { return n[key] && (!m || n[key] < m) ? n[key] : m; }, "");
+          var name = key === "created" ? "Added" : "Updated";
+          // No dates: say so and drop the span picker (the title is the panel's summary).
+          document.getElementById("tl-title").textContent = newest ? name : name + " (no dates in data)";
+          document.getElementById("tl-window").hidden = !newest;
+          buildTimeline(document.getElementById("tl-window").value);
         }
+        useDate("updated");
+        document.getElementById("tl-date").addEventListener("change", function (ev) {
+          useDate(ev.target.value);
+          paintRange();
+          if (mode === "age") { recolour(); }
+        });
         document.getElementById("tl-window").addEventListener("change", function (ev) {
           buildTimeline(ev.target.value); refreshTimeline(); paintRange();
         });
@@ -534,7 +566,12 @@
                    chosen: { edge: function (v, id, selected) {
                      if (selected) { v.opacity = 1; v.color = edgeHighlight; }
                    } } },
-          nodes: { font: { color: token("--text"), face: "Inter, system-ui, sans-serif", size: 11 } },
+          nodes: { font: { color: token("--text"), face: "Inter, system-ui, sans-serif", size: 11 },
+                   // Reason: link counts are skewed (median 7, max 129 on 2026-11-27); a square root
+                   // keeps typical docs apart instead of leaving all but a few at the minimum size.
+                   scaling: { min: 5, max: 22, customScalingFunction: function (lo, hi, total, v) {
+                     return hi === lo ? 0.5 : Math.sqrt((v - lo) / (hi - lo));
+                   } } },
           interaction: { hover: true, tooltipDelay: 120 }
         });
 
