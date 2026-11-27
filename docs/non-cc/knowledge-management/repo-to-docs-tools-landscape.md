@@ -161,7 +161,7 @@ links that land on another doc in the set become edges.
 | Google Drive | [`changes.getStartPageToken` then `changes.list`][s-g-changes]; `files.list` for the first pass | [Docs API][s-g-docs] `TextStyle.link` carries `url`, `bookmark` or `heading` targets; [export][s-g-export] to `text/markdown` or `text/html` | [Service account with domain-wide delegation][s-g-sa]; reading all files needs a [restricted scope][s-g-scopes] (`drive.readonly`) and its OAuth verification | The Drive API has no link endpoint (none found); in a Google Doc, a [`richLink`][s-g-docs] element points to a Drive file |
 | Box | [Events][s-box-events] (`changes`, `sync` streams), resumed from a saved [`stream_position`][s-box-pos]; [folder items][s-box-items] (marker paging) | None found; extract from content | [Client Credentials Grant or JWT][s-box-auth] for server apps | |
 | Confluence Cloud | [`GET /pages`][s-cf-pages] (cursor paging); [CQL `lastmodified`][s-cf-cql] for changed pages; [descendants][s-cf-desc] for the tree | No link endpoint found in the v1 or v2 pages read; parse the body: [storage format][s-cf-storage] marks page links `ac:link` + `ri:page` (Data Center 11.0 page; Cloud equivalence unverified) | [API token + basic auth or OAuth 2.0 (3LO)][s-cf-auth]; [service-account tokens][s-cf-sa] exist and carry scopes | Data Center's [page information][s-cf-info] lists incoming links in the UI |
-| Nextcloud | WebDAV [PROPFIND][s-nc-dav] with `Depth`, `d:getetag`, `oc:fileid`; [WebDAV SEARCH][s-nc-search] can filter by modified date; no `sync-collection` REPORT documented | None; extract from content | [App passwords][s-nc-dav], which the docs suggest for scripts where 2FA is enforced | [Collectives][s-nc-coll] README documents Markdown pages; no backlink graph mentioned |
+| Nextcloud | WebDAV [PROPFIND][s-nc-dav] with `Depth`, `d:getetag`, `oc:fileid`; [WebDAV SEARCH][s-nc-search] can filter by modified date; no `sync-collection` REPORT documented | None found (WebDAV pages and the Collectives README read); extract from content | [App passwords][s-nc-dav], which the docs suggest for scripts where 2FA is enforced | [Collectives][s-nc-coll] README documents Markdown pages; no backlink graph mentioned |
 | OpenCloud | [Libre Graph spec][s-oc-spec] has `driveItem` paths but no `/delta` path (read 2026-11-26); WebDAV docs are a [stub][s-oc-docs] | None found | Not verified | [Apache-2.0][s-oc-lic]; use PROPFIND as for Nextcloud (unverified) |
 
 **Links.** Only Confluence (body markup) and Google Docs (`TextStyle.link`, `richLink`) expose links as structured
@@ -170,8 +170,8 @@ Office, image, email and text into structured summaries rendered as Markdown, DO
 does not say hyperlinks survive, so it is a text leg, not a link extractor (unverified). `.docx`
 hyperlinks live in the package's relationship parts (unverified at first party here).
 
-**Products.** Obsidian's [graph view][s-obs-graph] shows "the relationships between the notes in your vault", so a DMS
-needs a Markdown export first; its [licence][s-obs-lic] allows commercial use. Atlassian's
+**Products.** Obsidian's [graph view][s-obs-graph] shows "the relationships between the notes in your vault"; to use
+it on a DMS, the store would first need exporting to Markdown (our inference); its [licence][s-obs-lic] allows commercial use. Atlassian's
 [Teamwork Graph][s-tg] stores [relationships][s-tg-rel] between objects (a Jira work item linked to a
 Confluence page); its release status and page-to-page links are unverified. Microsoft retired [Viva Topics][s-viva] (as of 2025-02-22); the semantic-index and Graph
 insights pages returned 404 here, so no Microsoft document-link graph is confirmed (unverified).
@@ -183,8 +183,9 @@ leaving the builder untouched; `bucket_of` assumes `docs/<section>/`, so stub pa
 edge aggregation.
 
 **Recommendation.** Do not build now: this corpus is git markdown and no DMS corpus is in scope. If one
-appears, start with SharePoint or Confluence, read-only, scoped to one site or space; or sync the store
-to a Markdown vault and run the builder unchanged.
+appears, start with SharePoint (documented delta listing and app-only access), read-only and scoped to
+one site; Confluence follows once its Cloud link markup is confirmed. An untested alternative of ours:
+export the store to Markdown and run the builder unchanged.
 
 **Effort (our own judgment, not sourced).** About 3 to 5 days for the first store (listing, state, link
 extraction, adapter, tests), 2 to 3 per further store, plus admin consent and, for Google, restricted-scope
