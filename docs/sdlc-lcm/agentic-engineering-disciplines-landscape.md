@@ -2,7 +2,7 @@
 title: Agentic Engineering Disciplines & Methodologies Landscape
 purpose: Credo-framed synthesis of the "-engineering" disciplines and "-driven development" methodologies that keep an agentic coding fleet compounding, with a five-layer stack and a reference implementation.
 created: 2026-06-23
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-11-25
 status: assess
 ---
@@ -174,6 +174,45 @@ The ladders above cover how to build; one vendor guide adds how to hand an agent
 
 These map onto the Layer 4 evals (regression suite) and the human-approval gates above; the shadow period and the named owner are the parts this landscape did not state. The guide also quotes an analyst forecast about future autonomous decisions, which is omitted here as unnamed and unverified.
 
+## Diverge and converge
+
+Many agentic workflows widen first (several angles, candidates or attempts) and then narrow (verify,
+select, go deep on one). The design-process name for this is the Double Diamond: the Design Council
+describes four phases in two diamonds, Discover and Define for the problem, then Develop and Deliver
+for the solution. Develop asks for "different answers" and Deliver rejects those that do not work
+and improves the rest (page read via an archived copy, 2026-01-12; the live page returned a bot
+check to our fetcher) [Design Council][double-diamond]. The page does not use the words diverge and
+converge, so naming the broad half and the narrow half that way is our reading. The same shape in
+reinforcement learning is the exploration-exploitation trade-off ([Sutton & Barto][sutton-barto];
+the book page was read, the chapter text was not, so the link to it is unverified).
+
+How agent harnesses implement it (our synthesis, not a vendor claim):
+
+- **Fan-out, then synthesis.** Anthropic's *parallelization* (sectioning or voting) and
+  *orchestrator-workers* patterns widen; aggregation or a synthesizing lead narrows
+  ([Building Effective Agents][anthropic-bea]).
+- **Search, then select.** Run several attempts or tree branches, then keep the best: a human
+  picking among attempts, majority voting, or MCTS over a refinement tree.
+- **Read-only first, then act.** Explore and plan with edits denied, then act with a narrower, chosen plan.
+- **Budget the wide half.** Fan-out multiplies tokens, so the narrow half needs a stated stop or cap
+  (see Loop engineering in practice above).
+
+Where this knowledge base mentions or does the pattern. "Mentions" means the doc describes it;
+"does" means the doc's own method follows it. The full audit is in the lane findings, not here.
+
+| Place | Wide phase | Narrow phase | Mentions or does |
+|---|---|---|---|
+| [Explore-Plan-Act][epa] | Explore, read-only | Act with full tools | Mentions, phases named |
+| [Fork-Join Parallelism][forkjoin] | Parallel subagents in worktrees | Merge when all finish | Mentions |
+| [`/deep-research`][dr] | Search angles in parallel | Cross-check, vote per claim, drop unsupported | Mentions, phases named |
+| [Deep-research agent mapping][ra] | Fan-out in each agent | Cross-check, cited synthesis | Mentions |
+| [Anthropic's five patterns][bea5] | Parallelization, orchestrator-workers | Voting, evaluator-optimizer loop | Mentions |
+| [Superpowers stages][sp] | Brainstorming | Plan, execute, review | Mentions |
+| [Addy Osmani agent-skills][osm] | `idea-refine`: "divergent/convergent thinking" | Spec and plan phases | Mentions, terms named |
+| [Vibe Kanban attempts][vk] | Several runs per task | Manual best-of-N pick | Mentions |
+| [Harness search results][hsr] | Propose-Probe-Compose; MCTS refinement tree | Composed or best-scoring harness | Mentions, not run by us |
+| [Enrich a topic][enrich] | Gap survey, up to three lanes | Falsification passes, then integrate | Does |
+
 ## Cross-References
 
 - [CC-dynamic-workflows-analysis.md][workflows] — execution + observability + verify surfaces (Layers 3–4)
@@ -187,6 +226,7 @@ These map onto the Layer 4 evals (regression suite) and the human-approval gates
 
 | Source | Content |
 |---|---|
+| [Design Council — The Double Diamond][double-diamond] · [Sutton & Barto][sutton-barto] | Four-phase, two-diamond process; RL textbook page (chapter text not read) |
 | [HarnessFlow (arXiv 2611.06254)][harnessflow] · [Meta-Harness repo][meta-harness] | Tree search over whole agent harnesses; its baseline |
 | [Shittu Olumide, four-ring diagram][rings-img] · [KDnuggets roundup][kdn-roundup] | Prompt, context, harness and loop engineering as nested rings with dates; article page not readable (HTTP 403), read 2026-11-25 |
 | [Avi Chawla, Daily Dose of Data Science][chawla-rings] · [Simpliaxis][simpliaxis-rings] | Practitioner posts that disagree on the outermost layer (loop vs harness), read 2026-11-25 |
@@ -271,6 +311,18 @@ These map onto the Layer 4 evals (regression suite) and the human-approval gates
 [bmad]: https://github.com/bmad-code-org/BMAD-METHOD
 [kiro]: https://kiro.dev/docs/specs/
 [oach]: https://qte77.github.io/open-agentic-coding-harness/
+[double-diamond]: https://www.designcouncil.org.uk/our-resources/the-double-diamond/
+[sutton-barto]: http://incompleteideas.net/book/the-book-2nd.html
+[epa]: ../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#6-explore-plan-act-loop
+[forkjoin]: ../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#8-fork-join-parallelism
+[dr]: ../cc-native/agents-skills/CC-dynamic-workflows-analysis.md#bundled-workflow-deep-research
+[ra]: ../non-cc/knowledge-management/research-agents-landscape.md#mapping-to-the-cc-deep-research-harness
+[bea5]: ../non-cc/frameworks/workflow-frameworks-landscape.md#workflows-vs-agents-anthropics-5-patterns
+[sp]: ../cc-community/CC-community-skills-landscape.md#foundational-workflow-stages
+[osm]: ../cc-community/CC-community-skills-landscape.md#sdlc-phase-mapping
+[vk]: ../cc-community/CC-office-worker-workflows.md#vibe-kanban-sunsetting--apache-20-288k-stars-as-of-2026-11-26
+[hsr]: ../non-cc/reference/weco-aide-recursive-self-improvement-analysis.md#harness-search-results
+[enrich]: ../../.claude/skills/adding-research-source/SKILL.md#mode-enrich-a-topic
 [workflows]: ../cc-native/agents-skills/CC-dynamic-workflows-analysis.md
 [harness-patterns]: ../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md
 [frameworks]: ../non-cc/frameworks/agent-frameworks-infrastructure-landscape.md
