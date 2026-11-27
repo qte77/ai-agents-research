@@ -7,6 +7,7 @@ platform, its alternatives, and how coding agents plug into them. Pointers only;
 | Doc / section | What it covers | Bucket |
 |---|---|---|
 | [github-platform-capabilities-analysis.md](../sdlc-lcm/github-platform-capabilities-analysis.md) | GitHub's own platform by plan tier: Actions and runners, Codespaces and dev containers, rulesets and branch protection, org and enterprise features, agent surfaces | sdlc-lcm |
+| [code-forge-ci-alternatives-landscape.md](../sdlc-lcm/code-forge-ci-alternatives-landscape.md) | Alternatives: code forges (GitLab, Bitbucket, Azure DevOps, Gitea, Forgejo, SourceHut, Gerrit and more), CI/CD systems, faster GitHub Actions runner services; Codeberg and SourceHut rules on agent-written code | sdlc-lcm |
 | [agent-code-analysis-landscape.md § 4](../sdlc-lcm/agent-code-analysis-landscape.md#4-ci-forge-integration-verified-first-party) | Static and dynamic code analysis wired into CI on GitHub, GitLab and other forges | sdlc-lcm |
 | [oss-alm-landscape.md](../sdlc-lcm/oss-alm-landscape.md) | Open-source ALM tools, GitLab CE among them, as a possible later phase | sdlc-lcm |
 | [CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md) | Claude Code in GitHub Actions: the action, the GitHub App, setup, limits and cost | cc-native |
