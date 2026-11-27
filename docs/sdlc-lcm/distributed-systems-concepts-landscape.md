@@ -32,14 +32,13 @@ failure modes apply to it unchanged:
 
 ## Fallacies of Distributed Computing
 
-The list is eight false assumptions that programmers new to distributed applications make. The
-original statements are in Arnon Rotem-Gal-Oz's "Fallacies of Distributed Computing Explained" PDF, which
-the Wikipedia page cites ([rgo-pdf][rgo-pdf]); **that PDF timed out when fetched on 2026-11-27 and was
-not read**, so the wording below comes from the secondary [Wikipedia page][wiki-fallacies] (read
-2026-11-27), which lists them as "The network is reliable; Latency is zero; Bandwidth is infinite; The
-network is secure; Topology doesn't change; There is one administrator; Transport cost is zero; The
-network is homogeneous". Wikipedia describes the list as "a set of assertions made by L. Peter Deutsch
-and others at Sun Microsystems".
+The list is eight false assumptions that people building their first distributed application make.
+[Peter Deutsch's own page][deutsch] (read 2026-11-27) states them: "The network is reliable; Latency is
+zero; Bandwidth is infinite; The network is secure; Topology doesn't change; There is one administrator;
+Transport cost is zero; The network is homogeneous", and says all "prove to be false in the long run". It
+points to Arnon Rotem-Gal-Oz's article for details ([rgo-pdf][rgo-pdf]; **that PDF timed out when fetched
+on 2026-11-27 and was not read**). The secondary [Wikipedia page][wiki-fallacies] (read 2026-11-27)
+describes the list as "a set of assertions made by L. Peter Deutsch and others at Sun Microsystems".
 
 | # | Fallacy | Agent-system example (our synthesis) |
 |---|---|---|
@@ -79,7 +78,7 @@ come from the papers' standard citations, not from re-reading the PDFs.
 | 1998 | Paxos: consensus by a replicated log of decrees (paper written earlier, published 1998) | Lamport | ["The Part-Time Parliament"][paxos] |
 | 2000/02 | CAP: conjecture (2000), formal proof (2002): a service cannot have consistency, availability and partition tolerance together | Brewer; Gilbert, Lynch | ["Brewer's Conjecture and the Feasibility of Consistent, Available, Partition-Tolerant Web Services"][cap] |
 | 2007 | Dynamo: always-writable key-value store with eventual consistency and vector clocks | DeCandia et al. (Amazon) | ["Dynamo"][dynamo] |
-| 2011 | CRDTs: data types whose replicas converge without coordination | Shapiro, Preguiça, Baquero, Zawirski | ["Conflict-free Replicated Data Types"][crdt] |
+| 2011 | CRDTs: data types whose replicas converge without coordination | Shapiro, Preguiça, Baquero, Zawirski | ["A comprehensive study of Convergent and Commutative Replicated Data Types"][crdt] |
 | 2012 | PACELC: under partition choose availability or consistency; else latency or consistency | Abadi | ["Consistency Tradeoffs in Modern Distributed Database System Design"][pacelc] |
 | 2014 | Raft: consensus designed to be understandable, "equivalent to Paxos in fault-tolerance and performance" | Ongaro, Ousterhout | [Raft site][raft-site]; [paper][raft-paper] |
 
@@ -139,7 +138,7 @@ description, so the contract also includes natural-language text that no schema 
 | Coupling in time | Synchronous request/response vs asynchronous messaging | Sync is simple but ties availability together; async needs correlation ids and a place for replies. |
 | Delivery semantics | At most once; at least once; exactly once | Kafka defines them as "Messages may be lost but are never redelivered", "Messages are never lost but may be redelivered", and "Each message is processed once and only once" ([Kafka design][kafka]). |
 | Exactly-once caution | Read the fine print | Kafka warns that many "exactly-once" claims "are misleading" once producers or consumers can fail ([Kafka design][kafka]). |
-| Idempotency | Same request, same effect | AWS: "APIs with side effects aren't safe to retry unless they provide idempotency" ([Builders' Library][aws-retries]). Kafka's idempotent producer, since 0.11.0.0, stops resends from creating duplicates. |
+| Idempotency | Same request, same effect | AWS: "APIs with side effects aren't safe to retry unless they provide idempotency" ([AWS Builder Center][aws-retries]). Kafka's idempotent producer, since 0.11.0.0, stops resends from creating duplicates. |
 | Timeouts | Bound every wait | Without one, a caller can "stall or infinitely wait" (Wikipedia on fallacy effects, secondary). |
 | Backpressure | Slow producers when consumers lag | Backoff and load shedding are the client-side forms ([patterns](#patterns)). |
 
@@ -166,7 +165,7 @@ verified by the agent or harness (read back the state), however reliable the tra
 
 | Topology | Distributed-systems form | Multi-agent form | KB doc |
 |---|---|---|---|
-| Client-server | One server, many clients | One tool server per agent; harness calls tools | [MCP section above](#system-contracts) |
+| Client-server | One server, many clients | One tool server per agent; harness calls tools | [System contracts above](#system-contracts) |
 | Hub-and-spoke / broker | Central broker routes messages | Orchestrator with workers | [orchestrators](../non-cc/orchestrators/orchestrators-landscape.md) |
 | Peer-to-peer | Equal nodes, no coordinator | A2A between independent agents | [mas-design-principles](mas-design-principles.md) |
 | Mesh | Many-to-many links | Agent swarms with shared state; hardest to reason about | [workflow frameworks](../non-cc/frameworks/workflow-frameworks-landscape.md) |
@@ -175,7 +174,7 @@ verified by the agent or harness (read back the state), however reliable the tra
 
 | Pattern | Problem | Agent-system analogue (our synthesis) | Source |
 |---|---|---|---|
-| Retry with exponential backoff and jitter | Immediate retries pile load on a failing service | Rate-limited model API calls; most AWS SDKs implement it (read 2026-11-27) | [AWS Architecture Blog][aws-backoff], [Builders' Library][aws-retries] |
+| Retry with exponential backoff and jitter | Immediate retries pile load on a failing service | Rate-limited model API calls; most AWS SDKs implement it (read 2026-11-27) | [AWS Architecture Blog][aws-backoff], [AWS Builder Center][aws-retries] |
 | Circuit breaker | Calls to a failing dependency waste time and load | Stop calling a dead MCP server after repeated errors; Fowler: once failures reach a threshold, "the circuit breaker trips" | [Fowler][cb], [Azure][azure-cb] |
 | Bulkhead | One failure drains shared resources | Separate concurrency pools per tool server or per tenant | [Azure bulkhead][bulkhead] |
 | Saga | No atomic transaction across services | Multi-step agent task with compensating actions: "a reliably coordinated sequence of local transactions" | [Garcia-Molina and Salem][sagas-paper], [microservices.io][saga] |
@@ -212,6 +211,7 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 | [Kafka design][kafka], [RFC 1122][rfc1122] | Delivery semantics; layering |
 
 [wiki-fallacies]: https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing
+[deutsch]: https://nighthacks.com/jag/res/Fallacies.html
 [apnic]: https://blog.apnic.net/2025/12/08/21-years-and-counting-of-eight-fallacies-of-distributed-computing/
 [algomaster]: https://algomaster.io/learn/computer-networks/fallacies-of-distributed-computing
 [rgo-pdf]: https://www.rgoarchitects.com/Files/fallacies.pdf
@@ -243,5 +243,5 @@ Entries removed under the [pruning rule](../../CONTRIBUTING.md#pruning-entries-w
 [pact]: https://docs.pact.io/
 [mcp-spec]: https://modelcontextprotocol.io/specification/2026-07-28
 [a2a-spec]: https://a2a-protocol.org/latest/specification/
-[kafka]: https://kafka.apache.org/documentation/design/
+[kafka]: https://kafka.apache.org/documentation/#semantics
 [rfc1122]: https://www.rfc-editor.org/rfc/rfc1122
