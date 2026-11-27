@@ -182,7 +182,7 @@ describes four phases in two diamonds, Discover and Define for the problem, then
 for the solution. Develop asks for "different answers" and Deliver rejects those that do not work
 and improves the rest (page read via an archived copy of 2026-01-12, `web.archive.org/web/20260112201722/https://www.designcouncil.org.uk/our-resources/the-double-diamond/`; the live page returned a bot
 check to our fetcher) [Design Council][double-diamond]. The archived page does not use the words diverge and
-converge, so naming the broad half and the narrow half that way is our reading. The same shape in
+converge, so naming the broad half and the narrow half that way is our reading. A related idea in
 reinforcement learning is the exploration-exploitation trade-off ([Sutton & Barto][sutton-barto];
 the book page was read, the chapter text was not, so the link to it is unverified).
 
@@ -193,8 +193,8 @@ How agent harnesses implement it (our synthesis, not a vendor claim):
   ([Building Effective Agents][anthropic-bea]).
 - **Search, then select.** Run several attempts or tree branches, then keep the best: a human
   picking among attempts, majority voting, or MCTS over a refinement tree.
-- **Read-only first, then act.** Explore and plan with edits denied, then act with a narrower, chosen plan.
-- **Budget the wide half.** Fan-out multiplies tokens, so the narrow half needs a stated stop or cap
+- **Read-only first, then act.** Explore and plan with edits denied, then act on the chosen plan.
+- **Budget the wide half.** Fan-out adds token cost ([Codex subagents](../non-cc/coding-agents/codex-cli-analysis.md)), so the narrow half needs a stated stop or cap
   (see Loop engineering in practice above).
 
 Where this knowledge base mentions or does the pattern. "Mentions" means the doc describes it;
@@ -208,8 +208,8 @@ Where this knowledge base mentions or does the pattern. "Mentions" means the doc
 | [`/deep-research`][dr] | Search angles in parallel | Cross-check, vote per claim, drop unsupported | Mentions, phases named |
 | [Deep-research agent mapping][ra] | Fan-out in each agent | Cross-check, cited synthesis | Mentions |
 | [Anthropic's five patterns][bea5] | Parallelization (sectioning or voting), orchestrator-workers | Aggregating the parallel outputs; the lead's synthesis | Mentions |
-| [Superpowers stages][sp] | Brainstorming | Plan, execute, review | Mentions |
-| [Addy Osmani agent-skills][osm] | `idea-refine`: "divergent/convergent thinking" | Spec and plan phases | Mentions, terms named |
+| [Superpowers stages][sp] | Brainstorming (our reading: the stage is described as design refinement) | Plan, execute, review | Mentions |
+| [Addy Osmani agent-skills][osm] | `idea-refine`: "divergent/convergent thinking" | Its convergent half, then the plan phase (our reading) | Mentions, terms named |
 | [Vibe Kanban attempts][vk] | Several runs per task | Manual best-of-N pick | Mentions |
 | [Harness search results][hsr] | Propose-Probe-Compose; MCTS refinement tree | One kept or composed harness (the selection rule differs per method) | Mentions, not run by us |
 | [Enrich a topic][enrich] | Gap survey, up to three lanes | Falsification passes, then integrate | Does |
