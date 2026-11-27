@@ -296,6 +296,34 @@ Gaps and where they went (owner decision 2026-11-27, "do C"): (1) matrix lacks s
 the owner to pick: per-harness sandboxing depth (3), hooks, skills and subagents in the harnesses' own docs (4),
 auth-table and community coverage (5) → row N87.
 
+### N86 audit: diverge and converge
+
+Where the KB describes (M) or itself does (D) a broad exploratory phase followed by a narrow one, found
+2026-11-27 by `git grep -i` over `docs/` for converg, diverg, fan-out, fan-in, best-of, MCTS, tree search,
+brainstorm, Propose-Probe-Compose, plan mode, self-consistency and majority vote. About 45 of 100 "converg"
+hits use the word in another sense (convergence of practice, git "diverged") and are left out. No hits for
+beam search, tree of thought, breadth-first or depth-first. Phases named = the doc labels both halves.
+
+| Place | M or D | Phases named |
+|---|---|---|
+| `cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md` Explore-Plan-Act; Fork-Join | M | yes |
+| `cc-native/agents-skills/CC-dynamic-workflows-analysis.md` `/deep-research` fan-out, cross-check, vote | M | yes |
+| `cc-native/agents-skills/CC-output-verification-analysis.md` adversarial verify, per-claim voting | M | partly |
+| `non-cc/knowledge-management/research-agents-landscape.md` fan-out, cross-check, synthesis | M | yes |
+| `non-cc/frameworks/workflow-frameworks-landscape.md` parallelization, orchestrator-workers | M | yes |
+| `cc-community/CC-community-skills-landscape.md` Superpowers stages; `idea-refine` (the only use of "divergent/convergent" for this pattern); fan-out research skill | M | partly to yes |
+| `cc-community/CC-office-worker-workflows.md` Vibe Kanban attempts (best-of-N); claude-session-driver fan-out | M | yes; no |
+| `cc-community/CC-community-plugins-landscape.md` `/seo` audit fan-out | M | no |
+| `cc-native/sandboxing/CC-sandbox-platforms-landscape.md` sandboxes for agent fan-out | M | no |
+| `cc-native/configuration/CC-changelog-feature-scan.md` `/batch` fan-out | M | no |
+| `non-cc/reference/weco-aide-recursive-self-improvement-analysis.md` Propose-Probe-Compose; HarnessFlow MCTS | M | yes |
+| `non-cc/frameworks/agent-frameworks-infrastructure-landscape.md` self-consistency (sample-N, majority vote) | M | partly |
+| `non-cc/infrastructure/kv-cache-serving-landscape.md` prefix cache for branching (tree search) | M | no |
+| `cc-native/agents-skills/CC-plans-as-skill-rule-templates.md`; `non-cc/coding-agents/goal-loops-landscape.md` plan mode | M | partly; no |
+| `.claude/skills/adding-research-source/SKILL.md` enrich a topic: gap survey, lanes, falsification passes | D | yes |
+
+The section's table in the disciplines landscape keeps the clearest cases.
+
 ### Second batch (owner 2026-11-27)
 
 - **N77, definitions.** Knowledge graph: replace the inference-only definition with a first-party
