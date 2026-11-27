@@ -62,6 +62,15 @@ definition first; if one exists, link it, and if not, add the term here with its
 | RLVR | Reinforcement Learning with Verifiable Rewards | [agent-evaluation-metrics-landscape.md § Verifiable rewards (RLVR)][rlvr] |
 | RSI | recursive self-improvement | [weco-aide-recursive-self-improvement-analysis.md][rsi] |
 
+## Privacy law
+
+| Term | Expansion | Owner |
+|---|---|---|
+| GDPR | General Data Protection Regulation | [privacy-law-touchpoints-landscape.md § Requirements at a glance][privacy] |
+| CCPA | California Consumer Privacy Act | [same section][privacy] |
+| CPRA | California Privacy Rights Act | [same section][privacy] |
+| PIPEDA | Personal Information Protection and Electronic Documents Act | [same section][privacy] |
+
 ## Sources
 
 This page cites only corpus docs; each owner section carries its own sources.
@@ -78,6 +87,7 @@ This page cites only corpus docs; each owner section carries its own sources.
 [hybrid]: non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#hybrid-search--query-transforms
 [rerankers]: non-cc/frameworks/agent-frameworks-infrastructure-landscape.md#rerankers
 [structure]: non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#choosing-a-structure
+[privacy]: sdlc-lcm/privacy-law-touchpoints-landscape.md#requirements-at-a-glance
 [formal]: non-cc/infrastructure/semantic-layers-data-catalog-landscape.md#formal-ontologies--semantic-web
 [pg-rdf]: non-cc/infrastructure/graph-databases-query-languages-landscape.md#property-graph-vs-rdf
 [query]: non-cc/infrastructure/graph-databases-query-languages-landscape.md#query-languages
