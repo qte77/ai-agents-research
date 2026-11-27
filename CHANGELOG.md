@@ -11,6 +11,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.28.0] - 2026-11-27
+
+### Added
+
+- Feasibility study (plan 0017 N66): running the doc-link graph over a document management system (SharePoint and OneDrive, Google Drive, Box, Confluence, Nextcloud, OpenCloud), with listing, link-extraction and auth per store, existing products, an adapter sketch for `doc_graph.py`, a recommendation and an effort estimate.
+
+- `agentic-enterprise-os-landscape.md` § Enterprise data APIs for agents: auth model, licence or plan, unattended access, terms on automation or AI, and official MCP server for Microsoft Graph and Copilot APIs, Google Workspace, Salesforce, Databricks, AWS, Google Cloud, Atlassian, Slack, ServiceNow, Snowflake, Box, Notion, SAP, Workday, OpenCloud and Nextcloud, each cell from the vendor's own pages or marked unverified (plan 0017 N65).
+
+### Changed
+
+- Doc graph: physics slows down and stops instead of halting abruptly, docs cluster more closely around their topic hub, and the Colour by, Filters and a new separate Updated panel start closed (plan 0016 N58).
+
+- Plan 0017 opens for doc-graph focus, kit colours and encoding, harness subscriptions, Microsoft 365 Copilot APIs, an enterprise data-API table and a document-management graph study; plan 0016 is superseded and its open rows move to it.
+
+- Doc-graph and index page colours now come from an unedited copy of the EyeRest brand kit (`ui/eyerest.css`, kit 0.5.0), pinned by a sha256 test; the graph folder colours use the kit's data tokens and `style.css` no longer defines colours (plan 0017 N59).
+
+- Doc graph: clicking or tapping a doc keeps it and its linked docs coloured and dims the rest (clicking empty space clears it, and search dimming still applies); edges use one colour and fade when zoomed out, and a selected doc's own edges stay highlighted (plan 0017 N60).
+
+- Harness subscriptions (plan 0017 N64a): Copilot CLI Microsoft Entra sign-in, OpenCode on Copilot plans, Claude and Codex agents on a Copilot plan, unofficial Copilot-subscription proxies, and two Claude Code patterns (Remote Control is subscription-only; a gateway credential replaces the subscription login).
+
+- Microsoft 365 Copilot analysis: Graph Copilot APIs subsection (endpoint table, Chat API limits, absences, four ways to use the licence from outside, API terms 3(b)(12), (13) and (18)) and a corrected Chat API permissions label (plan 0017 N64b).
+
+- Idle compaction in `CC-prompt-caching-behavior.md`: add changelog entries 2.1.326 and 2.1.332, and rewrite the note on why idle compaction did not fire before the long gaps, with a stopped-host explanation marked as inference (plan 0017 N64c).
+
+- Refreshed 18 `docs/sdlc-lcm/` docs against first-party sources: corrected stale versions, counts and attributions (for example the Artificial Analysis index v2.1, Claude Code AGENTS.md fallback, MAESTRO attribution) and marked unsourced claims unverified (plan 0016 N61, R1).
+
+- Refreshed 17 `docs/cc-community/` analyses against first-party sources: current star counts, versions and licences, corrected stale claims (Ultraplan removal, multi-account `CLAUDE_CONFIG_DIR` docs, Gmail connector send, vision token formula), and marked unsourced figures as unverified (plan 0016 N61, lane R2).
+
+- Refresh 23 `docs/cc-native` docs (top level, agents-skills, ci-remote, context-memory, model-internals) against first-party sources: renamed or moved docs URLs, removed Ultraplan, updated hook, permission, network, caching and skill-budget facts, and re-dated star and release counts.
+
+- Refreshed 19 `docs/cc-native/configuration/` and `docs/cc-native/sandboxing/` docs against first-party sources: corrected stale versions, availability, prices, repository figures and issue states, and marked unsourced claims unverified (plan 0016 N61, R4).
+
+- Refreshed 20 `docs/cc-native/plugins-ecosystem/` and `docs/cc-native/sessions/` docs against first-party sources: corrected stale counts, versions, plan lists and renamed commands (for example `claude purge`, `claude --cloud`, Firecrawl pricing, fast-mode models) and marked unsourced claims unverified (plan 0016 N61, R5).
+
+- Refreshed 35 `docs/non-cc/` docs (agents, orchestrators, protocols, reference) against first-party sources: updated versions, star counts, prices, repo moves and model rosters, and marked claims no longer found at source unverified (plan 0016 N61, R6).
+
+- Refreshed 37 `docs/non-cc/coding-agents/` and `docs/non-cc/frameworks/` docs against first-party sources: updated versions, star counts, pricing and plan tiers, model lists and vendor renames (for example Amp modes, Codebuff shutdown notice, Cursor and Trae pricing), and marked unsourced claims unverified (plan 0016 N61, R7).
+
+- Refreshed 35 `docs/non-cc/` docs (context-memory, infrastructure, knowledge-management) against first-party sources: updated versions, star counts, prices and repo moves (for example OpenViking's architecture and retrieval, the Opennote sunset, FastContext's withdrawn paper, KV-cache pricing) and marked unsourced claims unverified (plan 0016 N61, R8).
+
+- Refresh follow-ups (plan 0016 N61): MAESTRO attributed to the Cloud Security Alliance, MITRE ATLAS counts updated, the German wiki incident claims sourced to the paper abstract, canonical URLs for Gemini, Air, Codex and Claude Code docs, SAP MCP status, the hooks event list pointer, the spec-driven framework snapshots, and two `purpose` lines aligned with their bodies.
+
+- Doc graph: doc size follows its link count (square-root scale); "Colour by" gains "age" (oldest `--border` to newest `--primary`, undated docs muted; in this mode search and focus dim by fading, since `--border` is the oldest colour); the timeline panel switches between Updated and Added, and the age colours follow the chosen date (plan 0017 N63).
+
 ## [0.27.0] - 2026-11-25
 
 ### Added
