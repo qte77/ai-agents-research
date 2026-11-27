@@ -46,4 +46,5 @@ status: reference
 | [2026-11-15-0014-kb-strengthening.md](2026-11-15-0014-kb-strengthening.md) | superseded | #848 |
 | [2026-11-20-0015-kb-structure-graphify-removal.md](2026-11-20-0015-kb-structure-graphify-removal.md) | superseded | #935 |
 | [2026-11-24-0016-graph-ui-sources-paperverse-feed.md](2026-11-24-0016-graph-ui-sources-paperverse-feed.md) | superseded | #1071 |
-| [2026-11-26-0017-graph-encoding-enterprise-apis.md](2026-11-26-0017-graph-encoding-enterprise-apis.md) | approved | #1071 |
+| [2026-11-26-0017-graph-encoding-enterprise-apis.md](2026-11-26-0017-graph-encoding-enterprise-apis.md) | superseded | #1071 |
+| [2026-11-27-0018-hypergraphs-github-platforms-sources.md](2026-11-27-0018-hypergraphs-github-platforms-sources.md) | approved | #1071 |
