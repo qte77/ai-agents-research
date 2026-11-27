@@ -132,8 +132,9 @@ scale locks into Anysphere's cloud infrastructure.
   option when developers want IDE ergonomics plus agentic automation in a single
   tool.
 - **Assess CLI (`-p` flag) for lightweight CI use** — non-interactive mode works
-  for scripted tasks but lacks the sandboxing and permissions model of
-  terminal-native peers such as [GitHub Copilot CLI][copilot-cli-analysis].
+  for scripted tasks; the CLI now documents a sandbox mode and permissions (see the
+  [Cross-Harness Matrix, second table](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15),
+  read 2026-11-27), compare [GitHub Copilot CLI][copilot-cli-analysis].
 - **Confirm model version gates** before relying on specific model behavior —
   model IDs advertised on the homepage are subject to change without a versioned
   API contract (access date: 2026-06-16).
