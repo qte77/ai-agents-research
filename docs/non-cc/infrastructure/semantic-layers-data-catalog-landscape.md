@@ -3,7 +3,7 @@ title: Semantic Layers & Data Catalogs — Agentic Data Access Landscape
 source: https://docs.cube.dev/docs/integrations/mcp-server
 purpose: "The semantic-layer and data-catalog substrate that grounds agentic data access: what each tool exposes to an agent and how it relates to agent-native context layers. Verified 2026-06-22."
 created: 2026-06-22
-updated: 2026-11-26
+updated: 2026-11-27
 validated_links_on: 2026-11-19
 status: assess
 ---
@@ -30,7 +30,7 @@ The agent-relevant question for each tool is: **what does it expose to an agent*
 | Taxonomy | Terms in a broader/narrower hierarchy (inference) | Medium; the tree needs review as the domain moves | "Everything under X" queries, navigation, scoped retrieval |
 | Thesaurus ([SKOS][skos]) | A taxonomy plus synonyms and associative links (inference). SKOS is "a common data model for sharing and linking knowledge organization systems via the Web" and defines `broader`, `narrower` and `related` links (W3C Recommendation, 2009-08-18) | Medium | Query expansion over synonyms; publishing a vocabulary others can link to |
 | Ontology ([OWL 2][owl]) | Classes, properties and individuals with "formally defined meaning" (Recommendation, second edition, 2012-12-11), so a reasoner can infer facts | High; needs a modeller and review | Correctness must be provable, see [Enhance](#formal-ontologies--semantic-web) below |
-| Knowledge graph | Entities as nodes and typed relations as edges (inference); RDF and property-graph forms: [Property Graph vs RDF](graph-databases-query-languages-landscape.md#property-graph-vs-rdf) | Medium to high; the cost is keeping facts current and sourced | Answers need multi-hop relations across documents or systems |
+| Knowledge graph | Entities as nodes and typed relations as edges; Hogan et al. define it as "a graph of data intended to accumulate and convey knowledge of the real world, whose nodes represent entities of interest and whose edges represent relations between these entities" ([Hogan et al. 2021][kg-survey], documented, read 2026-11-27); RDF and property-graph forms: [Property Graph vs RDF](graph-databases-query-languages-landscape.md#property-graph-vs-rdf) | Medium to high; the cost is keeping facts current and sourced | Answers need multi-hop relations across documents or systems |
 
 The rungs stack: a thesaurus is a taxonomy plus synonyms, an ontology adds logic on top, and a knowledge graph can be built from any of them (inference). Skipping rungs is the usual failure (inference): an OWL ontology over terms that are not yet consistent has nothing to stand on. For most agent-facing Markdown corpora the sensible stopping point is a controlled vocabulary or a SKOS-style hierarchy plus typed links (inference; see "Exclude" under [Formal Ontologies & Semantic Web](#formal-ontologies--semantic-web)).
 
@@ -212,6 +212,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [Apache Atlas][atlas] | Hadoop-era governance framework |
 | [Google Dataplex][dataplex] | GCP governance/metadata + Gemini |
 | [RDF][rdf] · [RDFS][rdfs] · [OWL][owl] · [OWL 2 Primer][owl-primer] · [SKOS][skos] · [SPARQL][sparql] · [SHACL][shacl] · [JSON-LD 1.1][json-ld] · [YAML-LD (draft)][yaml-ld] | W3C Semantic Web standards — formal ontologies, query, validation; open- vs closed-world; connect/exclude/enhance vs LLM KGs |
+| [Hogan et al., Knowledge Graphs (ACM Computing Surveys 2021)][kg-survey] | Knowledge-graph definition, quoted from the arXiv HTML text, read 2026-11-27 |
 | [WHATWG HTML link types][html-rel] | `rel` link types (typed hyperlinks), read 2026-11-21 |
 | [Neo4j graph concepts][neo4j-pg] | Property-graph model (vendor docs), read 2026-11-21 |
 | [schema.org getting started][schema-org-gs] · [Google structured data intro][google-sd] | schema.org syntaxes (Microdata, RDFa, JSON-LD); Google's JSON-LD recommendation and `<script>` embedding (read 2026-11-09) |
@@ -251,6 +252,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [owl]: https://www.w3.org/TR/owl2-overview/
 [owl-primer]: https://www.w3.org/TR/owl2-primer/
 [skos]: https://www.w3.org/TR/skos-reference/
+[kg-survey]: https://arxiv.org/abs/2003.02320
 [html-rel]: https://html.spec.whatwg.org/multipage/links.html#linkTypes
 [neo4j-pg]: https://neo4j.com/docs/getting-started/appendix/graphdb-concepts/
 [sparql]: https://www.w3.org/TR/sparql11-overview/
