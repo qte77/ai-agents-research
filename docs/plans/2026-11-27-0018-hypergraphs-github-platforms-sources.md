@@ -225,7 +225,7 @@ decision models doc instead of repeating it.
 | Row | Item | Gate | Done when |
 |---|---|---|---|
 | N67 | Hypergraphs and multi-layer relationships in `graph-databases-query-languages-landscape.md`, plus `caviri/rete` ([§ Lane tasks](#n67-hypergraphs-and-layered-relationships)) | agent | Section merged with two fact-check passes; the "not checked" note replaced; hub row in `knowledge-graphs.md` |
-| N68 | GitHub platform capabilities analysis and the `dev-platforms.md` hub ([§ Lane tasks](#n68-github-platform-capabilities)) | agent | Doc merged with two fact-check passes, every plan tier and preview status dated; hub listed in `docs/_topics/README.md` |
+| ~~N68~~ | ~~GitHub platform capabilities analysis and the `dev-platforms.md` hub ([§ Lane tasks](#n68-github-platform-capabilities))~~ | agent | Shipped 2026-11-27 (this PR): github-platform-capabilities-analysis.md (Actions, dev environments, rules and enforcement, org and enterprise features, agent surfaces; every tier and status dated), new dev-platforms.md hub, sdlc-lcm index row; two fact-check passes |
 | N69 | Code forge, CI/CD and GitHub Actions runner alternatives landscape ([§ Lane tasks](#n69-forge-and-ci-alternatives)) | agent | Doc merged with two fact-check passes; row in `dev-platforms.md` |
 | N70 | Hindsight, Docker Agent, *Agentic GraphRAG* and the Pydantic AI coding-agent sources (Coder, Pax, Fowler) in the frameworks doc ([§ Lane tasks](#n70-frameworks-doc-sources)) | agent | Merged with two fact-check passes; hub rows added |
 | N71 | Rust migration and Scientist, GUARD and self-improvement memory, the over-edit study, and codekb ([§ Lane tasks](#n71-sdlc-sources)) | agent | Merged with two fact-check passes; hub rows added |
