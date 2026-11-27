@@ -21,7 +21,7 @@ migration path that doc lacks. How GitHub, GitLab and Codeberg/Forgejo compare a
 
 **Leads, not evidence.** Four pages pointed us at candidates: [Blacksmith's home page][bs-home],
 [openalternative.co's list][lead-oa], [Spacelift's Actions-alternatives article][lead-sp] and
-[alternativeto.net's Actions page][lead-at]. They are aggregators or vendors with a stake. Every fact below comes from
+alternativeto.net's GitHub Actions page (plain-text URL in Sources: it returns 403 to the link checker). They are aggregators or vendors with a stake. Every fact below comes from
 the product's own docs, repository or licence file, except where a row says otherwise.
 
 ## 1. Code forges
@@ -126,7 +126,7 @@ or deferred (named, not yet read first-party).
 | [CircleCI config][circle-cfg] · [CircleCI MCP][circle-mcp] · [Buildkite steps][bk-steps] · [Buildkite MCP][bk-mcp] · [Jenkinsfile][jk-file] · [Jenkins MCP plugin][jk-mcp] · [Woodpecker syntax][wp-syntax] · [Dagger][dagger] | CI systems |
 | [Spacelift docs][sl-docs] · [Atlantis][atlantis] | IaC platforms |
 | [Blacksmith docs][bs-docs] · [pricing][bs-price] · [home][bs-home] · [Depot][dp-docs] · [Depot pricing][dp-price] · [Namespace][ns-docs] · [pricing][ns-price] · [RunsOn pricing][ro-price] · [README][ro-repo] · [Ubicloud][ub-docs] · [price-performance][ub-price] · [repo][ub-repo] | Runner services, vendor claims |
-| Leads: [openalternative.co][lead-oa] · [Spacelift][lead-sp] · [alternativeto.net][lead-at] | Candidate discovery only, not evidence |
+| Leads: [openalternative.co][lead-oa] · [Spacelift][lead-sp] · alternativeto.net (`https://alternativeto.net/software/github-actions/`, plain text: 403 to the link checker, read with a browser fetch 2026-11-27) | Candidate discovery only, not evidence |
 | `gh api` repository, licence and release endpoints, 2026-11-27 | Stars, licences, latest releases |
 
 [gl-lic]: https://docs.gitlab.com/development/licensing/
@@ -187,4 +187,3 @@ or deferred (named, not yet read first-party).
 [gogs]: https://github.com/gogs/gogs
 [lead-oa]: https://openalternative.co/blog/top-12-alternatives-to-github
 [lead-sp]: https://spacelift.io/blog/github-actions-alternatives
-[lead-at]: https://alternativeto.net/software/github-actions/
