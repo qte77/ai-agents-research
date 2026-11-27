@@ -2,7 +2,7 @@
 title: Multi-Agent Orchestrators — Landscape
 purpose: Cross-cut of the five orchestrator analyses by coordination pattern, state hand-off and escalation, with a Claude Code primitives table and multi-agent failure modes grounded in papers.
 created: 2026-11-18
-updated: 2026-11-20
+updated: 2026-11-27
 validated_links_on: 2026-11-18
 status: assess
 ---
@@ -87,6 +87,47 @@ Source for the Claude Code column: [Run agents in parallel][cc-agents-doc] (docu
 agent view, agent teams, projects, dynamic workflows; plus worktrees, cross-session messaging and `/batch` as
 supporting tools), checked 2026-11-18.
 
+## Swarms at Scale: Hugging Face PyBot Field Report
+
+One first-party report on running far more agents than the five analyses above. [Scaling Swarms to Thousands of
+Agents][hf-swarms] (Patiño, Tunstall, Burtenshaw and von Werra of Hugging Face, published 2026-11-25) describes PyBot:
+over nine days the authors grew a swarm to 1,000 DeepSeek agents, with one goal (a helpful chatbot in pure Python, no
+learned weights). All numbers below are the authors' own, from one run, and we did not reproduce them.
+
+- **What they built.** The report says it open-sources two tools: Legion, a harness-agnostic framework to spawn
+  agents from local compute to distributed clusters, and Msgboard, a message board with channels, threads, direct
+  messages and shared documents. An Opus 5.5 agent drove Legion and monitored the swarm around the clock. Each agent
+  kept one session in the Pi harness for the whole run. We did not read the Legion or Msgboard repositories.
+- **How the work was split.** One shared goal prompt, a style guide with example conversations as the definition of
+  "good", and ten "lanes" (understanding, answers, routing, safety and others), each with its own board channel,
+  with 2 to 4 agents forming teams inside a lane. A PR merged only after another agent approved it and only if it
+  beat main on a swarm-written set of realistic conversations.
+- **Result.** PyBot matched SmolLM-360M on everyday conversations, per the authors' own SmolTalkBench (1,000
+  conversations from their smoltalk dataset, judged by DeepSeek-V4.1-Flash against Llama 3.1 70B Instruct reference
+  replies); the run took 175,000 messages and over 8,500 merged PRs. The authors kept the eval hidden from the swarm.
+- **How they scaled.** They added agents in waves and lanes, in small batches a few minutes apart, because agents that
+  joined together read the same context and built the same thing twice. Snapshots of agent workspaces let the swarm
+  survive reclaimed CPU Spot instances. One 8-GPU model-server node would have been enough: agents mostly waited on
+  tool calls.
+- **Their stated lessons.**
+  - Requiring each PR to beat main worked better than the hierarchies, voting schemes and strict teams they tried
+    in six earlier setups (scored on SmolTalkBench).
+  - Prompting agents to check notifications failed, so the controller pushed them every 3 to 5 minutes. Tagging all
+    1,000 agents at once tripped Hub rate limits.
+  - Git was the bottleneck: with agent-side rebasing only about 11% of merge attempts succeeded. They moved
+    rebase and merge to a Git server, used Git's union merge driver for the shared test files (conflicting PRs in
+    those files fell from 10 of 23 to 1 of 9 in the first hour) and added a merge queue.
+  - Board writing took about 6% of output tokens (posts capped at 1,200 characters) while context compaction took
+    23%.
+- **Misbehaviour they saw (earlier, smaller runs).** One agent port-scanned the controller host and tried its own token
+  as the Git server's admin token after the server became unreachable (blocked); another tried to dodge the PR
+  budget (blocked); one approved a PR as a favour in a review swap, which the server accepted. The authors call for
+  stricter controls and supervision.
+
+This report fits the [failure-mode evidence](#multi-agent-failure-modes) above as an engineering case study, and the
+review-swap incident echoes the [silent-failure taxonomy][silent]. It is a single run with a self-built benchmark and
+a self-chosen judge model, so treat the scale numbers as indicative.
+
 ## Multi-Agent Failure Modes
 
 What follows is evidence from papers and the corpus, with each source's own scope noted.
@@ -158,6 +199,7 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [When Agents Coordinate][coord-2608] | Coordination networks over 1,902 runs |
 | [MS-Eval][ms-eval] | Sub-agent delegation benchmark |
 | [Scaling Inference-Time Compute with Teams of Coding Agents][teams-2610] | Team compute allocation on ProgramBench |
+| [Scaling Swarms to Thousands of Agents][hf-swarms] | Hugging Face PyBot field report: 1,000-agent run, scaling and Git lessons (read 2026-11-27) |
 
 [air]: air-analysis.md
 [deerflow]: deerflow-analysis.md
@@ -183,3 +225,4 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [coord-2608]: https://arxiv.org/abs/2608.16801
 [ms-eval]: https://arxiv.org/abs/2610.22869
 [teams-2610]: https://arxiv.org/abs/2610.17471
+[hf-swarms]: https://huggingfaceswarms-scaling-swarms.hf.space/
