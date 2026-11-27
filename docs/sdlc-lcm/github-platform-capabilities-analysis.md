@@ -22,6 +22,7 @@ It complements, and does not repeat:
 - [CC-github-actions-analysis.md](../cc-native/ci-remote/CC-github-actions-analysis.md): Claude Code's own GitHub Action, setup and runner sizing.
 - [github-copilot-cloud-agent-analysis.md](../non-cc/agents/github-copilot-cloud-agent-analysis.md) and [github-copilot-cli-analysis.md](../non-cc/agents/github-copilot-cli-analysis.md): Copilot products.
 - [agent-code-analysis-landscape.md § 4](agent-code-analysis-landscape.md#4-ci-forge-integration-verified-first-party): code-scanning and dependency features per forge.
+- [code-forge-ci-alternatives-landscape.md](code-forge-ci-alternatives-landscape.md): the forges, CI/CD systems and runner services that compete with or sit next to GitHub.
 
 ## Plans at a glance
 

@@ -30,7 +30,10 @@ checks all of it.
 2. **Wave 2:** N70 (frameworks doc sources), N71 (SDLC sources), N72 (micro language models).
 3. **Wave 3:** N73 (agent and connector sources), N74 (where harnesses process PDFs and images), N75 (capability map).
 4. **Then:** N76 (coverage-depth audit), whose output is a list of deepen rows for the owner to pick.
-5. **Release (minor)** for the batch, only on the owner's word.
+5. **Second batch (owner 2026-11-27, all agent rows, defaults below):** N77 to N86, each after the
+   earlier PR that owns its file has merged (see [§ Source map](#source-map)). N83 waits for the
+   findings that session m3d sends on TDD and tripwire tests (peer input: leads only, verified at source).
+6. **Release (minor)** for the batch, only on the owner's word (deferred by the owner 2026-11-27).
 
 **Owner-gated, don't start:** N9, N38, N56 and N62, plus the `13-*` rows. Each row's own text
 gives its gate.
@@ -73,6 +76,7 @@ Lead defaults, applied unless the owner overrides them.
 | Already covered | `google-research/harness2`, `erkamyaman/rust-anything` and `mvanhorn/last30days-skill` are covered; the new sibling entries cross-link them, with no rewrite. |
 | Low-adoption sources | Added at the level the evidence supports (for example "a day-old experiment"), or listed in the disposition table with a reason. None is dropped silently. |
 | Tracker | #1071 stays the tracking issue. |
+| Second batch (owner, 2026-11-27) | Do A (definitions, N77), B (the queue) and C (all three coverage gaps, N78 to N80). Item 1 means the GitHub capabilities doc: list what #1123 added, and map capabilities across forges (N81). Distributed systems: one new landscape in `docs/sdlc-lcm/` (N82). Privacy law: GDPR (EU), UK GDPR, CCPA and Canada, mapped with KB touchpoints, no legal advice (N84). Rotating the exposed tokens and the release are deferred by the owner. |
 
 ## The loop
 
@@ -99,6 +103,16 @@ row owns moves to that row.
 | N74 | `docs/non-cc/coding-agents/coding-agents-comparison-landscape.md` | § Input by harness and § Input notes (what each harness accepts); `CC-web-scraping-plugins-analysis.md` § Read Tool: PDF & Image Parsing (Claude Code, poppler-utils); `CC-vlm-screen-sharing-landscape.md` § Claude Code Image Token Economics; `codex-cli-analysis.md` model list (GPT-6.2 Astra) |
 | N75 | `docs/cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md` § Cross-Harness Matrix | Its six mechanic rows (tools, sandbox, permissions, compaction, hooks, resume) checked 2026-11-15; `CC-web-auth-setup-analysis.md` § Other Coding CLIs (headless sign-in, billing); the per-harness analysis docs |
 | N76 | this plan (audit table), then rows the owner picks | `docs/non-cc/coding-agents/` (25 docs), `docs/cc-native/` (72 docs), `docs/cc-community/` (19 docs) |
+| N77 | frameworks doc § RAG patterns at a glance and the hypergraph bullet; `semantic-layers-data-catalog-landscape.md` § Choosing a Structure; `docs/glossary.md` (lead) | Glossary rows for RAG and GraphRAG; § Property Graph vs RDF |
+| N78 | `CC-agentic-harness-patterns-analysis.md` § Cross-Harness Matrix (after N75) | The N76 audit table below; each harness's analysis doc |
+| N79 | `workflow-frameworks-landscape.md` § Checkpoint and resume matrix | Codex, Gemini CLI and OpenCode rows already there |
+| N80 | `coding-agents-comparison-landscape.md`, new § Configuration and policy by harness (after N74) | `CC-managed-settings-fleet-analysis.md`, `CC-env-vars-reference.md` and the other `cc-native/configuration/` docs for Claude Code |
+| N81 | `code-forge-ci-alternatives-landscape.md`, new § Capability map (after N69) | `github-platform-capabilities-analysis.md` (GitHub column); `agent-code-analysis-landscape.md` § 4 (code-analysis rows, linked, not repeated) |
+| N82 | new `docs/sdlc-lcm/distributed-systems-concepts-landscape.md` | `mas-design-principles.md`, `mas-security-framework.md`, the protocol docs (MCP, A2A), `workflow-frameworks-landscape.md` (durable execution) |
+| N83 | new `docs/sdlc-lcm/test-eval-driven-development-landscape.md` | `agent-evaluation-metrics-landscape.md`, `evaluation-data-resources-landscape.md`, `spec-driven-frameworks-landscape.md`, `agentic-engineering-disciplines-landscape.md`, the OpenAI Agents SDK tripwire guardrails in `openai-agents-sdk-analysis.md` |
+| N84 | new `docs/sdlc-lcm/privacy-law-touchpoints-landscape.md` | `ai-security-governance-analysis.md` (EU AI Act and frameworks), `agentic-enterprise-os-landscape.md` § Enterprise data APIs for agents, memory and telemetry docs |
+| N85 | `agent-skill-evolution-research-landscape.md`, `moss-self-evolving-agent-analysis.md`, `weco-aide-recursive-self-improvement-analysis.md` (after N71) | The weco doc's harness search results table |
+| N86 | `agentic-engineering-disciplines-landscape.md`, new § Diverge and converge | The audit of where the KB already uses the idea |
 | N73 | `docs/non-cc/agents/computer-use-agents-landscape.md`, `docs/non-cc/orchestrators/orchestrators-landscape.md`, `docs/non-cc/agents/openresearch-analysis.md`, `docs/cc-native/plugins-ecosystem/CC-connectors-overview.md`, `docs/non-cc/agents/ibm-agent-stack-analysis.md` | `agentic-engineering-disciplines-landscape.md` (names IBM Bob once) |
 
 ### Source disposition (owner list, 2026-11-27)
@@ -255,20 +269,105 @@ cover (configuration, context and memory, agents and skills, plugins, sandboxing
 remote), each cell the doc or section that covers it, or a gap. Top-10 by the comparison landscape's
 rows. Done when the table is in the plan and each gap the owner picks is its own row.
 
+**Audit result (2026-11-27).** Claude Code has 5 to 19 docs per `cc-native/` area; Codex CLI and Gemini CLI
+come next through shared matrices plus one doc each; the other eight top harnesses get one analysis doc each
+plus the compaction and auth tables. Cell key: **M** = [Cross-Harness Matrix](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15)
+(CC, Codex, Gemini, OpenCode, Pi only); **CMP** = [comparison landscape § Context compaction by harness](../non-cc/coding-agents/coding-agents-comparison-landscape.md);
+**AUTH** = [CC-web-auth-setup-analysis.md § Other Coding CLIs](../cc-native/ci-remote/CC-web-auth-setup-analysis.md);
+**CKPT** = [workflow frameworks § Checkpoint and resume matrix](../non-cc/frameworks/workflow-frameworks-landscape.md);
+**own** = the harness's own analysis doc. "Gap" = no hit in the scopes searched (headings of the ten harness
+docs, keyword counts, harness-name hits across `docs/`); counts are rough, so a gap is a lead, not a proof.
+
+| Harness | configuration | context-memory | agents-skills | plugins-ecosystem | sandboxing | sessions | ci-remote | cc-community |
+|---|---|---|---|---|---|---|---|---|
+| Codex CLI | M (hooks 14, settings); own § Key features, Providers; `CC-model-provider-configuration.md` (8 mentions) | M (AGENTS.md, compaction); CMP | M (`/plan`, subagents "isolation not verified"); own 2 subagent and 1 skill mentions (thin) | thin: M (MCP via config.toml); `non-cc/protocols/openai-apps-plugins-analysis.md` covers the OpenAI plugin side | **own § Approval modes and sandboxing**; M | M (resume); CKPT ("restore unstated, unverified"); own § Interactive vs headless | AUTH; own § Interactive vs headless; `CC-github-actions-analysis.md` (OpenAI Codex Action row); `CC-remote-access-landscape.md` (8 mentions) | Dedicated: `CC-codex-plugin-cc-analysis.md`; also `CC-community-tooling-landscape.md`, `CC-memory-tooling-landscape.md`, `CC-community-skills-landscape.md` |
+| Gemini CLI | M (hooks 11); own § Architecture and model access, Release cadence | M (GEMINI.md, `/compress`); own § Context and memory; CMP | M ("`/agents` exists, isolation not verified"); gap in own doc (0 subagent or skill mentions) | thin: own (1 MCP line); M | thin: M (opt-in `-s`); own has 1 mention; `CC-sandbox-platforms-landscape.md` lists it under "Documented integrations" | M; CKPT (`~/.gemini/tmp/.../chats`, 30-day cleanup); own § Headless | AUTH; own § Headless / scripting mode | thin: `CC-community-skills-landscape.md` (5 mentions) |
+| GitHub Copilot CLI (doc at `non-cc/agents/github-copilot-cli-analysis.md`) | thin: own § Install and invoke | CMP (~80% background compaction); own § Sessions, memory, auth | own § Built-in agents, Extensibility (MCP, custom agents, instructions); not in M | own § Extensibility; own § Copilot SDK | own § Permissions, sandboxing, autonomy | own § Sessions, memory, auth; gap in CKPT | AUTH; own; `CC-github-actions-analysis.md` (Copilot Coding Agent row, line 340); `non-cc/infrastructure/cloud-agent-platforms-landscape.md`; `non-cc/sdlc-lcm/github-platform-capabilities-analysis.md` | thin: `CC-community-tooling-landscape.md`, `CC-memory-tooling-landscape.md` (3 to 4 mentions) |
+| VS Code Copilot Chat | gap (0 settings or config mentions in own doc) | CMP; own: no memory section (0 mentions) | thin: own § Agent Mode (1 skill line) | own § Interfaces (MCP, extensions) | gap (0) | thin: own (session mentions only); gap in CKPT | thin: own § Headless / CLI Surface (points to the separate Copilot CLI doc); `CC-github-actions-analysis.md` (1 mention) | gap |
+| Cursor | thin: own § Model selection; AUTH covers only the CLI | CMP ("not documented"); own § Extensibility (rules) | own § Extensibility (rules, skills, SDK with nested subagents); `CC-skills-adoption-analysis.md` (1 mention) | own § Extensibility (MCP, marketplace); `non-cc/protocols/agent-plugins-standard-analysis.md` (Cursor plugin manifest namespace); `CC-community-skills-landscape.md` (14 mentions) | thin: own (headless "lacks the sandboxing and permissions model") | own § Agent mode (checkpoints); gap in CKPT | AUTH; own § CLI (`agent`); `CC-remote-access-landscape.md` (5 mentions) | Several: `CC-code-tooling-landscape.md` (16 mentions), `CC-community-skills-landscape.md` (14), `CC-memory-tooling-landscape.md` (10) |
+| Cline | gap | CMP; own § How It Works (`.clinerules`) | thin: own § How It Works (Plan/Act, kanban board "unverified"); no subagent coverage (0) | own § How It Works (MCP) | thin: own (approval prompt per destructive action only) | gap | thin: AUTH (2 mentions); own (cron-based scheduling) | thin: `CC-code-tooling-landscape.md` (4 mentions) |
+| Aider | thin: own § Additional capabilities | CMP; own § Codebase mapping (repo map) | gap | gap (0 MCP or plugin mentions) | thin: own comparison table ("None built-in") | thin: own (`/clear`, `/reset` only); own: no cross-session memory | gap in AUTH; own § Additional capabilities | thin: `CC-code-tooling-landscape.md` (2 mentions) |
+| OpenCode | M; own § Configuration and extensibility; `CC-model-provider-configuration.md` (12 mentions) | M (AGENTS.md, auto compaction); CMP | M (`subagent` permission, `general` and `explore` agents); own § Dual-agent system; `CC-agent-teams-orchestration.md` (4 mentions) | own § MCP support; own § Configuration and extensibility | gap in own doc (0 sandbox); M (per-resource permission rules) | CKPT (DB path only, "resume unverified"); gap in own doc (1 mention) | AUTH; own § Headless / non-interactive mode; `CC-remote-access-landscape.md` (4 mentions) | Several: `CC-community-tooling-landscape.md` (10), `CC-memory-tooling-landscape.md` (11), `CC-code-tooling-landscape.md` (9) |
+| Amp | thin: own § Pricing model | CMP ("not documented" on all three columns); own has an AGENTS.md mention | thin: own § Architecture and modes (1 subagent mention) | own § Extensibility (MCP, TypeScript plugins) | gap | gap | own § CLI and headless operation; gap in AUTH | gap (`CC-1x-session-schema.md` has 8 "amp" hits but not about this harness; I did not read them) |
+| Windsurf | gap (0 settings mentions) | CMP ("not documented"); gap in own doc (0 memory mentions) | own § Agent Command Center (multiple local and cloud agents); thin on subagents | thin: own (extension mentions) | gap | thin: 2 mentions | own § Headless / CLI mode; gap in AUTH | gap (`CC-memory-tooling-landscape.md` has 3 mentions, not read) |
+
+Gaps and where they went (owner decision 2026-11-27, "do C"): (1) matrix lacks seven harnesses → N78;
+(2) sessions and resume weakest → N79; (5) configuration and policy uneven → N80. The rest stay open for
+the owner to pick: per-harness sandboxing depth (3), hooks, skills and subagents in the harnesses' own docs (4),
+auth-table and community coverage (5) → row N87.
+
+### Second batch (owner 2026-11-27)
+
+- **N77, definitions.** Knowledge graph: replace the inference-only definition with a first-party
+  one (for example Hogan et al., "Knowledge Graphs", arXiv 2003.02320). Hypergraph and hyperedge: add
+  a first-party definition source to the frameworks doc's bullet. HybridRAG (knowledge graph plus
+  vector retrieval, Sarmah et al., arXiv 2408.04948) as a row in RAG patterns at a glance, told
+  apart from hybrid search. Glossary rows (lead): hybrid search, HybridRAG, hypergraph and hyperedge,
+  n-ary relation, multilayer network.
+- **N78, capability table.** Add Copilot CLI, VS Code Copilot Chat, Cursor, Cline, Aider, Amp and
+  Windsurf to the Cross-Harness Matrix, all 13 mechanics, cells from vendor docs, dated. If the
+  table gets too wide, split it into two tables with the same rows rather than drop mechanics.
+- **N79, session save and resume.** Rows for the same seven harnesses in the checkpoint and resume
+  matrix, and re-check the "unverified" cells of the Codex, Gemini CLI and OpenCode rows.
+- **N80, configuration and policy.** One table: settings files and precedence, environment
+  variables, managed or enterprise policy, per-project overrides, for Claude Code and the top-10
+  harnesses; link the Claude Code docs instead of repeating them.
+- **N81, forge capability map.** One table, rows = capabilities (CI, hosted runners, merge queue,
+  rulesets and branch protection, required checks, code owners, dev environments, secret scanning,
+  code scanning, package registry, enterprise SSO and audit log, official MCP server, coding-agent
+  integration), columns = GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket, Azure DevOps. Each
+  cell from the vendor's docs, dated.
+- **N82, distributed systems.** Concept space with an agent lens: the fallacies of distributed
+  computing (owner sources: the Wikipedia article, the APNIC 2025 post and the AlgoMaster page are
+  leads; cite the original statements where readable), system borders (bounded contexts, trust
+  boundaries), contracts (interface and schema contracts, consumer-driven contract tests),
+  communication (sync and async, messaging, delivery semantics, idempotency, backpressure), key
+  papers and a dated timeline (for example Lamport clocks, FLP, Paxos, the end-to-end argument, CAP,
+  Raft), layers, topologies and patterns (retry with backoff, circuit breaker, saga, outbox,
+  event sourcing). Then where these show up for agents (MCP and A2A as contracts, multi-agent
+  failure modes, durable execution). Well-known items only.
+- **N83, test- and eval-driven development.** TDD, BDD (Gherkin, Cucumber), property-based testing
+  (Hypothesis), eval-driven development (arXiv 2411.13768, LangChain, Airbnb, the Medium post as a
+  practitioner write-up) and tripwire tests and evals (similar concepts: canaries, guardrail
+  tripwires, assertion monitors). Session m3d's findings are leads only.
+- **N84, privacy law.** GDPR (EUR-Lex), UK GDPR and the Data Protection Act 2018 (ICO,
+  legislation.gov.uk), CCPA as amended by CPRA (California OAG, CPPA), and Canada (PIPEDA from the
+  Office of the Privacy Commissioner; Quebec's Law 25). What each requires, from first-party text,
+  then a table of where each touches KB topics (agent memory, logs and telemetry, training-data
+  terms, cross-border transfer, automated decisions, enterprise data APIs). Not legal advice; say so.
+- **N85, self-evolving and meta-learning.** Gap survey of the three docs first; then add the
+  well-known missing lines (for example meta-learning, learned optimizers, self-referential agents,
+  automated agent design), each from its paper's abstract page.
+- **N86, diverge and converge.** Audit where the KB describes or uses a broad exploratory phase
+  followed by a narrow vertical one (the audit result goes in this plan), then one short section
+  with first-party sources (for example the Design Council's Double Diamond) and links to the
+  places found.
+
 ## Remaining work
 
 | Row | Item | Gate | Done when |
 |---|---|---|---|
 | ~~N67~~ | ~~Hypergraphs and multi-layer relationships in `graph-databases-query-languages-landscape.md`, plus `caviri/rete` ([§ Lane tasks](#n67-hypergraphs-and-layered-relationships))~~ | agent | Shipped 2026-11-27 (this PR): § Higher-order and layered relationships in the graph-databases doc (n-ary table, multilayer, time as a layer, libraries, rete), the frameworks doc's hyperedge note now points to it, knowledge-graphs hub row; two fact-check passes |
 | ~~N68~~ | ~~GitHub platform capabilities analysis and the `dev-platforms.md` hub ([§ Lane tasks](#n68-github-platform-capabilities))~~ | agent | Shipped 2026-11-27 (this PR): github-platform-capabilities-analysis.md (Actions, dev environments, rules and enforcement, org and enterprise features, agent surfaces; every tier and status dated), new dev-platforms.md hub, sdlc-lcm index row; two fact-check passes |
-| N69 | Code forge, CI/CD and GitHub Actions runner alternatives landscape ([§ Lane tasks](#n69-forge-and-ci-alternatives)) | agent | Doc merged with two fact-check passes; row in `dev-platforms.md` |
-| N70 | Hindsight, Docker Agent, *Agentic GraphRAG* and the Pydantic AI coding-agent sources (Coder, Pax, Fowler) in the frameworks doc ([§ Lane tasks](#n70-frameworks-doc-sources)) | agent | Merged with two fact-check passes; hub rows added |
-| N71 | Rust migration and Scientist, GUARD and self-improvement memory, the over-edit study, and codekb ([§ Lane tasks](#n71-sdlc-sources)) | agent | Merged with two fact-check passes; hub rows added |
-| N72 | Micro language models landscape ([§ Lane tasks](#n72-micro-language-models)) | agent | Doc merged with two fact-check passes; hub and index rows added |
-| N73 | n8n nod, Hugging Face swarms report, OpenResearch example, PandaDoc connector and IBM Bob ([§ Lane tasks](#n73-agent-and-connector-sources)) | agent | Merged with two fact-check passes; hub rows added |
-| N74 | Where Claude Code, Codex CLI, Gemini CLI and other open-source harnesses process PDFs and images (local or server, which packages), and GPT-6.2 Astra's input modalities ([§ Lane tasks](#n74-where-harnesses-process-pdfs-and-images)) | agent | Section merged with two fact-check passes; each local or server claim cites docs or source at a tag |
-| N75 | Capability map: new mechanic rows in the Cross-Harness Matrix ([§ Lane tasks](#n75-capability-map)) | agent | Rows merged with two fact-check passes |
-| N76 | Coverage-depth audit of the top coding harnesses against Claude Code ([§ Lane tasks](#n76-coverage-depth-audit)) | agent, then owner | Audit table in this plan; the owner picks which gaps become rows |
+| ~~N69~~ | ~~Code forge, CI/CD and GitHub Actions runner alternatives landscape ([§ Lane tasks](#n69-forge-and-ci-alternatives))~~ | agent | Shipped 2026-11-27 (this PR): code-forge-ci-alternatives-landscape.md (forges, CI/CD systems, GitHub Actions runner services, Codeberg and SourceHut rules on agent-written code; leads cited as leads), cross-linked with the GitHub capabilities doc, dev-platforms hub row; two fact-check passes |
+| ~~N70~~ | ~~Hindsight, Docker Agent, *Agentic GraphRAG* and the Pydantic AI coding-agent sources (Coder, Pax, Fowler) in the frameworks doc ([§ Lane tasks](#n70-frameworks-doc-sources))~~ | agent | Shipped 2026-11-27 (this PR): Hindsight (§ 4), Docker Agent (§ 3), Pydantic AI coding agents (Coder, Pax beta, Fowler-site walkthrough) and the Agentic GraphRAG book pointer in the frameworks doc; memory and harness hub rows; two fact-check passes |
+| ~~N71~~ | ~~Rust migration and Scientist, GUARD and self-improvement memory, the over-edit study, and codekb ([§ Lane tasks](#n71-sdlc-sources))~~ | agent | shipped (legacy migration: Anthropic Rust migration, GitHub Scientist; Weco GUARD and SIM; Code Necessity; codekb) |
+| ~~N72~~ | ~~Micro language models landscape ([§ Lane tasks](#n72-micro-language-models))~~ | agent | Shipped 2026-11-27 (this PR): micro-language-models-landscape.md (arXiv 2604.19642 on-device openers, SPREAD's fine-tuned Nemotron as a vendor claim, llama2.c, a bare-metal inference experiment; Trigma not included), non-cc index and harness hub rows; two fact-check passes |
+| ~~N73~~ | ~~n8n nod, Hugging Face swarms report, OpenResearch example, PandaDoc connector and IBM Bob ([§ Lane tasks](#n73-agent-and-connector-sources))~~ | agent | shipped (Nod, PyBot field report, OpenResearch shared projects, PandaDoc connector, IBM Bob) |
+| ~~N74~~ | ~~Where Claude Code, Codex CLI, Gemini CLI and other open-source harnesses process PDFs and images (local or server, which packages), and GPT-6.2 Astra's input modalities ([§ Lane tasks](#n74-where-harnesses-process-pdfs-and-images))~~ | agent | shipped (comparison landscape § Where media is processed; GPT-6.2 Astra video not supported; CC Read-tool line corrected) |
+| ~~N75~~ | ~~Capability map: new mechanic rows in the Cross-Harness Matrix ([§ Lane tasks](#n75-capability-map))~~ | agent | shipped (seven Cross-Harness Matrix rows: OpenCode subagents, Gemini built-in agents, A2A, resume flags) |
+| ~~N76~~ | ~~Coverage-depth audit of the top coding harnesses against Claude Code ([§ Lane tasks](#n76-coverage-depth-audit))~~ | agent, then owner | shipped (audit table in § N76; gaps 1, 2 and 5 went to N78 to N80, the rest to owner row N87) |
+| N87 | Owner pick from the N76 audit: per-harness sandboxing, hooks, skills and subagents in the harnesses' own docs, auth-table and community coverage ([§ N76](#n76-coverage-depth-audit)) | owner | Owner names which become rows; default: none until N78 to N80 have shipped |
+| N77 | Definitions: knowledge graph, hypergraph and hyperedge, HybridRAG vs hybrid search, plus glossary rows ([§ Second batch](#second-batch-owner-2026-11-27)) | agent | Each term has a first-party definition source; glossary rows added; two fact-check passes |
+| N78 | Capability table: Copilot CLI, VS Code Copilot Chat, Cursor, Cline, Aider, Amp and Windsurf added to the Cross-Harness Matrix | agent | All 13 mechanics filled or marked not documented, dated; two passes |
+| ~~N79~~ | ~~Session save and resume for the same seven harnesses; re-check the unverified rows~~ | agent | shipped (checkpoint and resume rows for seven harnesses; Codex, Gemini CLI and OpenCode re-checked) |
+| N80 | Configuration and policy by harness | agent | Table merged; two passes |
+| N81 | Forge capability map: GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket, Azure DevOps | agent | Table merged; two passes |
+| N82 | Distributed systems concepts landscape (fallacies, borders, contracts, communication, papers, timeline, layers, topologies, patterns, agent lens) | agent | New doc merged with hub and index rows; two passes |
+| N83 | Test- and eval-driven development landscape (TDD, BDD, property-based testing, EDD, tripwires) | agent | New doc merged; m3d leads verified or dropped; two passes |
+| N84 | Privacy law touchpoints: GDPR (EU), UK GDPR, CCPA/CPRA, Canada (PIPEDA, Quebec Law 25) | agent | New doc merged with touchpoint table and links; two passes |
+| N85 | Self-evolving and meta-learning: survey the three docs, add what is missing | agent | Gap survey in the PR body; additions merged; two passes |
+| N86 | Diverge and converge: audit and one section | agent | Audit in this plan; section merged; two passes |
 | N9 | Assess YouTube videos (ai-that-works playlist, Cole Medin channel) as research leads (owner 2026-11-22; #1009) | owner | **ai-that-works part done 2026-11-22** (owner narrowed it to the companion repo's transcripts): all 86 episode dirs triaged from the repo (github.com/ai-that-works/ai-that-works, no licence, so read and cited only), 47 with transcripts; 3 strong, 18 possible and 38 dropped leads, list and reasons in the session triage notes. Shipped, each re-checked at first-party sources with two fact-check passes: #1031 GEPA, #1032 SlopCodeBench, #1033 HumanLayer status, #1034 lethal trifecta. **Concept pass** (owner 2026-11-22: concepts, how-tos and best practices count, not only tools): about 225 ideas triaged, 24 kept, each cited as a single-source practitioner claim with outside corroboration where it exists: #1039 harness patterns, #1040 eval practices, #1041 memory, skills, observability and event-log projections; five LLM-application patterns held for lack of a fitting doc. **Open, owner-gated:** Cole Medin's channel, once the owner picks a transcript route (from this Codespace, yt-dlp and headless browsers hit YouTube's sign-in bot check) |
 | N38 | paperverse: make the weekly real-feed sync mergeable, add `triage/kb-papers` as a source, then one catch-up sync (D2) | agent in a paperverse session; owner if the fix needs a setting or an App | The sync PR gets every required check and merges without help; paperverse `main` holds all weekly files and `arxiv-kb.jsonl`; deployed page shows them |
 | N56 | Compare `scripts/cc_cache_usage.py` with Claude Code `/usage` "Prompt cache (main)" and with a cachemiss run on one session (residual of N55) | owner | The owner pasted the `/usage` section on 2026-11-25 (46 main-thread requests, 99% of input from cache, no misses); still waits on approval to run cachemiss (external code); the three sets of numbers agree or the differences are explained in `CC-prompt-caching-behavior.md`; offer the prediction column to cachemiss only if they agree |

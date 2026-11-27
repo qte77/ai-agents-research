@@ -3,7 +3,7 @@ title: Computer-Use Agents Landscape
 source: https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool
 purpose: "Landscape of agents that operate a GUI from screen observations: Claude computer use, other vendors' tools, open models, the OSWorld benchmark family, pixel vs accessibility-tree, and safety."
 created: 2026-11-19
-updated: 2026-11-24
+updated: 2026-11-27
 validated_links_on: 2026-11-19
 status: reference
 ---
@@ -95,8 +95,9 @@ status, so this table makes no claim about them.
 | [Agent S][agent-s] (Simular) | Apache-2.0 framework; README lists Agent S4 (2026-10-20) and claims 21.3% on OSWorld V2 with an open model, quoting 20.6% for Claude Opus 4.8 and 13.0% for GPT-5.5; the README also claims 72.60% on OSWorld for Agent S3 (2025-12-15) as the first above human performance, and a 2026-08-28 entry saying Simular's production agent Sai tops OSWorld 2.0 with an unexplained "(73%)". The leaderboard file lists Sai with Opus 5 at 41.67% binary and 79.38% partial (no official flag), so the 73% matches neither; we could not reconcile it | vendor claim |
 | [UI-TARS-desktop][ui-tars] (ByteDance) | Apache-2.0 desktop app on UI-TARS models; archived (read-only), about 39,600 stars, last push 2026-10-09 (GitHub API, 2026-11-22), so treat as frozen | documented |
 | [Qwen-UI-Agent report][qwenui] | Abstract reports 79.5% on OSWorld-Verified and 40.0% partial-progress on OSWorld-v2 (submitted 2026-07-30) | authors' claim |
+| [Nod][nod] (n8n) | Scope note: a personal agent that also drives websites in a browser container, listed here because it acts on apps and sites for the user; whether it works from screenshots was not verified. Apache-2.0 personal agent that runs on your machine with a model you choose; it works Gmail, Calendar, Slack, Notion and websites through a server-side sandbox container and a Chromium browser container, and asks before it acts. README status badge: research preview; created 2026-09-25, about 4,200 stars, latest release `nod-v0.10.0` (GitHub API, read 2026-11-27). The README builds on the Pi agent runtime, agent-browser, Composio and MCP, and runs a trust check on each app action and each website step that can change something. It reports 98% of 226 errands finished (3 runs each) and 0 unsafe actions in those 678 runs, in simulated accounts and sites with one model in October 2026. Whether its browser agent works from screenshots or page structure we did not verify | documented (project); vendor claim (benchmarks) |
 
-We read none of the weights or code; scores are as reported. "First above human" and "SOTA" are
+We read none of the weights or code; scores are as reported (the Nod figures are n8n's own, from its README). "First above human" and "SOTA" are
 the vendors' words and are not independently verified.
 
 ## The OSWorld family
@@ -228,6 +229,7 @@ strongly as for screen agents.
 | [Agent S][agent-s] | README claims, dated |
 | [UI-TARS-desktop][ui-tars] | Archived repo |
 | [Qwen-UI-Agent][qwenui] | OSWorld-Verified claim |
+| [n8n Nod][nod] | README, LICENSE and release (GitHub API, read 2026-11-27) |
 | [OSWorld-Science][osworld-science], [cua-speedrun][cua-speedrun], [Safe Autonomy][sacua], [VeriCUA][vericua] | 2026 paper leads |
 
 [claude-cu]: https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool
@@ -244,6 +246,7 @@ strongly as for screen agents.
 [agent-s]: https://github.com/simular-ai/Agent-S
 [ui-tars]: https://github.com/bytedance/UI-TARS-desktop
 [qwenui]: https://arxiv.org/abs/2607.28227
+[nod]: https://github.com/n8n-io/nod
 [osworld-science]: https://arxiv.org/abs/2609.39903
 [cua-speedrun]: https://arxiv.org/abs/2609.40284
 [sacua]: https://arxiv.org/abs/2610.18508
