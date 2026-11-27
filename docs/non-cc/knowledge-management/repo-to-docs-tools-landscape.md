@@ -148,6 +148,49 @@ Differentiation happens at the output stage:
 2. Used as `llms.txt` equivalent for external repos
 3. Cached as L1/L2 context in OpenViking-style tiered systems
 
+## Doc-link graphs over a document management system (feasibility)
+
+Feasibility only, no code (checked 2026-11-26). Could the builder `.github/scripts/lib/doc_graph.py`
+(one node per doc, one edge per markdown link) run over a document management system (DMS)? Its input is
+`build_graph({path: markdown text})`: title from frontmatter, first H1 or file stem; only relative `.md`
+links that land on another doc in the set become edges.
+
+| Store | Incremental listing | Outgoing links | Unattended auth | Notes |
+|---|---|---|---|---|
+| SharePoint / OneDrive | [driveItem delta][s-ms-delta] on the drive root: follow `@odata.nextLink`, store `@odata.deltaLink`, handle HTTP 410 resync | No link or backlink relationship on the [driveItem resource][s-ms-driveitem]; download via [content][s-ms-content], then extract | [Client credentials][s-ms-app]; application permission `Files.Read.All` (least) or `Sites.Read.All`; [`Sites.Selected`][s-ms-selected] limits it to granted sites | driveItem calls are not on the [metered list][s-ms-metered] (only `assignSensitivityLabel` is, for SharePoint) |
+| Google Drive | [`changes.getStartPageToken` then `changes.list`][s-g-changes]; `files.list` for the first pass | [Docs API][s-g-docs] `TextStyle.link` carries `url`, `bookmark` or `heading` targets; [export][s-g-export] to `text/markdown` or `text/html` | [Service account with domain-wide delegation][s-g-sa]; reading all files needs a [restricted scope][s-g-scopes] (`drive.readonly`) and its OAuth verification | The Drive API has no link endpoint (none found); in a Google Doc, a [`richLink`][s-g-docs] element points to a Drive file |
+| Box | [Events][s-box-events] (`changes`, `sync` streams), resumed from a saved [`stream_position`][s-box-pos]; [folder items][s-box-items] (marker paging) | None found; extract from content | [Client Credentials Grant or JWT][s-box-auth] for server apps | |
+| Confluence Cloud | [`GET /pages`][s-cf-pages] (cursor paging); [CQL `lastmodified`][s-cf-cql] for changed pages; [descendants][s-cf-desc] for the tree | No link endpoint found in the v1 or v2 pages read; parse the body: [storage format][s-cf-storage] marks page links `ac:link` + `ri:page` (Data Center 11.0 page; Cloud equivalence unverified) | [API token + basic auth or OAuth 2.0 (3LO)][s-cf-auth]; [service-account tokens][s-cf-sa] exist and carry scopes | Data Center's [page information][s-cf-info] lists incoming links in the UI |
+| Nextcloud | WebDAV [PROPFIND][s-nc-dav] with `Depth`, `d:getetag`, `oc:fileid`; [WebDAV SEARCH][s-nc-search] can filter by modified date; no `sync-collection` REPORT documented | None found (WebDAV pages and the Collectives README read); extract from content | [App passwords][s-nc-dav], which the docs suggest for scripts where 2FA is enforced | [Collectives][s-nc-coll] README documents Markdown pages; no backlink graph mentioned |
+| OpenCloud | [Libre Graph spec][s-oc-spec] has `driveItem` paths but no `/delta` path (read 2026-11-26); WebDAV docs are a [stub][s-oc-docs] | None found | Not verified | [Apache-2.0][s-oc-lic]; use PROPFIND as for Nextcloud (unverified) |
+
+**Links.** Only Confluence (body markup) and Google Docs (`TextStyle.link`, `richLink`) expose links as structured
+data; elsewhere they sit inside the file. doc-pipeline-engine ([README][s-dpe], Apache-2.0) turns PDF,
+Office, image, email and text into structured summaries rendered as Markdown, DOCX or PDF; its README
+does not say hyperlinks survive, so it is a text leg, not a link extractor (unverified). `.docx`
+hyperlinks live in the package's relationship parts (unverified at first party here).
+
+**Products.** Obsidian's [graph view][s-obs-graph] shows "the relationships between the notes in your vault"; to use
+it on a DMS, the store would first need exporting to Markdown (our inference); its [licence][s-obs-lic] allows commercial use. Atlassian's
+[Teamwork Graph][s-tg] stores [relationships][s-tg-rel] between objects (a Jira work item linked to a
+Confluence page); its release status and page-to-page links are unverified. Microsoft retired [Viva Topics][s-viva] (as of 2025-02-22); the semantic-index and Graph
+insights pages returned 404 here, so no Microsoft document-link graph is confirmed (unverified).
+
+**Adapter.** The builder takes text, not `(path, title, links)`. Smallest change: render each DMS item
+to a stub (`# title` plus `[t](relative/path.md)` per resolved link, item IDs mapped to synthetic paths),
+leaving the builder untouched; `bucket_of` assumes `docs/<section>/`, so stub paths take the form
+`docs/<site>/…`. Cleaner for several stores: a second entry point taking `(path, title, links)` that reuses the
+edge aggregation.
+
+**Recommendation.** Do not build now: this corpus is git markdown and no DMS corpus is in scope. If one
+appears, start with SharePoint (documented delta listing and app-only access), read-only and scoped to
+one site; Confluence follows once its Cloud link markup is confirmed. An untested alternative of ours:
+export the store to Markdown and run the builder unchanged.
+
+**Effort (our own judgment, not sourced).** About 3 to 5 days for the first store (listing, state, link
+extraction, adapter, tests), 2 to 3 per further store, plus admin consent and, for Google, restricted-scope
+verification.
+
 ## Cross-References
 
 | Topic | File |
@@ -179,6 +222,40 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 | [VectifyAI/PageIndex][pageindex] | PageIndex repository |
 | `gh api repos/VectifyAI/OpenKB` and `repos/VectifyAI/PageIndex`, 2026-09-24 | Stars, license, latest release tag |
 | `gh api repos/egonex-ai/understand-anything`, `repos/langchain-ai/openwiki` and `repos/VectifyAI/OpenKB`, 2026-11-22 | Refreshed stars and latest release tags |
+| [Microsoft Graph driveItem delta][s-ms-delta] | delta flow, permissions, 410 resync (page updated 2026-06-06) |
+| [Microsoft Graph driveItem resource][s-ms-driveitem] | relationships list, no link relationship |
+| [Microsoft Graph download driveItem content][s-ms-content] | download flow and permissions |
+| [Microsoft Graph app-only access][s-ms-app] | client-credentials flow, admin consent |
+| [Microsoft Graph Sites.Selected][s-ms-selected] | per-site grant |
+| [Microsoft Graph metered APIs][s-ms-metered] | only assignSensitivityLabel metered for SharePoint |
+| [Google Drive manage changes][s-g-changes] | start page token, changes.list |
+| [Google Docs API documents][s-g-docs] | TextStyle.link fields, richLink element |
+| [Google Drive export formats][s-g-export] | text/markdown export |
+| [Google service accounts][s-g-sa] | domain-wide delegation |
+| [Google Drive scopes][s-g-scopes] | restricted-scope classification |
+| [Box events][s-box-events] | event streams |
+| [Box events pagination][s-box-pos] | `stream_position`, `next_stream_position` |
+| [Box folder items][s-box-items] | marker paging |
+| [Box authentication][s-box-auth] | CCG and JWT for server apps |
+| [Confluence Cloud REST v2 pages][s-cf-pages] | GET /pages |
+| [Confluence CQL][s-cf-cql] | lastmodified field |
+| [Confluence Cloud REST v2 descendants][s-cf-desc] | descendants endpoint |
+| [Confluence storage format (Data Center 11.0)][s-cf-storage] | ac:link and ri:page markup |
+| [Confluence Cloud security for other integrations][s-cf-auth] | API token and OAuth 3LO |
+| [Atlassian service-account API tokens][s-cf-sa] | tokens exist and carry scopes |
+| [Confluence page information (Data Center 11.0)][s-cf-info] | incoming links in the UI |
+| [Nextcloud WebDAV basics][s-nc-dav] | PROPFIND, properties, app passwords |
+| [Nextcloud WebDAV search][s-nc-search] | SEARCH by modified date |
+| [nextcloud/collectives][s-nc-coll] | Markdown pages, AGPL-3.0 |
+| [opencloud-eu/libre-graph-api spec][s-oc-spec] | driveItem paths, no /delta (read 2026-11-26) |
+| [OpenCloud developer docs][s-oc-docs] | stub page |
+| [opencloud-eu/opencloud LICENSE][s-oc-lic] | Apache-2.0 |
+| [qte77/doc-pipeline-engine][s-dpe] | README (v0.3.1, Apache-2.0) |
+| [Obsidian graph view][s-obs-graph] | graph of internal links in a vault |
+| [Obsidian licence][s-obs-lic] | free for commercial use (page dated 2025-02-20) |
+| [Atlassian Teamwork Graph][s-tg] | data layer |
+| [Teamwork Graph relationships][s-tg-rel] | relationship example |
+| [Changes coming to Topics][s-viva] | "Viva Topics has been retired as of February 22, 2025" |
 
 [s-deepwiki]: https://deepwiki.com
 [s-c2t]: https://code2tutorial.com
@@ -187,6 +264,40 @@ Entries removed under the [pruning rule](../../../CONTRIBUTING.md#pruning-entrie
 [s-openwiki]: https://github.com/langchain-ai/openwiki
 [s-openkb]: https://github.com/VectifyAI/OpenKB
 [pageindex]: https://github.com/VectifyAI/PageIndex
+[s-ms-delta]: https://learn.microsoft.com/en-us/graph/api/driveitem-delta?view=graph-rest-1.0
+[s-ms-driveitem]: https://learn.microsoft.com/en-us/graph/api/resources/driveitem?view=graph-rest-1.0
+[s-ms-content]: https://learn.microsoft.com/en-us/graph/api/driveitem-get-content?view=graph-rest-1.0
+[s-ms-app]: https://learn.microsoft.com/en-us/graph/auth-v2-service
+[s-ms-selected]: https://learn.microsoft.com/en-us/graph/permissions-selected-overview
+[s-ms-metered]: https://learn.microsoft.com/en-us/graph/metered-api-list
+[s-g-changes]: https://developers.google.com/workspace/drive/api/guides/manage-changes
+[s-g-docs]: https://developers.google.com/workspace/docs/api/reference/rest/v1/documents
+[s-g-export]: https://developers.google.com/workspace/drive/api/guides/ref-export-formats
+[s-g-sa]: https://developers.google.com/identity/protocols/oauth2/service-account
+[s-g-scopes]: https://developers.google.com/workspace/drive/api/guides/api-specific-auth
+[s-box-events]: https://developer.box.com/guides/events/
+[s-box-pos]: https://developer.box.com/guides/events/parameters/pagination
+[s-box-items]: https://developer.box.com/reference/get-folders-id-items/
+[s-box-auth]: https://developer.box.com/guides/authentication/
+[s-cf-pages]: https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-page/
+[s-cf-cql]: https://developer.atlassian.com/cloud/confluence/advanced-searching-using-cql/
+[s-cf-desc]: https://developer.atlassian.com/cloud/confluence/rest/v2/api-group-descendants/
+[s-cf-storage]: https://confluence.atlassian.com/doc/confluence-storage-format-790796544.html
+[s-cf-auth]: https://developer.atlassian.com/cloud/confluence/security-for-other-integrations/
+[s-cf-sa]: https://support.atlassian.com/user-management/docs/manage-api-tokens-for-service-accounts/
+[s-cf-info]: https://confluence.atlassian.com/doc/view-page-information-139408.html
+[s-nc-dav]: https://docs.nextcloud.com/server/latest/developer_manual/client_apis/WebDAV/basic.html
+[s-nc-search]: https://docs.nextcloud.com/server/latest/developer_manual/client_apis/WebDAV/search.html
+[s-nc-coll]: https://github.com/nextcloud/collectives
+[s-oc-spec]: https://github.com/opencloud-eu/libre-graph-api/blob/main/api/openapi-spec/v1.0.yaml
+[s-oc-docs]: https://docs.opencloud.eu/docs/dev/
+[s-oc-lic]: https://github.com/opencloud-eu/opencloud/blob/main/LICENSE
+[s-dpe]: https://github.com/qte77/doc-pipeline-engine
+[s-obs-graph]: https://obsidian.md/help/plugins/graph
+[s-obs-lic]: https://obsidian.md/license
+[s-tg]: https://developer.atlassian.com/platform/teamwork-graph/
+[s-tg-rel]: https://developer.atlassian.com/platform/teamwork-graph/relationships/
+[s-viva]: https://learn.microsoft.com/en-us/microsoft-365/topics/changes-coming-to-topics
 
 ## Action Items
 
