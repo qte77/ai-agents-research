@@ -2,7 +2,7 @@
 title: Microsoft 365 Copilot Analysis — SharePoint Skills, Copilot Studio, Work IQ, Agent 365
 purpose: First-party fact-check and practitioner how-to for the Microsoft 365 Copilot ecosystem, from SharePoint Skills and Copilot Studio to Agent 365, Cowork and Researcher.
 created: 2026-10-21
-updated: 2026-11-26
+updated: 2026-11-28
 validated_links_on: 2026-11-22
 status: assess
 ---
@@ -594,15 +594,21 @@ inherit organizational governance, security, and compliance controls from the mo
 created" [managed-runtime-overview] (2026-10-05, updated 2026-11-06) — it hosts **apps**. The
 admin overview, re-read 2026-11-18, words this as helping teams "build and run line-of-business
 agentic applications" [managed-runtime-admin]; it is still an app host, not a runtime that runs
-agents for you. Every page in this cluster carries a
-preview notice — "This is a preview feature" on three of them [managed-runtime-overview], worded
-as "This feature is in preview" on the security page [managed-runtime-security].
-**GA announced, not yet documented (2026-11-18):** Microsoft's Ignite post of 2026-11-17 says apps
-are hosted "with the Copilot Managed Runtime, generally available today" [ignite-2026-blog], but the
-licensing FAQ, updated the same day, still says "During preview" [managed-runtime-licensing-faq].
-Treat GA as announced until the Learn pages drop their preview notices. GA of the host does not
-make every build path GA: app creation in Copilot Studio is still "in preview" [studio-overview],
-and Cowork's App skill is still listed as Frontier [cowork-whats-new].
+agents for you. Until 2026-11-18 every page in this cluster carried a preview notice ("This is a
+preview feature" on three of them [managed-runtime-overview], "This feature is in preview" on the
+security page [managed-runtime-security]).
+**GA announced; the Learn notices are gone (read 2026-11-28):** Microsoft's Ignite post of
+2026-11-17 says apps are hosted "with the Copilot Managed Runtime, generally available today"
+[ignite-2026-blog]. On 2026-11-28 none of the thirteen cluster pages read (the overview, admin overview,
+security page and licensing FAQ, plus the nine under [Admin pages](#admin-pages-read-2026-11-28)) showed a
+page-level preview notice or "During preview" in the rendered text or the raw HTML, which fits the
+announcement; no page states "generally available" for the host, so GA stays announced, not
+documented. This section's heading keeps "(preview)" because sub-features still carry it:
+Monitor metrics and alerts [managed-runtime-monitoring], [managed-runtime-inventory], the Fabric
+backend integration and Power Platform RBAC for the admin center [managed-runtime-governance]
+[managed-runtime-roles]. GA of the host does not make every build path GA: app creation in Copilot
+Studio is still "in preview" [studio-overview], and Cowork's App skill is still listed as Frontier
+[cowork-whats-new].
 
 "All four paths produce the same kind of artifact: an app that runs in Copilot Managed Runtime"
 [managed-runtime-overview]:
@@ -616,7 +622,22 @@ and Cowork's App skill is still listed as Frontier [cowork-whats-new].
 
 The admin page (2026-11-18) also lists Lovable as a creation path for "Makers who build in Lovable
 and deploy to your tenant" [managed-runtime-admin]; users open apps at
-`managedapps.cloud.microsoft` [managed-runtime-overview]. The overview page still says four paths [managed-runtime-overview].
+`managedapps.cloud.microsoft` [managed-runtime-overview]. The overview page still says four paths
+and does not name Lovable [managed-runtime-overview] (read 2026-11-28), so the admin overview's five
+tools (Cowork, Code, Copilot Studio, CLI, Lovable) are the fuller list [managed-runtime-admin].
+
+**Lovable relation (read 2026-11-28).** The Lovable integration is "a third-party feature provided
+by Lovable"; per Lovable it needs a Lovable Business or Enterprise plan and "is being released
+gradually", and a Lovable workspace admin must enable the connector [managed-runtime-lovable].
+Lovable builds the artifact outside Microsoft's build system; Copilot Managed Runtime then hosts
+the app and applies Entra sign-in and the environment's governance. The Lovable project source,
+chat history and workspace/connection metadata stay outside the tenant, while the published app,
+its runtime identity and its connector activity live in it [managed-runtime-lovable]. The admin
+consents to an Entra enterprise app named "Lovable managed apps" with delegated permissions, so it
+acts only with the signed-in maker's rights and holds no tenant admin role. Two settings must be on
+per environment or environment group: CLI app creation, and external artifacts (off by default,
+and a group-level rule locks every environment in the group). Revoking consent stops future
+access but leaves deployed apps in place [managed-runtime-lovable].
 
 - **Sandboxed iframe:** "App code runs inside a sandboxed iframe within the managed host. This
   setup separates the app code from the surrounding host and keeps host-managed authentication
@@ -635,7 +656,28 @@ and deploy to your tenant" [managed-runtime-admin]; users open apps at
   [Three things called "harness"](#three-things-called-harness) below; the CLI needs no license to
   build); running requires a Power Apps Premium licence or inclusion in a Copilot-Managed-Runtime
   spending policy [managed-runtime-licensing-faq]. Re-check this page directly before quoting any
-  figure in a budget — it is explicitly preview pricing.
+  figure in a budget. The pricing pages no longer carry "During preview" (read 2026-11-28), but that
+is not a published price guarantee.
+
+#### Admin pages (read 2026-11-28)
+
+Each row adds only what the admin overview, security page and licensing FAQ above do not state. All
+pages show ms.date 2026-11-17 unless noted.
+
+| Page | What it adds |
+|---|---|
+| Default governance [managed-runtime-governance] | A Microsoft-managed default environment group (scoped to Everyone, undeletable) holds the rules: routing, connectors and MCP servers, sharing, content security policy (CSP) and Fabric backend. Allow list: 19 first-party connectors and 12 first-party MCP servers (read 2026-11-28); open-ended HTTP, Office Script and Dataverse unbound-action calls are blocked. Taking over the connector policy stops Microsoft's automatic updates. Sharing defaults: organisation-wide links on, guests off, and guests cannot open apps even when on (a stated known issue). CSP is enforced by default (`default-src 'self'`, `connect-src 'self'`, `worker-src 'none'`) with a report-only mode for rollout. External artifacts are off by default |
+| Roles [managed-runtime-roles] | Manage roles (Power Platform admin, Global admin, Dynamics 365 admin) can change policy, alerts, block/delete apps; read-only roles (AI admin, AI reader, Global reader) cannot. Billing uses other roles: turning on usage-based billing and creating spending policies needs Global or Billing admin; AI admin and License admin can only edit existing ones |
+| Inventory [managed-runtime-inventory] | Microsoft 365 admin center Apps > All apps lists every app (changes show within 15 minutes). Block keeps the app and its data and shows a blocked state to users; Delete is permanent. The Monitor tab's alert rules are preview (review window 1 h or 24 h) |
+| Monitoring [managed-runtime-monitoring] | Five health metrics, all marked Preview: app open success rate, time to interactive, session count, data request success rate and latency. Aggregated daily by default (hourly when an alert uses a 1-hour window), 28-day lookback, 75th percentile, not real-time. Needs no Azure subscription; Application Insights holds a superset of logs with customer-set retention |
+| Security and compliance [managed-runtime-security-compliance] | Environment must be a Managed Environment; an Entra security group on the environment gates who can run apps, separate from app sharing. Purview Audit logs app events under the `CopilotManagedRuntime` record type (519), but searching needs the Purview Audit Logs or View-Only Audit Logs role, which the app admin roles do not replace. **Path conflict:** this page sends sharing settings to "Settings > App settings", the governance page to "Apps > Settings > Environment groups" [managed-runtime-governance]; both read 2026-11-28, so check the live admin center |
+| Licensing and credits [managed-runtime-licensing-credits] | Running needs Power Apps Premium or a spending policy that includes the Copilot Managed Runtime service; the recommended start is one all-users policy at 100 credits (US$1) per user a month (read 2026-11-28). Cost per call, 0.1 credits, matches the licensing FAQ quote above; each static asset at launch counts as a call. Overlapping policies: highest per-user limit wins, ties go to the larger policy limit, then the newer policy; limits reset on the 1st and a group move does not reset use. Microsoft 365 E3/E5 Power Apps use rights and a Copilot licence alone do not cover runtime |
+| Admin FAQ [managed-runtime-faq] | Apps are built in per-maker personal environments (always Managed Environments) chosen by routing rules; a maker matching no rule cannot build, and the Everyone catch-all cannot be changed once governance is initialised. Cowork's other files (such as HTML saved to OneDrive) are not apps and stay out of the inventory |
+| Architecture [managed-runtime-architecture] | The host handles Entra sign-in, app loading, runtime governance (Conditional Access, DLP, advanced connector policies, sharing limits) and shows messages when an app fails to load. The app's Git repository, platform-provisioned or an external GitHub one, is the source of truth, and an existing TypeScript/JavaScript single-page app is the stated prerequisite |
+
+The admin overview links the architecture page as `.../copilot-managed-runtime/developer/apps/architecture`,
+which did not load when fetched on 2026-11-28; the cited `.../copilot-managed-runtime/architecture`
+URL is self-canonical and loads.
 
 This is a distinct product from the two Foundry "managed runtime" items covered in
 [agentic-enterprise-os-landscape.md](../frameworks/agentic-enterprise-os-landscape.md) — see below
@@ -1559,6 +1601,15 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Copilot Managed Runtime overview for admins (preview)][managed-runtime-admin] | Entra ID, default governance, enablement defaults by path |
 | [Security and governance in the Managed Runtime (preview)][managed-runtime-security] | Sandboxed iframe |
 | [Copilot Managed Runtime licensing FAQ (preview)][managed-runtime-licensing-faq] | Credit rate, harness rename, build/run billing split |
+| [Set up Copilot Managed Runtime for Lovable][managed-runtime-lovable] | Lovable relation, consent, two environment settings |
+| [Copilot Managed Runtime default governance settings][managed-runtime-governance] | Default environment group, allow lists, sharing, CSP |
+| [Roles and responsibilities][managed-runtime-roles] | Manage vs read-only roles, billing roles |
+| [View and oversee apps across your tenant][managed-runtime-inventory] | All apps inventory, Block vs Delete |
+| [Monitor the health of apps][managed-runtime-monitoring] | Preview metrics, aggregation, Application Insights |
+| [Manage security and compliance][managed-runtime-security-compliance] | Managed Environment, security group, Purview audit |
+| [Manage licensing and Copilot Credits][managed-runtime-licensing-credits] | Run licence rules, baseline policy, overlap rules |
+| [Copilot Managed Runtime admin FAQ][managed-runtime-faq] | Personal environments, routing, Cowork files |
+| [Copilot Managed Runtime architecture][managed-runtime-architecture] | Host responsibilities, Git source of truth |
 | [Use the Microsoft Copilot harness with prompt agents][foundry-copilot-harness] | Foundry harness definition, tools, skills |
 | [Hosted agents in Foundry Agent Service][foundry-hosted-agents] | Hosted-agent definition, no "managed runtime" phrase, no stated GA |
 | [Microsoft Foundry Agent Service (product page)][foundry-agent-service-product] | Marketing-page "managed runtime" wording for hosted agents |
@@ -1704,6 +1755,15 @@ re-checked even when Microsoft leaves the page unchanged.
 [managed-runtime-admin]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/?view=o365-worldwide
 [managed-runtime-security]: https://learn.microsoft.com/en-us/microsoft-365/copilot-managed-runtime/managed-runtime-security-governance?view=o365-worldwide
 [managed-runtime-licensing-faq]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/licensing-faq?view=o365-worldwide
+[managed-runtime-lovable]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/configure-lovable?view=o365-worldwide
+[managed-runtime-governance]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/governance?view=o365-worldwide
+[managed-runtime-roles]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/roles-responsibilities?view=o365-worldwide
+[managed-runtime-inventory]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/inventory?view=o365-worldwide
+[managed-runtime-monitoring]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/visibility-monitoring?view=o365-worldwide
+[managed-runtime-security-compliance]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/security-compliance?view=o365-worldwide
+[managed-runtime-licensing-credits]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/licensing-credits?view=o365-worldwide
+[managed-runtime-faq]: https://learn.microsoft.com/en-us/microsoft-365/admin/manage/apps/faq-about-apps?view=o365-worldwide
+[managed-runtime-architecture]: https://learn.microsoft.com/en-us/microsoft-365/copilot-managed-runtime/architecture?view=o365-worldwide
 [foundry-copilot-harness]: https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/use-tools-skills-copilot-harness
 [foundry-hosted-agents]: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents
 [foundry-agent-service-product]: https://azure.microsoft.com/en-us/products/ai-foundry/agent-service
