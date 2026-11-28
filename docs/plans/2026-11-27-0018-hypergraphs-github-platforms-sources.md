@@ -23,12 +23,15 @@ checks all of it.
   [§ Owner decisions](#owner-decisions-2026-11-27); the owner can override any of them.
 - **Shipped 2026-11-27:** every agent row, N67 to N86 and N88 (#1122 to #1141); the N76 audit
   table is in [§ N76](#n76-coverage-depth-audit), the N86 audit in [§ N86 audit](#n86-audit-diverge-and-converge).
+- **Shipped 2026-11-28:** release v0.29.0 (#1144); the owner's N87 pick, which became rows N89
+  and N90 after a re-check against main (N78 had already added the sandbox, hooks, skills and
+  subagents rows for all twelve harnesses).
 - **In flight:** nothing.
 
-**Next:** only owner-gated work is left. N87 (pick which N76 audit gaps become rows; default none),
-then the **release (minor)** for the batch on the owner's word (deferred by the owner 2026-11-27).
+**Next:** N89 and N90 (agent; separate files, so they can run as parallel lanes), then a release on
+the owner's word.
 
-**Owner-gated, don't start:** N87, N9, N38, N56 and N62, plus the `13-*` rows. Each row's own text
+**Owner-gated, don't start:** N9, N38, N56 and N62, plus the `13-*` rows. Each row's own text
 gives its gate.
 
 **Watch-outs:**
@@ -70,6 +73,7 @@ Lead defaults, applied unless the owner overrides them.
 | Low-adoption sources | Added at the level the evidence supports (for example "a day-old experiment"), or listed in the disposition table with a reason. None is dropped silently. |
 | Tracker | #1071 stays the tracking issue. |
 | Second batch (owner, 2026-11-27) | Do A (definitions, N77), B (the queue) and C (all three coverage gaps, N78 to N80). Item 1 means the GitHub capabilities doc: list what #1123 added, and map capabilities across forges (N81). Distributed systems: one new landscape in `docs/sdlc-lcm/` (N82). Privacy law: GDPR (EU), UK GDPR, CCPA and Canada, mapped with KB touchpoints, no legal advice (N84). Rotating the exposed tokens and the release are deferred by the owner. |
+| N87 pick (owner, 2026-11-28) | All three audit gaps. Re-checked against main first: the Cross-Harness Matrix (N78, #1141) already has Sandbox, Hooks, Skills and Subagents rows for all twelve harnesses, so only the residual becomes rows: the auth table's missing harnesses (N89), and the matrix's "not documented" cells plus pointers from the harness docs (N90). Community coverage is deferred: `cc-community/` holds Claude Code-only tools, so no doc owns community tooling for other harnesses; it reopens when the owner names a target doc. |
 
 ## The loop
 
@@ -381,7 +385,7 @@ The section's table in the disciplines landscape keeps the clearest cases.
 | ~~N74~~ | ~~Where Claude Code, Codex CLI, Gemini CLI and other open-source harnesses process PDFs and images (local or server, which packages), and GPT-6.2 Astra's input modalities ([§ Lane tasks](#n74-where-harnesses-process-pdfs-and-images))~~ | agent | shipped (comparison landscape § Where media is processed; GPT-6.2 Astra video not supported; CC Read-tool line corrected) |
 | ~~N75~~ | ~~Capability map: new mechanic rows in the Cross-Harness Matrix ([§ Lane tasks](#n75-capability-map))~~ | agent | shipped (seven Cross-Harness Matrix rows: OpenCode subagents, Gemini built-in agents, A2A, resume flags) |
 | ~~N76~~ | ~~Coverage-depth audit of the top coding harnesses against Claude Code ([§ Lane tasks](#n76-coverage-depth-audit))~~ | agent, then owner | shipped (audit table in § N76; gaps 1, 2 and 5 went to N78 to N80, the rest to owner row N87) |
-| N87 | Owner pick from the N76 audit: per-harness sandboxing, hooks, skills and subagents in the harnesses' own docs, auth-table and community coverage ([§ N76](#n76-coverage-depth-audit)) | owner | Owner names which become rows; default: none until N78 to N80 have shipped |
+| ~~N87~~ | ~~Owner pick from the N76 audit: per-harness sandboxing, hooks, skills and subagents in the harnesses' own docs, auth-table and community coverage ([§ N76](#n76-coverage-depth-audit))~~ | owner | decided 2026-11-28: owner picked all three gaps; after a re-check against main the residual became N89 and N90, community coverage deferred (see § Owner decisions) |
 | ~~N77~~ | ~~Definitions: knowledge graph, hypergraph and hyperedge, HybridRAG vs hybrid search, plus glossary rows ([§ Second batch](#second-batch-owner-2026-11-27))~~ | agent | shipped (Hogan et al. KG definition, HyperNetX hypergraph quote, HybridRAG row, glossary rows) |
 | ~~N78~~ | ~~Capability table: Copilot CLI, VS Code Copilot Chat, Cursor, Cline, Aider, Amp and Windsurf added to the Cross-Harness Matrix~~ | agent | shipped (second matrix table: Copilot CLI, VS Code Copilot Chat, Cursor, Cline, Aider, Amp, Windsurf; 13 mechanics) |
 | ~~N79~~ | ~~Session save and resume for the same seven harnesses; re-check the unverified rows~~ | agent | shipped (checkpoint and resume rows for seven harnesses; Codex, Gemini CLI and OpenCode re-checked) |
@@ -393,6 +397,8 @@ The section's table in the disciplines landscape keeps the clearest cases.
 | ~~N85~~ | ~~Self-evolving and meta-learning: survey the three docs, add what is missing~~ | agent | shipped (§ Meta-levels in the Weco doc, 12 landmarks; gap survey in the PR body) |
 | ~~N86~~ | ~~Diverge and converge: audit and one section~~ | agent | shipped (§ Diverge and converge; audit in § N86 audit) |
 | ~~N88~~ | ~~Prompt-to-app builders (owner 2026-11-27): Lovable, Bolt.new (StackBlitz WebContainers), HeyBoss, plus well-known peers v0 and Replit~~ | agent | shipped (§ Prompt-to-app builders: Lovable, Bolt.new, v0, Replit; HeyBoss and Firebase Studio notes) |
+| N89 | Auth table: add the harnesses the N76 audit found missing from [CC-web-auth-setup-analysis.md § Other Coding CLIs](../cc-native/ci-remote/CC-web-auth-setup-analysis.md#other-coding-clis-headless-sign-in-and-billing) (Cline, Aider, Amp, Windsurf (Devin Desktop), Pi) | agent | One row each, every cell from the vendor's own docs with `(read YYYY-MM-DD)` on plan-tier and billing claims, or "not documented" after a site-wide check; two fact-check passes; `make lint` green |
+| N90 | Matrix residual: re-check the "not documented" cells of the [Cross-Harness Matrix](../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15) (Sandbox: OpenCode, Aider, Amp local runs; Hooks, Skills, Subagents: Aider) across each vendor's docs navigation and repo, and give each harness analysis doc without a matrix link one pointer line to it (no restated cells) | agent | Each re-checked cell is filled from the vendor's docs or keeps "not documented" with the scope searched; the nine docs link the matrix; two fact-check passes; `make lint` green |
 | N9 | Assess YouTube videos (ai-that-works playlist, Cole Medin channel) as research leads (owner 2026-11-22; #1009) | owner | **ai-that-works part done 2026-11-22** (owner narrowed it to the companion repo's transcripts): all 86 episode dirs triaged from the repo (github.com/ai-that-works/ai-that-works, no licence, so read and cited only), 47 with transcripts; 3 strong, 18 possible and 38 dropped leads, list and reasons in the session triage notes. Shipped, each re-checked at first-party sources with two fact-check passes: #1031 GEPA, #1032 SlopCodeBench, #1033 HumanLayer status, #1034 lethal trifecta. **Concept pass** (owner 2026-11-22: concepts, how-tos and best practices count, not only tools): about 225 ideas triaged, 24 kept, each cited as a single-source practitioner claim with outside corroboration where it exists: #1039 harness patterns, #1040 eval practices, #1041 memory, skills, observability and event-log projections; five LLM-application patterns held for lack of a fitting doc. **Open, owner-gated:** Cole Medin's channel, once the owner picks a transcript route (from this Codespace, yt-dlp and headless browsers hit YouTube's sign-in bot check) |
 | N38 | paperverse: make the weekly real-feed sync mergeable, add `triage/kb-papers` as a source, then one catch-up sync (D2) | agent in a paperverse session; owner if the fix needs a setting or an App | The sync PR gets every required check and merges without help; paperverse `main` holds all weekly files and `arxiv-kb.jsonl`; deployed page shows them |
 | N56 | Compare `scripts/cc_cache_usage.py` with Claude Code `/usage` "Prompt cache (main)" and with a cachemiss run on one session (residual of N55) | owner | The owner pasted the `/usage` section on 2026-11-25 (46 main-thread requests, 99% of input from cache, no misses); still waits on approval to run cachemiss (external code); the three sets of numbers agree or the differences are explained in `CC-prompt-caching-behavior.md`; offer the prediction column to cachemiss only if they agree |
