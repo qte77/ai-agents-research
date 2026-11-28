@@ -3,7 +3,7 @@ title: GitHub Copilot CLI Analysis
 source: https://github.com/github/copilot-cli
 purpose: Analysis of GitHub Copilot CLI as a terminal coding agent sharing the agentic harness of the Copilot coding agent, distinct from its cloud surface, plus the Copilot SDK that embeds the same engine.
 created: 2026-06-11
-updated: 2026-11-26
+updated: 2026-11-28
 validated_links_on: 2026-10-24
 status: assess
 ---
@@ -165,6 +165,7 @@ the hook and ends the turn anyway" ([hooks][goal-copilot-hooks]).
 - [CC-github-actions-analysis.md](../../cc-native/ci-remote/CC-github-actions-analysis.md#issue-lifecycle-automation-landscape) — the Copilot **coding agent** (cloud) it shares a harness with
 - [multi-agent-onboarding-outlook.md](../../sdlc-lcm/multi-agent-onboarding-outlook.md) — the AGENTS.md/GEMINI.md convergence + per-agent config-file comparison
 - [CC-community-tooling-landscape.md](../../cc-community/CC-community-tooling-landscape.md) — multi-agent tooling (CC Switch, CodeBurn) that targets Copilot; `~/.copilot` session data
+- [CC-agentic-harness-patterns-analysis.md § Cross-Harness Matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15) — sandbox, permissions, hooks, skills, subagents and MCP side by side with the other harnesses
 
 ## Sources
 

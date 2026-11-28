@@ -3,7 +3,7 @@ title: Gemini CLI Analysis
 source: https://github.com/google-gemini/gemini-cli
 purpose: Analysis of Gemini CLI as Google's open-source terminal AI agent, now deprecated for non-enterprise users.
 created: 2026-06-16
-updated: 2026-11-26
+updated: 2026-11-28
 validated_links_on: 2026-11-18
 status: hold
 ---
@@ -114,6 +114,8 @@ Checked 2026-11-23 against the repo's [authentication guide][gemini-auth] and [c
 - **Google AI Studio.** The other direct route is a Gemini API key in `GEMINI_API_KEY`.
 - **Gateway or proxy.** `GOOGLE_GEMINI_BASE_URL` (Gemini API key auth) and `GOOGLE_VERTEX_BASE_URL` (Vertex auth) override the endpoint; the value must be HTTPS unless it points at localhost. These redirect to a proxy that speaks the Gemini or Vertex API, not an OpenAI-compatible one.
 - **Azure, AWS Bedrock, OpenRouter, Infomaniak.** No route found in the two pages read. The authentication guide (read in full for method headings and env vars) and a search of the configuration reference for `BASE_URL` found none; this is absence in those two pages only, not in the whole docs tree. If no route exists, reaching these backends would take a third-party translation layer outside the vendor docs.
+
+See the [Cross-Harness Matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15) for sandbox, permissions, hooks, skills, subagents and MCP side by side with the other harnesses.
 
 ## Adoption Decision
 
