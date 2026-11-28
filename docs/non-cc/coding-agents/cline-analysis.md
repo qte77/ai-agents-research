@@ -3,7 +3,7 @@ title: Cline — Autonomous Coding Agent (VS Code, CLI, SDK)
 source: https://github.com/cline/cline
 purpose: Evaluate Cline as an open-source autonomous coding agent for IDE, CLI, and CI/CD use cases.
 created: 2026-06-16
-updated: 2026-11-26
+updated: 2026-11-28
 validated_links_on: 2026-06-16
 status: adopt
 platform_scope: [cursor, windsurf]
@@ -36,6 +36,8 @@ platform_scope: [cursor, windsurf]
 **VS Code extension.** Listed as `saoudrizwan.claude-dev` on the VS Marketplace; version 4.1.28 (checked 2026-11-26), rated 4/5 from 329 reviews.
 
 **Pricing.** The extension and CLI are free (Apache 2.0). Users pay only for AI inference at cost or via their own API keys — no seat fees or subscriptions. Enterprise plan (custom pricing, contact sales) adds SSO/OIDC, SLA, centralized billing, RBAC, and authentication logging ([cline.bot/pricing][pricing], 2026-06-16).
+
+See the [Cross-Harness Matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15) for sandbox, permissions, hooks, skills, subagents and MCP side by side with the other harnesses.
 
 ## Adoption Decision
 

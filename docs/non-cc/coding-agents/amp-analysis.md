@@ -3,7 +3,7 @@ title: Amp Analysis
 source: https://ampcode.com/
 purpose: Analysis of Amp (Sourcegraph spinoff) as a terminal-first agentic coding tool with pay-as-you-go model pricing.
 created: 2026-06-16
-updated: 2026-11-26
+updated: 2026-11-28
 validated_links_on: 2026-06-16
 status: trial
 ---
@@ -129,6 +129,7 @@ remains. Enterprise pricing is custom and not published.
 ## Cross-References
 
 - [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.md) — proprietary peer with fixed subscription model; useful cost comparison baseline
+- [CC-agentic-harness-patterns-analysis.md § Cross-Harness Matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15) — sandbox, permissions, hooks, skills, subagents and MCP side by side with the other harnesses
 
 ## Sources
 

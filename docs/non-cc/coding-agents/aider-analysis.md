@@ -3,7 +3,7 @@ title: Aider — Terminal AI Pair Programmer
 source: https://aider.chat/
 purpose: OSS terminal coding agent with git-native workflow and multi-LLM support
 created: 2026-06-16
-updated: 2026-11-26
+updated: 2026-11-28
 validated_links_on: 2026-06-22
 status: adopt
 ---
@@ -159,6 +159,7 @@ cross-session memory or cloud sandbox.
 
 - [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.md) — proprietary terminal peer;
   comparison point for subscription vs bring-your-own-key models
+- [CC-agentic-harness-patterns-analysis.md § Cross-Harness Matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15) — sandbox, permissions, hooks, skills, subagents and Model Context Protocol (MCP) side by side with the other harnesses
 
 ## Sources
 

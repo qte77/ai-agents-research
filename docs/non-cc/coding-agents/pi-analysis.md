@@ -3,7 +3,7 @@ title: Pi — Minimal Extensible AI Coding Agent CLI
 source: https://pi.dev/
 purpose: Evaluate Pi as an open-source terminal coding agent harness with multi-provider LLM support and extension-first architecture
 created: 2026-06-16
-updated: 2026-11-26
+updated: 2026-11-28
 validated_links_on: 2026-09-24
 status: trial
 ---
@@ -96,6 +96,8 @@ positioning — a "native Rust core" with Windows-native support requiring no WS
 consistent with, but more forward-leaning than, the GitHub README's own "~80k lines of Rust core"
 figure and its plain PowerShell/Windows install path. This doc describes the GitHub-repo-documented
 `v19.2.1` release; the omp.sh page's headline reads "omp², soon!", so omp² is presented as upcoming, not as a shipped version.
+
+See the [Cross-Harness Matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15) for sandbox, permissions, hooks, skills, subagents and Model Context Protocol (MCP) side by side with the other harnesses.
 
 ## Adoption Decision
 
