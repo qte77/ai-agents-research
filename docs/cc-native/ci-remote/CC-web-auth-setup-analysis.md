@@ -3,7 +3,7 @@ title: CC Web Setup, Authentication & API Key Usage
 source: https://code.claude.com/docs/en/claude-code-on-the-web
 purpose: How to set up Claude Code on the web, connect GitHub, authenticate with API keys for non-interactive use, connect remote sessions, and the Claude Console admin surface an org API key touches.
 created: 2026-03-24
-updated: 2026-11-26
+updated: 2026-11-28
 validated_links_on: 2026-11-15
 status: assess
 ---
@@ -345,7 +345,7 @@ script that relies on a plan login will need an explicit opt-out or a key.
 
 ### Other Coding CLIs: Headless Sign-In and Billing
 
-Checked 2026-11-15 against each vendor's docs; per-tool detail lives in the linked analysis docs. "No rule
+Checked 2026-11-15 against each vendor's docs (the Cline, Aider, Amp, Windsurf and Pi rows were read 2026-11-28); per-tool detail lives in the linked analysis docs. "No rule
 in the docs read" means those pages are silent, not that no rule exists elsewhere.
 
 | CLI | Headless run | Sign-in for scripts | What a scripted run bills | Vendor text on automated or third-party use |
@@ -355,6 +355,11 @@ in the docs read" means those pages are silent, not that no rule exists elsewher
 | [Copilot CLI](../../non-cc/agents/github-copilot-cli-analysis.md) | `copilot -p` | `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, or `GITHUB_TOKEN`; classic `ghp_` PATs "Not supported by Copilot CLI" ([auth][copilot-auth]); in Actions, a PAT "if you want usage billed to a specific user's Copilot seat" ([Actions][copilot-actions]) | GitHub AI Credits, "1 AI credit = $0.01 USD" ([billing][copilot-billing]) | No rule in the Copilot CLI docs read |
 | [Cursor CLI](../../non-cc/coding-agents/cursor-analysis.md) | `agent -p` (`--force` to skip approvals) | `CURSOR_API_KEY` ([auth][cursor-auth]); team admins can turn on "Disable CLI headless mode" ([headless][cursor-headless]) | Paid plans have "a weekly pool of usage for Cursor models"; third-party models at "API list price, from prepaid credit" on Premium and above ([pricing][cursor-pricing]); the page doesn't name the CLI | No rule in the CLI docs read; Cursor's general terms not checked |
 | [opencode](../../non-cc/coding-agents/opencode-analysis.md) Go plan | `opencode run`, "designed for scripts, CI jobs, and other workflows" ([CLI][opencode-cli]) | Provider keys or logins ([providers][opencode-providers]) | Go $10/month, Go Plus $40, Go Teams $20/member; "Service accounts are not covered by Go Teams" ([Go][opencode-go]) | the page says Go and Go Plus cover the member who subscribes and the workspace's API keys, while other invited members use free models or the workspace balance; "Traffic is monitored for abuse" ([Go][opencode-go]) |
+| [Cline](../../non-cc/coding-agents/cline-analysis.md) | `cline "prompt"`, with `--json`; headless also starts when stdin is piped or output is redirected ([overview][cline-overview]); "Runs in yolo mode by default" ([CLI][cline-cli]) | `cline auth -p <provider> -k "$KEY" -m <model>`, which sets up "without prompts"; `-k` takes the "API key for this run, also saved as the provider's key" ([CLI][cline-cli]); the Actions sample passes an OpenRouter key from a repository secret ([sample][cline-actions]) | With your own key, the provider bills it; the Cline provider is "Pay as you go: add Cline credits" ([provider][cline-provider]); ClinePass is $9.99/month (read 2026-11-28) and the page says models can be used "from your own scripts, apps, or automation through the Cline API" ([ClinePass][cline-pass]); in the CLI it is picked as the provider under `/settings` ([ClinePass][cline-pass]); the pages read don't say whether a `cline` headless run draws on the ClinePass quota | Terms of Service: no one may use "any other automated means to access the Service in a manner that sends more request messages to the servers running the Service than a human can reasonably produce" in the same period in a browser ([terms][cline-tos]); the scope sentence names the VS Code and JetBrains extensions and "related software", not the CLI, so whether it covers scripted CLI runs is not stated |
+| [Aider](../../non-cc/coding-agents/aider-analysis.md) | `aider --message "..."` (or `--message-file`), which does "that one thing, apply the edits to the files and then exit"; `--yes-always` skips confirmations; the Python scripting API "is not officially supported or documented" ([scripting][aider-scripting], [options][aider-options]) | No login: keys by command line (`--openai-api-key`, `--anthropic-api-key`, `--api-key provider=<key>`), environment variable, `.env` or YAML config ([API keys][aider-keys]) | The pages read describe no Aider plan or charge; calls bill to the provider whose key is set. Via GitHub Copilot, "Calls made through aider are billed through your Copilot subscription" ([Copilot][aider-copilot]) | No rule in the Aider docs read. Aider's Copilot page says "The Copilot docs explicitly allow third-party “agents” that hit this API"; that is Aider's claim about GitHub's docs, which were not checked here |
+| [Amp](../../non-cc/coding-agents/amp-analysis.md) | `amp -x "prompt"`: it "waits until the agent ends its turn, prints its final message, and exits"; execute mode also turns on when stdout is redirected; `--stream-json`; exits 1 when "a tool call needs approval" ([execute mode][amp-exec]) | "For non-interactive environments, such as scripts and CI/CD pipelines, set your access token in an environment variable": `AMP_API_KEY`, a `sgamp_` access token from Settings; the short-lived session token `amp login` stores is rejected; a service account's API key runs a pipeline "as the workspace" ([execute mode][amp-exec]) | Tiers Hobby (free), Individual $20/month (read 2026-11-28); past included usage, paid credits are charged "for the actual model and tool usage in each thread", with no markup on provider prices "for individuals and non-enterprise workspaces" ([pricing][amp-pricing-docs]); the page lists "Bring your own keys (BYOK)" and does not separate execute-mode runs | Terms: "You may not directly resell resource quotas from Your Subscription" ([terms][amp-terms]); the pricing page says to "link your Claude subscription to use it for Claude models in Amp" (compare Anthropic's sign-in rules above); no rule on scripted CLI use in the pages read, and the Acceptable Use Policy the Terms incorporate was not found |
+| [Windsurf (Devin Desktop)](../../non-cc/coding-agents/windsurf-analysis.md) | The IDE has no headless mode in our analysis doc; the bundled Devin CLI runs `devin -p "prompt"` ("Print response and exit"); it "fails in an untrusted directory" unless `--respect-workspace-trust false` ([commands][devin-cmds]) | `devin auth login` stores a token that "does not expire" by default, with `--force-manual-token-flow` for remote or SSH sessions ([Devin Auth][devin-auth], [commands][devin-cmds]); `WINDSURF_API_KEY` is documented only for `devin acp`; no scripts-only credential for `-p` in the pages read | Self-serve: "A daily and weekly usage quota that covers Devin sessions, Devin CLI, and Devin Desktop"; Pro $20/month, Max $200, Teams $80 (read 2026-11-28) ([plans][devin-billing]); Enterprise: "billed using the standard Devin ACU (Agent Compute Unit) model" ([Devin Auth][devin-auth]); legacy Windsurf Enterprise: "standard Windsurf legacy credit model" ([Windsurf Auth][devin-wauth]) | No rule on scripted CLI runs in the Platform Terms or Acceptable Use Policy read; the policy says "Users must adhere to any usage limits specified in their subscription or licensing agreement" and bars "crawling, scraping or harvesting data from our services" ([AUP][devin-aup], [terms][devin-terms]) |
+| [Pi](../../non-cc/coding-agents/pi-analysis.md) | `pi --print "..."`; `--mode json` writes JSONL events, `--mode rpc` reads JSONL commands; print mode also starts when stdin or stdout is redirected ([CLI][pi-cli], [integration][pi-integration]) | "Environment variables are useful in CI and anywhere Pi should not store the key"; `--api-key` is "a non-persistent API-key override"; `pi auth login <provider> [--api-key] [--no-browser]` ([providers][pi-providers], [CLI][pi-cli]) | The pages read describe no Pi charge; usage bills at the provider or subscription connected; Radius, the gateway from Pi's authors, is "currently in early alpha" (read 2026-11-28) and its pricing was not read ([providers][pi-providers]) | Terms of Use: connecting "a model provider, extension, MCP server or other third-party tool" is "governed by its own terms, which you accept directly with that third party"; Pi itself is under the MIT License ([terms][pi-terms]) |
 | Z.ai GLM Coding Plan | Through a supported tool | Plan API key | Plan quota | "may only be used within officially supported tools and products"; "Accounts with more than three violations may be banned" ([usage policy][zai-policy]) |
 | MiniMax M Plan | Through a compatible tool | Plan API key | Plan quota | "designed for individual, interactive developer use ... Pay-as-you-go is recommended for production use" ([FAQ][minimax-faq]) |
 
@@ -432,6 +437,7 @@ One line each, where they bear on running agents against a Console key:
 - [Anthropic Usage Policy][aup]
 - [CC Legal and compliance][cc-legal], [Consumer Terms][consumer-terms], [Agent SDK overview][cc-sdk], [CC headless docs][cc-headless], [CC scheduled tasks docs][cc-routines], [Monthly API credits article][api-credits], [Models, usage, and limits in Claude Code][cc-usage-metering], [Claude Platform pricing][platform-pricing] (all accessed 2026-11-15)
 - Other CLIs (accessed 2026-11-15): [Codex auth][codex-auth]; Gemini CLI [auth][gemini-auth], [headless][gemini-headless], [quotas][gemini-quota], [terms][gemini-tos]; Copilot CLI [auth][copilot-auth], [Actions][copilot-actions], [billing][copilot-billing]; Cursor [headless][cursor-headless], [auth][cursor-auth], [pricing][cursor-pricing]; opencode [CLI][opencode-cli], [providers][opencode-providers], [Go][opencode-go]; [Z.ai usage policy][zai-policy]; [MiniMax M Plan FAQ][minimax-faq]
+- Other CLIs (read 2026-11-28): Cline [CLI][cline-cli], [overview][cline-overview], [Actions sample][cline-actions], [provider][cline-provider], [ClinePass][cline-pass], [terms][cline-tos]; Aider [scripting][aider-scripting], [options][aider-options], [API keys][aider-keys], [Copilot][aider-copilot]; Amp [execute mode][amp-exec], [pricing][amp-pricing-docs], [terms][amp-terms]; Devin (Windsurf) [commands][devin-cmds], [Devin Auth][devin-auth], [Windsurf Auth][devin-wauth], [plans][devin-billing], [terms][devin-terms], [AUP][devin-aup]; Pi [CLI][pi-cli], [integration][pi-integration], [providers][pi-providers], [terms][pi-terms]
 
 [cc-web]: https://code.claude.com/docs/en/claude-code-on-the-web
 [cc-auth]: https://code.claude.com/docs/en/authentication
@@ -480,3 +486,26 @@ One line each, where they bear on running agents against a Console key:
 [opencode-go]: https://opencode.ai/docs/console/go/
 [zai-policy]: https://docs.z.ai/devpack/usage-policy
 [minimax-faq]: https://platform.minimax.io/docs/m-plan/faq
+[cline-cli]: https://docs.cline.bot/cli/cli-reference
+[cline-overview]: https://docs.cline.bot/usage/cli-overview
+[cline-actions]: https://docs.cline.bot/cli/samples/github-integration
+[cline-provider]: https://docs.cline.bot/getting-started/cline-provider
+[cline-pass]: https://docs.cline.bot/getting-started/clinepass
+[cline-tos]: https://cline.bot/tos
+[aider-scripting]: https://aider.chat/docs/scripting.html
+[aider-options]: https://aider.chat/docs/config/options.html
+[aider-keys]: https://aider.chat/docs/config/api-keys.html
+[aider-copilot]: https://aider.chat/docs/llms/github.html
+[amp-exec]: https://ampcode.com/docs/cli/execute-mode
+[amp-pricing-docs]: https://ampcode.com/docs/pricing
+[amp-terms]: https://ampcode.com/terms
+[devin-cmds]: https://docs.devin.ai/cli/reference/commands
+[devin-auth]: https://docs.devin.ai/cli/enterprise/devin-auth
+[devin-wauth]: https://docs.devin.ai/cli/enterprise/windsurf-auth
+[devin-billing]: https://docs.devin.ai/admin/billing/self-serve
+[devin-terms]: https://cognition.com/legal/platform-terms-of-service
+[devin-aup]: https://cognition.com/legal/acceptable-use-policy
+[pi-cli]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/cli.md
+[pi-integration]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/cli-integration.md
+[pi-providers]: https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/providers.md
+[pi-terms]: https://pi.dev/terms
