@@ -11,6 +11,58 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- scriv-insert-here -->
 
+## [0.29.0] - 2026-11-28
+
+### Added
+
+- Graph databases doc: "Higher-order and layered relationships" section (n-ary data models, multilayer and temporal pointers, HyperNetX, XGI, pymnet, HyperGraphDB, `caviri/rete`); replaced the unchecked-hyperedge note (plan 0018 N67).
+
+- `docs/sdlc-lcm/github-platform-capabilities-analysis.md`: GitHub platform map (Actions, Codespaces and dev containers, rulesets and enforcement, organization and enterprise features, agent surfaces) with plan tiers read from GitHub's docs (plan 0018 N68).
+
+- `docs/sdlc-lcm/code-forge-ci-alternatives-landscape.md`: dated landscape of code forges, CI/CD systems and GitHub Actions runner services that compete with GitHub, with licence, agent surface and migration path per row; vendor speed and price claims marked (plan 0018 N69).
+
+- Frameworks landscape: Hindsight agent memory, Docker Agent, Pydantic AI Coder and Pax beta with a practitioner write-up, and an *Agentic GraphRAG* book pointer (plan 0018 N70).
+
+- Plan 0018 N71: shadow-comparison migration validation (Anthropic's Rust migration, GitHub Scientist) in the legacy migration doc; GUARD and Self-Improvement Memory in the Weco recursive self-improvement doc; the over-edit study in the evaluation metrics landscape; `awslabs/codekb` in the repo-to-docs landscape.
+
+- Micro and small language models landscape (`docs/non-cc/reference/micro-language-models-landscape.md`): μLM paper (arXiv 2604.19642), SPREAD Nemotron as a vendor claim, llama2.c, a bare-metal assembly OS experiment (plan 0018 N72).
+
+- Agent and connector sources (plan 0018 N73): n8n Nod in the computer-use landscape, the Hugging Face PyBot swarm report in the orchestrators landscape, an OpenResearch shared-project example, PandaDoc's Claude connector in the connectors overview, and IBM Bob in the IBM agent stack analysis.
+
+- Coding agents comparison: "Where media is processed" section (local resize and PDF steps per harness read at release tags, model-side input types, GPT-6.2 Astra has no video input) (plan 0018 N74).
+
+- Cross-Harness Matrix: seven capability rows (instruction and memory files, skills, plugins, subagents, MCP configuration, headless and CI, cloud and remote runs) for Claude Code, Codex CLI, Gemini CLI, OpenCode and Pi, read from vendor docs 2026-11-27 (plan 0018 N75).
+
+- Cross-Harness Matrix: second table with GitHub Copilot CLI, VS Code Copilot Chat, Cursor, Cline, Aider, Amp and Windsurf (Devin Desktop) for all 13 mechanics, read from vendor docs 2026-11-27 (plan 0018 N78).
+
+- Coding agents comparison: "Configuration and policy by harness" section (settings files and precedence, environment variables, managed or enterprise policy, project overrides and instruction files for Claude Code and ten other harnesses, from vendor docs) (plan 0018 N80).
+
+- `docs/sdlc-lcm/code-forge-ci-alternatives-landscape.md`: new § Capability map across forges, comparing GitHub, GitLab, Codeberg/Forgejo, Gitea, Bitbucket Cloud and Azure DevOps across 16 capabilities (CI, runners, merge queues, protection, scanning, packages, SSO, audit, MCP, vendor agents) with plan tiers and "not documented" markers (plan 0018 N81).
+
+- `docs/sdlc-lcm/distributed-systems-concepts-landscape.md`: distributed systems concept map for agent systems (fallacies, paper timeline, borders, contracts, communication, layers, topologies, patterns), with secondary-only claims labelled (plan 0018 N82).
+
+- `docs/sdlc-lcm/test-eval-driven-development-landscape.md`: comparison of TDD, BDD, property-based testing and eval-driven development with the EDDOps paper, LangChain and Airbnb practice, and a tripwire section (mutation testing, RED-first, guardrail tripwires); links existing EDD coverage (plan 0018 N83).
+
+- `docs/sdlc-lcm/privacy-law-touchpoints-landscape.md`: requirements map of EU GDPR, UK GDPR, CCPA/CPRA and PIPEDA with KB touchpoints and interactions; Quebec Law 25 and Bill C-27 status marked unverified where first-party pages could not be read (plan 0018 N84).
+
+- Meta-levels table in the Weco AIDE² analysis: MAML, learned optimizers, OPRO, Promptbreeder, TextGrad, DSPy, AlphaEvolve, AFlow, ADAS, STOP, Gödel Agent and Darwin Gödel Machine, each from its abstract page; cross-references from the MOSS and skill-evolution docs (plan 0018 N85).
+
+- `docs/sdlc-lcm/agentic-engineering-disciplines-landscape.md`: "Diverge and converge" section (Double Diamond framing, how agent harnesses widen then narrow, table linking ten places in the knowledge base) (plan 0018 N86).
+
+- `docs/non-cc/coding-agents/coding-agents-comparison-landscape.md`: "Prompt-to-app builders" section covering Lovable, Bolt.new, v0 and Replit from vendor docs, plus notes on bolt.diy, the Firebase Studio sunset and HeyBoss (plan 0018 N88).
+
+### Changed
+
+- Plan 0018 opened (hypergraphs and layered graphs, GitHub platform and alternatives, 2026-11-27 sources); plan 0017 superseded, its open owner rows moved over unchanged.
+
+- CONTRIBUTING: volatile claims (counts, stars, versions, prices, GA or beta status, availability, benchmark numbers) carry one inline read date, `(read YYYY-MM-DD)`; `validated_links_on` stays link liveness only; the research lane brief uses the same form (plan 0016 N41, owner 2026-11-27).
+
+- Definition sources for knowledge graph (Hogan et al.), hyperedge (HyperNetX docs) and a HybridRAG row distinct from hybrid search (Sarmah et al.) (plan 0018 N77).
+
+- `docs/non-cc/frameworks/workflow-frameworks-landscape.md`: checkpoint and resume matrix gains GitHub Copilot CLI, VS Code Copilot Chat, Cursor, Cline, Aider, Amp and Windsurf rows; Codex CLI, Gemini CLI and OpenCode rows re-checked at vendor docs and release-tag source (plan 0018 N79).
+
+- Link check: Box legal and pricing pages and Snowflake's legal pages are excluded (403 to lychee; verified live with polyfetch, owner OK 2026-11-27), so the enterprise data-API table now links them instead of citing plain-text URLs.
+
 ## [0.28.0] - 2026-11-27
 
 ### Added
