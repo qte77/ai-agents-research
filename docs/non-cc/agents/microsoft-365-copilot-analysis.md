@@ -606,7 +606,7 @@ announcement, though the security-and-compliance admin page still has "(preview)
 [managed-runtime-security-compliance]; no page states "generally available" for the host, so GA stays announced, not
 documented. This section's heading keeps "(preview)" because sub-features still carry it:
 Monitor metrics and alerts [managed-runtime-monitoring], [managed-runtime-inventory], the Fabric
-backend integration and Power Platform RBAC for the admin center [managed-runtime-governance]
+backend integration and Power Platform role-based access control (RBAC) for the admin center [managed-runtime-governance]
 [managed-runtime-roles]. GA of the host does not make every build path GA: app creation in Copilot
 Studio is still "in preview" [studio-overview], and Cowork's App skill is still listed as Frontier
 [cowork-whats-new].
@@ -657,8 +657,8 @@ access but leaves deployed apps in place [managed-runtime-lovable].
   [Three things called "harness"](#three-things-called-harness) below; the CLI needs no license to
   build); running requires a Power Apps Premium licence or inclusion in a Copilot-Managed-Runtime
   spending policy [managed-runtime-licensing-faq]. Re-check this page directly before quoting any
-  figure in a budget. The pricing pages no longer carry "During preview" (read 2026-11-28), but that
-is not a published price guarantee.
+  figure in a budget. The pricing pages no longer carry "During preview" (read 2026-11-28), but the
+  missing notice is not a published price guarantee.
 
 #### Admin pages (read 2026-11-28)
 
@@ -1198,7 +1198,7 @@ in declarative agents GA" claim, which stays out of this table for exactly that 
 | 2026-09-30 (passed) | Declarative agent manifest schema 1.9 adds top-level `agent_skills` (SKILL.md, Agent Skills standard, max 8) and the `Fabric` capability | documented schema addition, no preview marker | [manifest-1-9] |
 | 2026-10-01 (passed) | Copilot Code documented as Frontier preview (page's own `ms.date`, not a stated entry date); application card names Claude Opus/Sonnet/Haiku plus Microsoft-hosted GPT models | Frontier preview | [code-use], [code-app-card] |
 | 2026-10-05 (passed) | Microsoft Copilot Managed Runtime documented in preview (Learn: "This is a preview feature") | preview | [managed-runtime-overview] |
-| 2026-11-17 (passed) | Ignite blog: Copilot Managed Runtime "generally available today," Home GA, Copilot Code GA "in the coming weeks," Autopilot rolling out to Frontier, Workspaces in Frontier; Learn pages still showed preview notices on 2026-11-18 | announcement | [ignite-2026-blog] |
+| 2026-11-17 (passed) | Ignite blog: Copilot Managed Runtime "generally available today," Home GA, Copilot Code GA "in the coming weeks," Autopilot rolling out to Frontier, Workspaces in Frontier; Learn pages still showed preview notices on 2026-11-18 (gone from the page bodies by 2026-11-28) | announcement | [ignite-2026-blog] |
 | 2026-03-09 (passed) | Microsoft 365 E7 "Frontier Suite" announced (vendor marketing: partner blog; the Learn comparison page documents what it includes) | announced | [e7-partner-blog], [m365-licence-compare] |
 | 2026-05-01 (passed) | Microsoft 365 E7 general availability, per the partner blog (vendor marketing, not a Learn page; Learn separately documents Agent 365 GA on this date) | GA per vendor blog | [e7-partner-blog], [agent365-overview] |
 | 2026-11-17 (passed) | Business Frontier admin page updated; the unified release preferences experience (Settings > Org settings > Release preferences) rolls out gradually from mid-November 2026 | documented, rolling out | [frontier-admin] |
@@ -1285,7 +1285,7 @@ surface:
   the Foundry consumption-unit rate.
 - [Copilot Cowork — what's new][cowork-whats-new] — usage-based billing and model changes over
   time; not a rate card.
-- [Copilot Managed Runtime licensing FAQ (preview)][managed-runtime-licensing-faq] — the credit-rate
+- [Copilot Managed Runtime licensing FAQ][managed-runtime-licensing-faq] — the credit-rate
   figures quoted above, accessed 2026-11-10.
 - [Use Copilot Code (Frontier)][code-use] — Frontier/Microsoft-Product-Terms preview; no separate
   price page was checked for Copilot Code itself.
@@ -1598,10 +1598,10 @@ re-checked even when Microsoft leaves the page unchanged.
 | [Copilot Studio blog — Copilot Managed Runtime][managed-runtime-blog] | David Blyth, 2026-09-25: Managed Runtime host and SDK "introduced in public preview" |
 | [Use Copilot Code (Frontier)][code-use] | Local/cloud execution, Managed Runtime publishing |
 | [Copilot Code — application card][code-app-card] | Model list (Claude + GPT), subprocessor posture, entitlement metering |
-| [What is Copilot Managed Runtime (preview)][managed-runtime-overview] | Four build paths, apps-not-agents framing |
-| [Copilot Managed Runtime overview for admins (preview)][managed-runtime-admin] | Entra ID, default governance, enablement defaults by path |
-| [Security and governance in the Managed Runtime (preview)][managed-runtime-security] | Sandboxed iframe |
-| [Copilot Managed Runtime licensing FAQ (preview)][managed-runtime-licensing-faq] | Credit rate, harness rename, build/run billing split |
+| [What is Copilot Managed Runtime][managed-runtime-overview] | Four build paths, apps-not-agents framing |
+| [Copilot Managed Runtime overview for admins][managed-runtime-admin] | Entra ID, default governance, enablement defaults by path |
+| [Security and governance in the Managed Runtime][managed-runtime-security] | Sandboxed iframe |
+| [Copilot Managed Runtime licensing FAQ][managed-runtime-licensing-faq] | Credit rate, harness rename, build/run billing split |
 | [Set up Copilot Managed Runtime for Lovable][managed-runtime-lovable] | Lovable relation, consent, two environment settings |
 | [Copilot Managed Runtime default governance settings][managed-runtime-governance] | Default environment group, allow lists, sharing, CSP |
 | [Roles and responsibilities][managed-runtime-roles] | Manage vs read-only roles, billing roles |
