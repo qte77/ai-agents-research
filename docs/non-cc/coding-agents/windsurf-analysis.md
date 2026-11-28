@@ -3,7 +3,7 @@ title: Windsurf Analysis (now Devin Desktop, by Cognition)
 source: https://devin.ai/
 purpose: Analysis of Windsurf as an agentic IDE product — acquired by Cognition in 2025, rebranded Devin Desktop June 2026.
 created: 2026-06-16
-updated: 2026-11-26
+updated: 2026-11-28
 validated_links_on: 2026-06-16
 status: trial
 ---
@@ -145,6 +145,7 @@ Hold final adoption until the Cognition/Windsurf integration trajectory stabiliz
 ## Cross-References
 
 - [github-copilot-cli-analysis.md](../agents/github-copilot-cli-analysis.md) — terminal-native alternative; compare for headless/CI workflows
+- [CC-agentic-harness-patterns-analysis.md § Cross-Harness Matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15) — sandbox, permissions, hooks, skills, subagents and Model Context Protocol (MCP) side by side with the other harnesses
 
 ## Sources
 

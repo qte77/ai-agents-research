@@ -3,7 +3,7 @@ title: opencode Analysis
 source: https://github.com/sst/opencode
 purpose: Analysis of opencode as a provider-agnostic, open-source terminal coding agent with TUI, desktop, and headless modes.
 created: 2026-06-16
-updated: 2026-11-26
+updated: 2026-11-28
 validated_links_on: 2026-11-09
 status: trial
 ---
@@ -112,6 +112,8 @@ brew install opencode                           # Homebrew
 npm install -g opencode                         # npm
 # also: Scoop, Pacman, Nix, desktop app at opencode.ai/download
 ```
+
+See the [Cross-Harness Matrix](../../cc-native/agents-skills/CC-agentic-harness-patterns-analysis.md#cross-harness-matrix-checked-2026-11-15) for sandbox, permissions, hooks, skills, subagents and MCP side by side with the other harnesses.
 
 ## Adoption Decision
 
