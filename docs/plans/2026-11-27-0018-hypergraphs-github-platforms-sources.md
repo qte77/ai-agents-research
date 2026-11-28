@@ -25,11 +25,9 @@ checks all of it.
   table is in [§ N76](#n76-coverage-depth-audit), the N86 audit in [§ N86 audit](#n86-audit-diverge-and-converge).
 - **Shipped 2026-11-28:** release v0.29.0 (#1144); the owner's N87 pick, which became rows N89
   and N90 after a re-check against main (N78 had already added the sandbox, hooks, skills and
-  subagents rows for all twelve harnesses).
+  subagents rows for all twelve harnesses); then N89 (#1146), N90 (#1147), and N91 (#1148) from the
+  owner's follow-up (keep the Lovable mention, add all eight uncited Copilot Managed Runtime admin pages).
 - **In flight:** nothing.
-
-- **Shipped 2026-11-28 (later):** N89 (#1146), N90 (#1147), and N91 from the owner's follow-up
-  (keep the Lovable mention, add all eight uncited Copilot Managed Runtime admin pages).
 
 **Next:** only owner-gated work is left; the next release (minor) for N89 to N91 on the owner's word.
 
