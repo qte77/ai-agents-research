@@ -594,15 +594,16 @@ inherit organizational governance, security, and compliance controls from the mo
 created" [managed-runtime-overview] (2026-10-05, updated 2026-11-06) — it hosts **apps**. The
 admin overview, re-read 2026-11-18, words this as helping teams "build and run line-of-business
 agentic applications" [managed-runtime-admin]; it is still an app host, not a runtime that runs
-agents for you. Until 2026-11-18 every page in this cluster carried a preview notice ("This is a
+agents for you. Up to the 2026-11-18 read, every page in this cluster carried a preview notice ("This is a
 preview feature" on three of them [managed-runtime-overview], "This feature is in preview" on the
 security page [managed-runtime-security]).
 **GA announced; the Learn notices are gone (read 2026-11-28):** Microsoft's Ignite post of
 2026-11-17 says apps are hosted "with the Copilot Managed Runtime, generally available today"
 [ignite-2026-blog]. On 2026-11-28 none of the thirteen cluster pages read (the overview, admin overview,
 security page and licensing FAQ, plus the nine under [Admin pages](#admin-pages-read-2026-11-28)) showed a
-page-level preview notice or "During preview" in the rendered text or the raw HTML, which fits the
-announcement; no page states "generally available" for the host, so GA stays announced, not
+preview notice in the page body or "During preview" in the rendered text or the raw HTML, which fits the
+announcement, though the security-and-compliance admin page still has "(preview)" in its title
+[managed-runtime-security-compliance]; no page states "generally available" for the host, so GA stays announced, not
 documented. This section's heading keeps "(preview)" because sub-features still carry it:
 Monitor metrics and alerts [managed-runtime-monitoring], [managed-runtime-inventory], the Fabric
 backend integration and Power Platform RBAC for the admin center [managed-runtime-governance]
@@ -661,8 +662,8 @@ is not a published price guarantee.
 
 #### Admin pages (read 2026-11-28)
 
-Each row adds only what the admin overview, security page and licensing FAQ above do not state. All
-pages show ms.date 2026-11-17 unless noted.
+Each row adds only what the admin overview, security page and licensing FAQ above do not state. The
+pages in this table show ms.date 2026-11-17 unless noted.
 
 | Page | What it adds |
 |---|---|
